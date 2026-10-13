@@ -284,16 +284,6 @@ td.pn{white-space:nowrap;min-width:290px}
 .mdl.camw{max-width:560px;text-align:center}
 .cka{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;margin:14px 0 2px;padding:12px 14px;border:1.5px solid rgba(var(--mr),.28);border-radius:12px;cursor:pointer;background:rgba(var(--mr),.05)}.prb{display:inline-flex!important;align-items:center;gap:6px}
 #prn{position:absolute;left:-99999px;top:0;width:210mm;background:#fff;color:#000}
-#prn .pdoc{font-family:'Times New Roman',Georgia,serif;font-size:12pt;line-height:1.45;color:#000}
-#prn .pdoc h2{font-size:15pt;margin:8px 0 2px;text-align:center;color:#000}
-#prn .pm{text-align:center;font-size:10.5pt;color:#333;margin:0 0 12px;border-bottom:2px solid #000;padding-bottom:6px}
-#prn .pq{display:flex;gap:8px;margin:0 0 12px;break-inside:avoid;page-break-inside:avoid}
-#prn .pn{min-width:26px;font-weight:700}
-#prn .pb{flex:1;min-width:0}
-#prn .po{margin:3px 0 3px 4px}
-#prn .po.pk{font-weight:700;text-decoration:underline}
-#prn .pl{border-bottom:1px dotted #888;height:24px;margin-top:6px}
-#prn img{max-width:100%;max-height:70mm}
 @media print{
   body.printing>*:not(#prn){display:none!important}
   body.printing #prn{position:static!important;left:auto!important;width:auto!important}
@@ -626,7 +616,7 @@ function mgmt() {
                 case 1:
                     L = _a.sent();
                     window.L = L;
-                    if (!(t == 'pt')) return [3, 3];
+                    if (!(t == 'pt' && U.sa)) return [3, 3];
                     return [4, go('liveList', U.nik, PW)];
                 case 2:
                     LVL = _a.sent();
@@ -652,7 +642,7 @@ function mgmt() {
                     _a.label = 5;
                 case 5:
                     if (t == 'pt')
-                        c = "<div class=box><h3>Ujian Sedang Berlangsung</h3>".concat(LVL.map(function (x, k) { return "<div class=st style=\"margin:8px 0;justify-content:space-between;align-items:center\"><span><b>".concat(esc(x.nama), "</b><br><small>").concat(esc(x.tingkat), " \u2022 ").concat(esc(x.mapel), " \u2022 ").concat(esc(x.guru), " \u2022 Kode ").concat(esc(x.kode), " \u2022 ").concat(x.rooms.map(esc).join(', '), "</small></span><button onclick=\"openMon(LVL[").concat(k, "].kode,LVL[").concat(k, "].nama)\">").concat(ic('radar', 15), " Pantau</button></div>"); }).join('') || '<p class=em>Belum ada ujian yang sedang berlangsung.</p>', "<button class=o onclick=\"mgmt('pt')\">Muat ulang</button></div><div class=box><h3>Pantau dengan Kode Asesmen</h3><small>Guru pengawas dapat memantau ujian guru lain dengan memasukkan kode asesmennya.</small><input id=pk2 placeholder=\"Kode asesmen, mis. A1B2C3\" style=\"text-transform:uppercase\"><button onclick=\"openMon($('#pk2').value.trim().toUpperCase(),'')\">").concat(ic('radar', 15), " Pantau</button></div>");
+                        c = (U.sa ? "<div class=box><h3>Ujian Sedang Berlangsung</h3>".concat(LVL.map(function (x, k) { return "<div class=st style=\"margin:8px 0;justify-content:space-between;align-items:center\"><span><b>".concat(esc(x.nama), "</b><br><small>").concat(esc(x.tingkat), " \u2022 ").concat(esc(x.mapel), " \u2022 ").concat(esc(x.guru), " \u2022 Kode ").concat(esc(x.kode), " \u2022 ").concat(x.rooms.map(esc).join(', '), "</small></span><button onclick=\"openMon(LVL[").concat(k, "].kode,LVL[").concat(k, "].nama)\">").concat(ic('radar', 15), " Pantau</button></div>"); }).join('') || '<p class=em>Belum ada ujian yang sedang berlangsung.</p>', "<button class=o onclick=\"mgmt('pt')\">Muat ulang</button></div>") : "") + "<div class=box><h3>Pantau dengan Kode Asesmen</h3><small>Masukkan kode asesmen soal yang akan Anda awasi. Guru pengawas dapat mengawasi soal mana pun dengan memasukkan kodenya; setelah itu pemantauan, pesan, hentikan ujian, histori, dan kamera dapat dipakai untuk soal tersebut.</small><input id=pk2 placeholder=\"Kode asesmen, mis. A1B2C3\" style=\"text-transform:uppercase\"><button onclick=\"openMon($('#pk2').value.trim().toUpperCase(),'')\">".concat(ic('radar', 15), " Pantau</button></div>");
                     if (t == 'kt') {
                         c = "<div id=ktw class=box>Memuat...</div>";
                         setTimeout(ktInit, 0);
@@ -1310,7 +1300,7 @@ function tblW(n) {
 }
 function buildDocx(a, key) {
     var T = TC(), MT = T.mt.slice(1).toUpperCase(), MA = T.m.slice(1).toUpperCase(), GR = '777777', n = a.soal.length, Z = 900000;
-    var b = '';
+    var b = '', IMS = [];
     var img = "<w:r><w:drawing><wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\"><wp:extent cx=\"".concat(Z, "\" cy=\"").concat(Z, "\"/><wp:docPr id=\"1\" name=\"Logo\"/><wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect=\"1\"/></wp:cNvGraphicFramePr><a:graphic><a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"><pic:pic><pic:nvPicPr><pic:cNvPr id=\"0\" name=\"logo.png\"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed=\"rId10\"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"").concat(Z, "\" cy=\"").concat(Z, "\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>");
     b += wHdr(T);
     b += WP(WR(a.NAMA.toUpperCase(), { b: 1, z: 16, c: MA, f: T.f }), { a: 'center', sb: 80, sa: 20 }) + WP(WR('Tahun Ajaran ' + a.TAHUN + ' • Semester ' + a.SEMESTER, { i: 1, c: GR }), { a: 'center', sa: 140 });
@@ -1326,7 +1316,7 @@ function buildDocx(a, key) {
     b += WP('', { bd: 6, bc: 'DDBFC5', sa: 60 });
     a.soal.forEach(function (q, k) {
         b += h2w(q.q, { l: 454, h: 454, sb: 180, sa: 60, k: 1 }, WR((k + 1) + '.  ', { b: 1, c: MA })).join('');
-        String(q.m || '').split(/\s+/).filter(Boolean).forEach(function (u) { b += WP(WR('[Lampiran: ' + u + ']', { i: 1, c: GR, z: 9 }), { l: 454, sa: 60 }); });
+        String(q.m || '').split(/\s+/).filter(Boolean).forEach(function (u) { var im = isImgU(u) && IMGC[u]; if (im) { var cx = im.w * 9525, cy = im.h * 9525, f = Math.min(1, 4500000 / cx, 3000000 / cy), id = IMS.length + 1; cx = Math.round(cx * f); cy = Math.round(cy * f); IMS.push({ rid: 'rId' + (20 + id), n: 'soal' + id + '.jpeg', d: Uint8Array.from(atob(im.u.split(',')[1]), function (c) { return c.charCodeAt(0); }) }); b += WP(wImg(cx, cy, 'rId' + (20 + id), 'soal' + id + '.jpeg', 100 + id), { l: 454, sa: 60 }); } else b += WP(WR('[Lampiran: ' + u + ']', { i: 1, c: GR, z: 9 }), { l: 454, sa: 60 }); });
         b += WP(WR('[' + TN[q.t] + (q.t == 'js' ? ' • jawaban maks. 60 karakter • bobot 0–2' : q.t == 'es' ? ' • bobot 0–4' : '') + ']', { i: 1, c: GR, z: 8.5 }), { l: 454, sa: 40 });
         if (q.t == 'pg') {
             (q.o || []).forEach(function (o, j) { if (!o)
@@ -1356,15 +1346,15 @@ function buildDocx(a, key) {
     var ftr = XH + "<w:ftr ".concat(NS, "><w:p><w:pPr><w:pBdr><w:top w:val=\"single\" w:sz=\"6\" w:space=\"6\" w:color=\"").concat(MA, "\"/></w:pBdr><w:jc w:val=\"center\"/></w:pPr>").concat(WR(sc.nama + ' • ' + a.MAPEL + ' • Kode ' + a.KODE + ' • Halaman ', { z: 8, c: GR })).concat(fr('<w:fldChar w:fldCharType="begin"/>')).concat(fr('<w:instrText xml:space="preserve"> PAGE </w:instrText>')).concat(fr('<w:fldChar w:fldCharType="separate"/>')).concat(fr('<w:t>1</w:t>')).concat(fr('<w:fldChar w:fldCharType="end"/>'), "</w:p></w:ftr>");
     var styles = XH + '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:lang w:val="id-ID"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
     var R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
-    return zipDocx(wKopZip([
+    return zipDocx(wImgZip(wKopZip([
         { n: '[Content_Types].xml', d: XH + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>' },
         { n: '_rels/.rels', d: XH + "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"".concat(R, "/officeDocument\" Target=\"word/document.xml\"/></Relationships>") },
         { n: 'word/document.xml', d: doc }, { n: 'word/styles.xml', d: styles }, { n: 'word/footer1.xml', d: ftr },
         { n: 'word/_rels/document.xml.rels', d: XH + "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"".concat(R, "/styles\" Target=\"styles.xml\"/><Relationship Id=\"rId10\" Type=\"").concat(R, "/image\" Target=\"media/logo.png\"/><Relationship Id=\"rId11\" Type=\"").concat(R, "/footer\" Target=\"footer1.xml\"/></Relationships>") },
         { n: 'word/media/logo.png', d: Uint8Array.from(atob(LOGO.split(',')[1]), function (c) { return c.charCodeAt(0); }) }
-    ]));
+    ]), IMS));
 }
-function dlSoal(b, i, key) { var t0 = b.innerHTML; b.disabled = true; b.textContent = 'Menyiapkan...'; kopReady().then(function () { b.disabled = false; b.innerHTML = t0; dlSoal0(b, i, key); }); }
+function dlSoal(b, i, key) { var t0 = b.innerHTML; b.disabled = true; b.textContent = 'Menyiapkan (gambar soal)...'; kopReady().then(function () { return loadSoalImgs(L[i]); }).then(function () { b.disabled = false; b.innerHTML = t0; dlSoal0(b, i, key); }); }
 function dlSoal0(b, i, key) {
     var a = L[i], t = b.innerHTML;
     b.disabled = true;
@@ -1400,9 +1390,9 @@ function openMon(kode, judul) {
     scr('mon');
     MK = kode;
     MF = '';
-    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt('pt')\">Kembali</button></header><div class=wrap><div class=box><h2><span class=live></span>Pantau Ujian <button class=\"o cpb\" onclick=\"cpk('").concat(esc(kode), "',this)\">").concat(ic('copy', 14), " Salin kode ").concat(esc(kode), "</button> <span class='pbx'><button class='pbn a' onclick='bcast()' title='Kirim pesan ke semua siswa'><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1z'/><path d='M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13'/></svg><span>Pesan Massal</span></button><button class='pbn b' onclick='hist()' title='Riwayat pesan yang pernah dikirim'><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 109-9 9 9 0 00-7 3.5L3 8'/><path d='M3 3v5h5'/><path d='M12 7v5l3 2'/></svg><span>Histori Pesan</span></button></span></h2><small id=mt>").concat(esc(judul || ''), " \u2022 Kode ").concat(esc(kode), " \u2022 diperbarui otomatis</small><div style=\"margin-top:10px\"><select id=mf onchange=\"MF=this.value;mfil()\" style=\"max-width:260px\"><option value=\"\">Semua kelas</option></select></div><div id=ms class=chips></div></div><div id=mr></div></div>");
+    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt('pt')\">Kembali</button></header><div class=wrap><div class=box><h2><span class=live></span>Pantau Ujian <button class=\"o cpb\" onclick=\"cpk('").concat(esc(kode), "',this)\">").concat(ic('copy', 14), " Salin kode ").concat(esc(kode), "</button></h2><small id=mt>").concat(esc(judul || ''), " \u2022 Kode ").concat(esc(kode), " \u2022 diperbarui otomatis</small><div style=\"margin-top:10px\"><select id=mf onchange=\"MF=this.value;mfil()\" style=\"max-width:260px\"><option value=\"\">Semua kelas</option></select></div><div id=ms class=chips></div></div><div id=mr></div></div>");
     $('#mr').addEventListener('click', function (e) { var b = e.target.closest('button[data-a]'); if (!b)
-        return; var tr = b.closest('tr'); var ac2 = b.dataset.a; ac2 == 'm' ? msgTo(tr.dataset.nis, tr.dataset.nm) : ac2 == 'c' ? camView(tr.dataset.nis, tr.dataset.nm) : ac2 == 's' ? stopTo(tr.dataset.nis, tr.dataset.nm) : resetTo(tr.dataset.nis, tr.dataset.nm); });
+        return; var tr = b.closest('tr'); var ac2 = b.dataset.a; ac2 == 'm' ? msgTo(tr.dataset.nis, tr.dataset.nm, roomOfRow(tr)) : ac2 == 'c' ? camView(tr.dataset.nis, tr.dataset.nm) : ac2 == 's' ? stopTo(tr.dataset.nis, tr.dataset.nm) : resetTo(tr.dataset.nis, tr.dataset.nm); });
     mref();
     MT = setInterval(function () { if (!document.hidden)
         mref(); }, 8000);
@@ -1451,7 +1441,7 @@ function mref() {
                         d.rooms.forEach(function (r, ri) { return mf.add(new Option(r.room, String(ri))); });
                     d.rooms.forEach(function (r, ri) {
                         if (!$('#rm' + ri))
-                            $('#mr').insertAdjacentHTML('beforeend', "<div class=box id=rb".concat(ri, "><h3>").concat(esc(r.room), "</h3><div class=sc><table><thead><tr><th>#</th><th>Siswa</th><th style=\"min-width:170px\">Progres</th><th>Benar</th><th>Salah</th><th>Status</th><th>Nilai</th><th>Aksi</th></tr></thead><tbody id=rm").concat(ri, "></tbody></table></div><p class=em id=em").concat(ri, ">Belum ada siswa yang memulai ujian.</p></div>"));
+                            $('#mr').insertAdjacentHTML('beforeend', "<div class=box id=rb".concat(ri, "><h3>").concat(esc(r.room), " ", pbxBtns(ri), "</h3><div class=sc><table><thead><tr><th>#</th><th>Siswa</th><th style=\"min-width:170px\">Progres</th><th>Benar</th><th>Salah</th><th>Status</th><th>Nilai</th><th>Aksi</th></tr></thead><tbody id=rm").concat(ri, "></tbody></table></div><p class=em id=em").concat(ri, ">Belum ada siswa yang memulai ujian.</p></div>"));
                         $('#em' + ri).style.display = r.list.length ? 'none' : 'block';
                         var ord = r.list.slice().sort(function (x, y) { return y.b - x.b || x.s - y.s || y.d - x.d || String(x.nama).localeCompare(String(y.nama)); });
                         ord.forEach(function (x) {
@@ -1666,8 +1656,8 @@ function celebrate(r, reason, pv) {
 function showMsg(m) { tone(880, 0, .25, .1); tone(1175, .15, .35, .08); modal("<div class=\"mi info\">".concat(ic('send', 26), "</div><h3>Pesan dari Pengawas</h3><p class=mt style=\"font-size:18px;text-align:center\">").concat(esc(m.t), "</p><p style=\"text-align:center;margin:0 0 14px\"><small style=\"color:#7b6a6d\">\u2014 ").concat(esc(m.g || 'Pengawas'), "</small></p><div class=mb><button onclick=\"mclose(this)\">").concat(ic('check', 16), " Mengerti</button></div>"), 'dlg'); }
 var QM = ['Fokus pada layar ujianmu ya.', 'Terindikasi menyontek, harap kerjakan sendiri.', 'Jangan mengantuk, tetap semangat!', 'Waktu tinggal sedikit, periksa kembali jawabanmu.'];
 
-function bcast(){var o=modal("<div class=\"mi info\">"+ic('send',26)+"</div><h3>Pesan untuk Semua Siswa yang Sedang Ujian</h3><div class=qk>"+QM.map(function(t){return "<button type=button class=o onclick=\"this.closest('.mdl').querySelector('textarea').value=this.textContent\">"+t+"</button>"}).join('')+"</div><textarea rows=3 maxlength=250 placeholder='Tulis pesan...'></textarea><div class=mb><button id=sm>"+ic('send',16)+" Kirim ke Semua</button><button class=o onclick='mclose(this)'>Batal</button></div>",'dlg');
-o.querySelector('#sm').onclick=function(){var t=o.querySelector('textarea').value.trim();if(!t)return;var b=this;b.disabled=true;api('broadcastMsg',U.nik,PW,MK,t).then(function(n){toast('Pesan terkirim ke '+n+' siswa (tampil dalam beberapa detik)');mclose(o)}).catch(function(e){alert(e);b.disabled=false})}}
+function bcast(ri){var rn=(MD&&MD.rooms[ri])?MD.rooms[ri].room:'';var o=modal("<div class=\"mi info\">"+ic('send',26)+"</div><h3>Pesan untuk Semua Siswa Kelas "+esc(rn)+" yang Sedang Ujian</h3><div class=qk>"+QM.map(function(t){return "<button type=button class=o onclick=\"this.closest('.mdl').querySelector('textarea').value=this.textContent\">"+t+"</button>"}).join('')+"</div><textarea rows=3 maxlength=250 placeholder='Tulis pesan...'></textarea><div class=mb><button id=sm>"+ic('send',16)+" Kirim ke Kelas "+esc(rn)+"</button><button class=o onclick='mclose(this)'>Batal</button></div>",'dlg');
+o.querySelector('#sm').onclick=function(){var t=o.querySelector('textarea').value.trim();if(!t)return;var b=this;b.disabled=true;api('broadcastMsg',U.nik,PW,MK,t,rn).then(function(n){toast('Pesan terkirim ke '+n+' siswa kelas '+rn+' (tampil dalam beberapa detik)');mclose(o)}).catch(function(e){alert(e);b.disabled=false})}}
 
 var ccol=function(x){return x>=90?'#2e9e5b':x>=75?'#e6b422':x>=60?'#e9853b':'#a31d33'};
 function pieN(v){var m={};v.forEach(function(x){m[x]=(m[x]||0)+1});var k=Object.keys(m).sort(function(a,b){return b-a}),t=v.length;if(!t)return '<p class=em>Belum ada data nilai.</p>';var a0=-Math.PI/2,P=function(a){return [(50+46*Math.cos(a)).toFixed(2),(50+46*Math.sin(a)).toFixed(2)]},sl='',lg='';k.forEach(function(n,i){var c=m[n],a1=a0+c/t*2*Math.PI,col='hsl('+(i*47%360)+',62%,48%)',p0=P(a0),p1=P(a1);sl+=k.length==1?"<circle cx=50 cy=50 r=46 fill='"+col+"'/>":"<path d='M50 50 L"+p0[0]+" "+p0[1]+" A46 46 0 "+(a1-a0>Math.PI?1:0)+" 1 "+p1[0]+" "+p1[1]+" Z' fill='"+col+"' stroke='#fff' stroke-width='1'/>";lg+="<div style='font-size:12px;margin:2px 0'><i style='display:inline-block;width:11px;height:11px;border-radius:3px;background:"+col+";margin-right:6px'></i>Nilai <b>"+n+"</b>: "+c+" siswa ("+Math.round(c/t*100)+"%)</div>";a0=a1});return "<div class=piew><svg viewBox='0 0 100 100' width=220 class=pies>"+sl+"</svg><div class=pil2><div style='font-weight:700;margin-bottom:4px'>Total "+t+" siswa</div>"+lg+"</div></div>"}
@@ -2039,16 +2029,59 @@ function prnPages(pages,single){ // kartu ujian / kartu pengawas: halaman A4 (8 
   var o=document.getElementById('prn');if(o)o.remove();document.body.appendChild(h);prnGo(h,single?'size:90mm 57mm;margin:0':'size:A4;margin:0');
 }
 function printRep(){window.print()} // laporan kelas / detail siswa: halaman tercetak persis seperti layar (tanpa menu & tombol)
-function prnMedia(m){if(!m)return '';var h=media(m);return /<img/i.test(h)?h:'<div class="pl">[Media: '+esc(m)+']</div>'}
+// ---- gambar soal: diambil lewat server lalu dipakai di Word & Print (bukan sekadar link) ----
+var IMGC={};
+function isImgU(m){return !!m&&!/#a$/.test(m)&&!/\/preview$/.test(m)&&!/\.(mp3|wav|ogg|m4a|mp4|webm)$/i.test(m)}
+function loadImg(u){
+  if(IMGC[u])return Promise.resolve(IMGC[u]);
+  return api('fotoByUrl',U.nik,PW,u).then(function(d){
+    if(!d||!/^data:image\//i.test(d))return null;
+    return new Promise(function(ok){var im=new Image();im.onload=function(){
+      var r=Math.min(1,1000/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.max(1,Math.round(im.naturalWidth*r)),h=Math.max(1,Math.round(im.naturalHeight*r)),c=document.createElement('canvas');c.width=w;c.height=h;
+      var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,w,h);g.drawImage(im,0,0,w,h);
+      var o={u:c.toDataURL('image/jpeg',.85),w:w,h:h};IMGC[u]=o;ok(o)};im.onerror=function(){ok(null)};im.src=d});
+  }).catch(function(){return null});
+}
+function loadSoalImgs(a){
+  var us=[];a.soal.forEach(function(q){String(q.m||'').split(/\s+/).filter(isImgU).forEach(function(u){if(us.indexOf(u)<0)us.push(u)})});
+  var k=0;function w(){return k>=us.length?Promise.resolve():loadImg(us[k++]).then(w)}
+  return Promise.all([w(),w(),w()]);
+}
+function wImgZip(a,IMS){ // sisipkan gambar soal ke dalam paket .docx
+  if(!IMS.length)return a;
+  var R='http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  a.forEach(function(f){
+    if(f.n=='[Content_Types].xml'&&f.d.indexOf('Extension="jpeg"')<0)f.d=f.d.replace('<Default Extension="png"','<Default Extension="jpeg" ContentType="image/jpeg"/><Default Extension="png"');
+    if(f.n=='word/_rels/document.xml.rels')f.d=f.d.replace('</Relationships>',IMS.map(function(m){return '<Relationship Id="'+m.rid+'" Type="'+R+'/image" Target="media/'+m.n+'"/>'}).join('')+'</Relationships>');
+  });
+  IMS.forEach(function(m){a.push({n:'word/media/'+m.n,d:m.d})});
+  return a;
+}
+// cetak dokumen HTML di iframe tersendiri (tidak terpengaruh CSS aplikasi), menunggu gambar selesai dimuat
+function prnFrame(html){
+  var f=document.createElement('iframe');f.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;height:297mm;border:0';document.body.appendChild(f);
+  var d=f.contentWindow.document;d.open();d.write(html);d.close();
+  var go=function(){try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('Print gagal: '+e)}setTimeout(function(){try{f.remove()}catch(e){}},120000)};
+  var t0=Date.now();(function w(){var im=[].slice.call(d.images);if(im.every(function(x){return x.complete})||Date.now()-t0>10000)setTimeout(go,250);else setTimeout(w,120)})();
+}
+function prnSoalMedia(m){
+  return String(m||'').split(/\s+/).filter(Boolean).map(function(u){
+    var im=isImgU(u)&&IMGC[u];
+    return im?'<div class="zm"><img src="'+im.u+'" alt=""></div>':'<div class="zl">[Lampiran: '+esc(u)+']</div>';
+  }).join('');
+}
 function printSoal(i,key){
-  var a=L[i];if(!a)return;toast('Menyiapkan cetak...');
-  kopReady().then(function(){
+  var a=L[i];if(!a)return;toast('Menyiapkan cetak... (gambar soal sedang diambil)');
+  kopReady().then(function(){return loadSoalImgs(a)}).then(function(){
     var qs=a.soal.map(function(s,n){
-      var o=s.t=='pg'?(s.o||[]).map(function(x,j){var ok=key&&'ABCDE'[j]==s.k;return x?'<div class="po'+(ok?' pk':'')+'"><b>'+'ABCDE'[j]+'.</b> '+rh(x)+(ok?' &#10003;':'')+'</div>':''}).join(''):(s.t=='js'?'<div class="pl">Jawaban: ..........................................................................</div>':'<div class="pl"></div><div class="pl"></div><div class="pl"></div><div class="pl"></div>');
-      return '<div class="pq"><div class="pn">'+(n+1)+'.</div><div class="pb">'+rh(s.q)+prnMedia(s.m)+o+'</div></div>';
+      var o=s.t=='pg'?(s.o||[]).map(function(x,j){var ok=key&&'ABCDE'[j]==s.k;return x?'<div class="zo'+(ok?' zk':'')+'"><b>'+'ABCDE'[j]+'.</b> '+rh(x)+(ok?' &#10003;':'')+'</div>':''}).join(''):(s.t=='js'?'<div class="zl">Jawaban: ..........................................................................</div>':'<div class="zg"></div><div class="zg"></div><div class="zg"></div><div class="zg"></div>');
+      return '<div class="zq"><div class="zn">'+(n+1)+'.</div><div class="zb"><div class="rt">'+rh(s.q)+'</div>'+prnSoalMedia(s.m)+o+'</div></div>';
     }).join('');
     var head=KOPD?'<img src="'+KOPD.u+'" style="width:100%;display:block;margin-bottom:6px" alt="">':'<div style="text-align:center;font-weight:700;font-size:14pt">'+esc(sc.nama)+'</div>';
-    prnHTML('<div class="pdoc">'+head+'<h2>'+esc(a.NAMA)+(key?'':' - Lembar Siswa')+'</h2><div class="pm">'+esc(a.MAPEL)+' &bull; '+esc(a.JENJANG)+' '+esc(a.TINGKAT)+' &bull; '+esc(a.TAHUN)+' Smt '+esc(a.SEMESTER)+' &bull; '+esc(a.DURASI)+' menit &bull; '+a.soal.length+' soal &bull; Kode '+esc(a.KODE)+(key?' &bull; DENGAN KUNCI JAWABAN':'')+'</div>'+(key?'':'<div class="pm" style="border:0;text-align:left">Nama: ................................................ &nbsp; Kelas: ............ &nbsp; No. Absen: ........</div>')+qs+'</div>','size:A4;margin:14mm');
+    var css="@page{size:A4;margin:14mm}*{box-sizing:border-box}body{margin:0;font-family:'Times New Roman',Georgia,serif;font-size:12pt;line-height:1.45;color:#000;background:#fff}h2{font-size:15pt;margin:8px 0 2px;text-align:center}.zm0{text-align:center;font-size:10.5pt;color:#333;margin:0 0 12px;border-bottom:2px solid #000;padding-bottom:6px}.zq{display:flex;gap:8px;margin:0 0 12px;break-inside:avoid;page-break-inside:avoid}.zn{min-width:28px;font-weight:700}.zb{flex:1;min-width:0}.zo{margin:3px 0 3px 4px}.zo.zk{font-weight:700;text-decoration:underline}.zl{color:#555;font-size:10pt;margin-top:4px}.zg{border-bottom:1px dotted #888;height:24px;margin-top:6px}.zm img{max-width:100%;max-height:75mm;display:block;margin:6px 0}"
+     +".rt table{border-collapse:collapse;margin:6px 0}.rt td,.rt th{border:1px solid #888;padding:4px 10px;min-width:30px}.rt ul,.rt ol{margin:4px 0 4px 22px;padding:0}.rt div,.rt p{margin:2px 0}.mf{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}.mf .mn{border-bottom:1.5px solid currentColor;padding:0 5px}.mf .md{padding:0 5px}.mr{display:inline-flex;align-items:flex-end}.mr .mv{border-top:1.5px solid currentColor;padding:0 3px;margin-left:1px}.rt img{max-width:100%}";
+    var meta=esc(a.MAPEL)+' &bull; '+esc(a.JENJANG)+' '+esc(a.TINGKAT)+' &bull; '+esc(a.TAHUN)+' Smt '+esc(a.SEMESTER)+' &bull; '+esc(a.DURASI)+' menit &bull; '+a.soal.length+' soal &bull; Kode '+esc(a.KODE)+(key?' &bull; DENGAN KUNCI JAWABAN':'');
+    prnFrame('<!doctype html><html><head><meta charset="utf-8"><title>Soal '+esc(a.NAMA)+'</title><style>'+css+'</style></head><body>'+head+'<h2>'+esc(a.NAMA)+(key?'':' - Lembar Siswa')+'</h2><div class="zm0">'+meta+'</div>'+(key?'':'<div class="zm0" style="border:0;text-align:left">Nama: ................................................ &nbsp; Kelas: ............ &nbsp; No. Absen: ........</div>')+qs+'</body></html>');
   });
 }
 // Word bawaan (Daftar Hadir, Berita Acara) dicetak dengan merender file Word yang sama (pustaka docx-preview dimuat otomatis dari internet)
@@ -2093,6 +2126,13 @@ function saveDlg(k){
       +'<div class="mb" style="margin-top:14px"><button class="o" onclick="cpk(\''+esc(k)+'\',this)">'+ic('copy',15)+' Salin Kode</button><button onclick="mclose(this)">'+ic('check',15)+' Selesai</button></div>','dlg');
   }).catch(function(){kodeDlg(k)});
 }
+// ---- Pantau Ujian: soal milik pengawas & tombol pesan per variasi kelas ----
+function pbxBtns(ri){
+  var A="<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1z'/><path d='M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13'/></svg>",B="<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 109-9 9 9 0 00-7 3.5L3 8'/><path d='M3 3v5h5'/><path d='M12 7v5l3 2'/></svg>";
+  return "<span class='pbx'><button class='pbn a' onclick='bcast("+ri+")' title='Kirim pesan ke semua siswa kelas ini'>"+A+"<span>Pesan Massal</span></button><button class='pbn b' onclick='hist("+ri+")' title='Riwayat pesan untuk kelas ini'>"+B+"<span>Histori Pesan</span></button></span>";
+}
+function roomOfRow(tr){var b=tr&&tr.closest?tr.closest('.box'):null,k=b?parseInt(String(b.id).replace('rb',''),10):-1;return (MD&&MD.rooms[k])?MD.rooms[k].room:''}
+function roomOfNis(nis){var r='';if(MD)MD.rooms.forEach(function(x){if(!r&&x.list.some(function(y){return String(y.nis)==String(nis)}))r=x.room});return r}
 function skBox(){
   return '<div class=box><h3>Identitas Sekolah</h3><input id=sn value="'+esc(sc.nama)+'" placeholder="Nama sekolah"><input id=sl value="'+esc(sc.logo)+'" placeholder="URL logo (kosong = logo Sekolah Rakyat)"><input type=file accept="image/*" onchange="upLogo(this)">'
     +'<h4 style="margin:16px 0 4px">Gambar Kop Sekolah</h4><p style="color:#7b6a6d;margin:0 0 8px;font-size:13px">Dipakai sebagai header (paling atas) semua dokumen Word dan PDF: soal, daftar hadir, berita acara, dan laporan hasil. Gunakan gambar lebar, mis. 2000 × 350 px (JPG/PNG). Jika kosong, dipakai kop standar (logo + nama sekolah).</p>'
@@ -2455,14 +2495,15 @@ function wkp(t){
   return 'mulai '+esc((t.s||'?').slice(11))+' \u2022 selesai '+esc((t.f||'?').slice(11))+' ('+esc(sd||fd)+')';
 }
 // ---- histori pesan pengawas (jendela lebar) ----
-function hist(){
-  api('histPesan',U.nik,PW,MK).then(function(L){
+function hist(ri){
+  var rn=(MD&&MD.rooms[ri])?MD.rooms[ri].room:'';
+  api('histPesan',U.nik,PW,MK,rn).then(function(L){
     var rows=function(f){
       f=(f||'').toLowerCase();
       var a=L.filter(function(x){return !f||(x.t+' '+x.to+' '+x.g).toLowerCase().indexOf(f)>=0});
       return a.length?a.map(function(x){return '<tr><td class=hw>'+esc(x.w)+'</td><td>'+esc(x.g)+'</td><td><span class=hs-to>'+esc(x.to)+'</span></td><td class=hm>'+esc(x.t)+'</td></tr>'}).join(''):'<tr><td colspan=4 style="text-align:center;padding:26px;color:#7b6a6d">'+(L.length?'Tidak ada pesan yang cocok.':'Belum ada pesan.')+'</td></tr>';
     };
-    var o=modal('<div class=hs-top><h3>'+ic('send',20)+' Histori Pesan Pengawas \u2022 Kode '+esc(MK)+' <small style="font-weight:400;color:#7b6a6d">('+L.length+' pesan)</small></h3><input id=hsf placeholder="Cari pesan atau nama siswa..."></div><div class=hs-w><table><thead><tr><th>Waktu</th><th>Pengirim</th><th>Kepada</th><th>Pesan</th></tr></thead><tbody id=hsb>'+rows('')+'</tbody></table></div><div class=mb><button onclick="mclose(this)">Tutup</button></div>','wide');
+    var o=modal('<div class=hs-top><h3>'+ic('send',20)+' Histori Pesan \u2022 Kelas '+esc(rn)+' \u2022 Kode '+esc(MK)+' <small style="font-weight:400;color:#7b6a6d">('+L.length+' pesan)</small></h3><input id=hsf placeholder="Cari pesan atau nama siswa..."></div><div class=hs-w><table><thead><tr><th>Waktu</th><th>Pengirim</th><th>Kepada</th><th>Pesan</th></tr></thead><tbody id=hsb>'+rows('')+'</tbody></table></div><div class=mb><button onclick="mclose(this)">Tutup</button></div>','wide');
     o.querySelector('#hsf').oninput=function(){o.querySelector('#hsb').innerHTML=rows(this.value)};
   }).catch(function(e){alert(e)});
 }
@@ -2549,7 +2590,8 @@ function scanNIS(){
 function scanFile(inp){var f=inp.files&&inp.files[0];if(!f)return;scanSt('Membaca gambar...');var im=new Image();im.onload=function(){SE.load(function(){SE.decode(im,im.naturalWidth,im.naturalHeight).then(function(r){URL.revokeObjectURL(im.src);if(!r||!scanDone(r))scanSt('Barcode/QR tidak terbaca. Coba foto lebih dekat, terang, dan tidak buram.');scanInfo()})})};im.onerror=function(){scanSt('Gambar tidak dapat dibaca.')};im.src=URL.createObjectURL(f);inp.value=''}
 function pwBox(){return "<div class=box><h3>Password Super Admin</h3><p style='color:#7b6a6d'>Ganti password Super Admin (minimal 6 karakter).</p><input id=zp1 type=password placeholder='Password baru'><input id=zp2 type=password placeholder='Ulangi password baru'><button onclick='savePw()'>Simpan Password</button></div>"}
 function savePw(){var a=$('#zp1').value,b=$('#zp2').value;if(a.length<6)return alert('Password minimal 6 karakter');if(a!==b)return alert('Konfirmasi password tidak sama');api('savePw',U.nik,PW,a).then(function(){PW=a;toast('Password Super Admin diubah');$('#zp1').value=$('#zp2').value=''}).catch(function(e){alert(e)})}
-function msgTo(nis, nama) {
+function msgTo(nis, nama, room) {
+    room = room || roomOfNis(nis);
     var o = modal("<div class=\"mi info\">".concat(ic('send', 26), "</div><h3>Pesan untuk ").concat(esc(nama), "</h3><div class=qk>").concat(QM.map(function (t) { return "<button type=button class=o onclick=\"this.closest('.mdl').querySelector('textarea').value=this.textContent\">".concat(t, "</button>"); }).join(''), "</div><textarea rows=3 maxlength=250 placeholder=\"Tulis pesan...\"></textarea><div class=mb><button class=o onclick=\"mclose(this)\">Batal</button><button id=sm>").concat(ic('send', 15), " Kirim</button></div>"));
     o.querySelector('#sm').onclick = function () {
         return __awaiter(this, void 0, void 0, function () { var t, e_7; return __generator(this, function (_a) {
@@ -2562,7 +2604,7 @@ function msgTo(nis, nama) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4, api('sendMsg', U.nik, PW, MK, nis, t, nama)];
+                    return [4, api('sendMsg', U.nik, PW, MK, nis, t, nama, room)];
                 case 2:
                     _a.sent();
                     toast('Pesan terkirim ke ' + nama + ' (tampil dalam beberapa detik)');
