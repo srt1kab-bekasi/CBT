@@ -374,6 +374,18 @@ table.dtb td.pn{min-width:0;width:300px}
 .jdx{margin-left:auto;padding:3px 9px!important;font-size:12px}
 .jdf{padding:10px 12px;border-top:1px dashed rgba(var(--mr),.25);text-align:center}
 .lkb{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;margin:8px 0 10px;border-radius:12px;background:#fff6dc;border:1px solid #e6c766;color:#6a4b00;font-size:13px;line-height:1.45}.lkb svg{flex:none;margin-top:1px}
+
+/* penjadwalan: blok bertingkat jenjang > kelas > variasi */
+.jdj{border:2px solid rgba(var(--mr),.35);border-radius:20px;margin:16px 0;background:rgba(var(--mr),.03);overflow:hidden}
+.jdjh{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--md),var(--m));color:#fff;padding:12px 16px;font-weight:700;flex-wrap:wrap}
+.jdjh select{margin:0;width:auto;min-width:110px;font-weight:700}.jdjh .jdx{margin-left:0;background:#fff}
+.jdsp{flex:1}
+.jdk{margin:14px;border:1.5px solid rgba(var(--mr),.28);border-radius:16px;background:#fff;overflow:hidden}
+.jdkb+.jdkb{border-top:3px solid rgba(var(--mr),.18)}
+.jdvh{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 14px;background:rgba(var(--mr),.07);border-bottom:1px solid rgba(var(--mr),.15)}
+.jdvh label{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px}.jdvh select{margin:0;width:auto;min-width:120px}.jdvh .jdx{margin-left:0}
+.jdad{padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(var(--mr),.04);border-top:1px dashed rgba(var(--mr),.25)}.jdad .jdx{margin-left:0}
+.jdkb .jdg{padding:10px 12px 14px}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -1929,11 +1941,14 @@ function kpPrint(i,k,prn){
   });
 }
 
-/* ===== Penjadwalan Asesmen (khusus Staf Kurikulum & Super Admin) ===== */
+/* ===== Penjadwalan Asesmen (khusus Staf Kurikulum & Super Admin) =====
+   Struktur: Periode > Jenjang (urutan bisa digeser) > Kelas (urut tingkat) > Variasi Kelas (1 variasi = 1 tabel jadwal) */
 Object.assign(IC,{calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'});
 var JD=null,JL=[],JG=[],JA=[],JF=['dari','sampai','mapel','kode','pi'];
 var HRI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-function jdNew(){return {id:'',nama:'',jenjang:'SMA',kelas:'X',vars:[],t1:'',t2:'',wk:0,rp:0,hari:[]}}
+function jdCp(o){return JSON.parse(JSON.stringify(o))}
+function jdKeys(){return Object.keys(TK)}
+function jdNat(a,b){return String(a).localeCompare(String(b),'id',{numeric:true})}
 function jdD(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?new Date(+m[1],+m[2]-1,+m[3]):null}
 function jdIso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function jdTgl(s,p){var d=jdD(s);return d?(p?'':HRI[d.getDay()]+', ')+d.getDate()+' '+BLN[d.getMonth()]+' '+d.getFullYear():'-'}
@@ -1941,163 +1956,226 @@ function jdJam(s){return String(s||'').replace(':','.')}
 function jdMin(t){var m=/^(\d\d):(\d\d)/.exec(t||'');return m?+m[1]*60+ +m[2]:-1}
 function jdHM(n){n=Math.max(0,Math.min(1439,n));return ('0'+Math.floor(n/60)).slice(-2)+':'+('0'+n%60).slice(-2)}
 function jdSesi(p){var a=p?jdMin(p.dari):-1,b=p?jdMin(p.sampai):-1;if(a<0||b<=a){a=450;b=570}else{var u=b-a;a=b;b=a+u}return {dari:jdHM(a),sampai:jdHM(b),mapel:'',kode:'',nama:'',pi:'',pn:''}}
+// asesmen yang cocok untuk jenjang + kelas + variasi tertentu
+function jdAsF(jn,kl,v){return JA.filter(function(a){return a.JENJANG==jn&&a.TINGKAT==kl&&(!v||(a.rooms||[]).some(function(r){return r.n==v}))})}
+function jdVarsOf(jn,kl){var m={};JA.forEach(function(a){if(a.JENJANG==jn&&a.TINGKAT==kl)(a.rooms||[]).forEach(function(r){m[r.n]=1})});return Object.keys(m).sort(jdNat)}
+function jdDays(){var a=jdD(JD.t1),b=jdD(JD.t2),o=[];if(!a||!b||b<a||(b-a)/864e5>60)return o;for(var d=new Date(a);d<=b;d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)){if(!JD.wk&&(d.getDay()==0||d.getDay()==6))continue;o.push(jdIso(d))}return o}
+function jdNewHari(){var d=jdDays();return d.length?d.map(function(t){return {tgl:t,sesi:[jdSesi(null)]}}):[{tgl:'',sesi:[jdSesi(null)]}]}
+function jdNewVk(jn,kl,K,prev){ // variasi pertama yang belum terpilih; jadwal disalin dari variasi sebelumnya (pengawas dikosongkan)
+  var u={};(K?K.vk:[]).forEach(function(x){u[x.v]=1});
+  var v=jdVarsOf(jn,kl).filter(function(x){return !u[x]})[0]||'',h;
+  if(prev&&prev.hari.length){h=jdCp(prev.hari);h.forEach(function(d){d.sesi.forEach(function(s){s.pi='';s.pn='';if(!jdAsF(jn,kl,v).some(function(a){return a.KODE==s.kode})){s.mapel='';s.kode='';s.nama=''}})})}else h=jdNewHari();
+  return {v:v,hari:h};
+}
+function jdNewKl(jn,J){var u={};(J?J.kls:[]).forEach(function(k){u[k.kelas]=1});var kl=TK[jn].filter(function(x){return !u[x]})[0];if(!kl)return null;var K={kelas:kl,vk:[]};K.vk.push(jdNewVk(jn,kl,K,null));return K}
+function jdNewJj(){var u={};(JD?JD.jj:[]).forEach(function(j){u[j.jenjang]=1});var ks=jdKeys().filter(function(k){return !u[k]});if(!ks.length)return null;var jn=ks.filter(function(k){return JA.some(function(a){return a.JENJANG==k})})[0]||ks[0],J={jenjang:jn,kls:[]},K=jdNewKl(jn,J);if(K)J.kls.push(K);return J}
+function jdNew(){var o={id:'',nama:'',t1:'',t2:'',wk:0,rp:0,jj:[]};JD=o;var J=jdNewJj();if(J)o.jj.push(J);return o}
+function jdMig(P){if(!P.jj){var vs=P.vars&&P.vars.length?P.vars:[''];P.jj=[{jenjang:P.jenjang,kls:[{kelas:P.kelas,vk:vs.map(function(v){return {v:v,hari:jdCp(P.hari||[])}})}]}]}return P}
+function jdOrd(P){P.jj.forEach(function(J){J.kls.sort(function(a,b){return TK[J.jenjang].indexOf(a.kelas)-TK[J.jenjang].indexOf(b.kelas)});J.kls.forEach(function(K){K.vk.sort(function(a,b){return !a.v?1:!b.v?-1:jdNat(a.v,b.v)})})});return P}
+function jdEach(f){JD.jj.forEach(function(J,ji){J.kls.forEach(function(K,ki){K.vk.forEach(function(V,vi){V.hari.forEach(function(H,di){H.sesi.forEach(function(S,si){f(S,{J:J,K:K,V:V,H:H,ji:ji,ki:ki,vi:vi,di:di,si:si})})})})})})}
 function jdInit(){
-  Promise.all([api('jadwalList',U.nik,PW),api('guruList',U.nik,PW),getL()]).then(function(r){JL=r[0]||[];JG=r[1]||[];JA=r[2]||[];JD=JD||jdNew();jdView()})
+  Promise.all([api('jadwalList',U.nik,PW),api('guruList',U.nik,PW),getL()]).then(function(r){JL=(r[0]||[]).map(jdMig);JG=r[1]||[];JA=r[2]||[];if(!JD)jdNew();jdView()})
   .catch(function(e){var w=$('#jdw');if(w)w.textContent='Gagal memuat: '+e});
 }
-function jdAs(){return JA.filter(function(a){return a.JENJANG==JD.jenjang&&a.TINGKAT==JD.kelas&&(!JD.vars.length||(a.rooms||[]).some(function(r){return JD.vars.indexOf(r.n)>=0}))})}
-function jdVars(){var m={};JA.forEach(function(a){if(a.JENJANG==JD.jenjang&&a.TINGKAT==JD.kelas)(a.rooms||[]).forEach(function(r){m[r.n]=1})});JD.vars.forEach(function(v){m[v]=1});return Object.keys(m).sort()}
-function jdUsed(f,d,s){var u={};JD.hari.forEach(function(h,i){h.sesi.forEach(function(x,j){if(x[f]&&!(i==d&&j==s))u[x[f]]=1})});return u}
+function jdAt(D){var o=JD.jj[+D.j];if(D.k==null)return o;o=o.kls[+D.k];if(D.v==null)return o;o=o.vk[+D.v];if(D.d==null)return o;o=o.hari[+D.d];if(D.s==null)return o;return o.sesi[+D.s]}
 function jdSync(){
   if(!$('#jdn'))return;
-  Object.assign(JD,{nama:$('#jdn').value,jenjang:$('#jdj').value,kelas:$('#jdk').value,t1:$('#jd1').value,t2:$('#jd2').value,wk:$('#jdwk').checked?1:0,rp:$('#jdrp').checked?1:0});
-  document.querySelectorAll('#jdw [data-d]').forEach(function(e){var h=JD.hari[+e.dataset.d];if(!h)return;if(e.dataset.s==null)h[e.dataset.f]=e.value;else if(h.sesi[+e.dataset.s])h.sesi[+e.dataset.s][e.dataset.f]=e.value});
+  Object.assign(JD,{nama:$('#jdn').value,t1:$('#jd1').value,t2:$('#jd2').value,wk:$('#jdwk').checked?1:0,rp:$('#jdrp').checked?1:0});
+  document.querySelectorAll('#jdw [data-f]').forEach(function(e){if(e.dataset.x)return;var o=jdAt(e.dataset);if(o)o[e.dataset.f]=e.value});
 }
-function jdFill(){JD.hari.forEach(function(h){h.sesi.forEach(function(x){
-  var a=JA.filter(function(y){return y.KODE==x.kode})[0],g=JG.filter(function(y){return y.i==x.pi})[0];
-  if(a){x.nama=a.NAMA;x.mapel=a.MAPEL}else if(x.kode){x.kode=''}
-  x.pn=g?g.n:'';
-})})}
-function jdPrune(){var ms={},ks={};jdAs().forEach(function(a){ms[a.MAPEL]=1;ks[a.KODE]=1});JD.hari.forEach(function(h){h.sesi.forEach(function(x){if(x.mapel&&!ms[x.mapel]){x.mapel='';x.kode='';x.nama=''}if(x.kode&&!ks[x.kode]){x.kode='';x.nama=''}})})}
-function jdHead(k){jdSync();if(k==1)JD.kelas=TK[JD.jenjang][0];JD.vars=[];jdPrune();jdView()}
-function jdVar(v){jdSync();var i=JD.vars.indexOf(v);if(i<0)JD.vars.push(v);else JD.vars.splice(i,1);jdPrune();jdView()}
-function jdChg(el){
-  jdSync();var d=+el.dataset.d,s=el.dataset.s,f=el.dataset.f;
-  if(s!=null&&f=='mapel'){var x=JD.hari[d].sesi[+s];x.kode='';var c=jdAs().filter(function(a){return a.MAPEL==x.mapel});if(c.length==1)x.kode=c[0].KODE}
-  jdFill();jdView();
+function jdFill(){jdEach(function(x){var a=JA.filter(function(y){return y.KODE==x.kode})[0],g=JG.filter(function(y){return y.i==x.pi})[0];if(a){x.nama=a.NAMA;x.mapel=a.MAPEL}else if(x.kode){x.kode='';x.nama=''}x.pn=g?g.n:''})}
+function jdPruneVk(jn,kl,V){var as=jdAsF(jn,kl,V.v);V.hari.forEach(function(h){h.sesi.forEach(function(s){if(s.kode&&!as.some(function(a){return a.KODE==s.kode})){s.kode='';s.nama=''}if(s.mapel&&!as.some(function(a){return a.MAPEL==s.mapel})){s.mapel='';s.kode='';s.nama=''}})})}
+function jdAutoKode(D){var J=JD.jj[+D.j],K=J.kls[+D.k],V=K.vk[+D.v],x=V.hari[+D.d].sesi[+D.s];x.kode='';var a=jdAsF(J.jenjang,K.kelas,V.v).filter(function(y){return y.MAPEL==x.mapel});if(a.length==1)x.kode=a[0].KODE}
+// perubahan struktur: jenjang / kelas / variasi
+function jdSt(el){
+  jdSync();var D=el.dataset,o=jdAt(D),J=JD.jj[+D.j],K;o[D.f]=el.value;
+  if(D.f=='jenjang'){J.kls=[];K=jdNewKl(el.value,J);if(K)J.kls.push(K)}
+  else if(D.f=='kelas'){K=J.kls[+D.k];K.vk=[jdNewVk(J.jenjang,K.kelas,K,null)]}
+  else if(D.f=='v'){K=J.kls[+D.k];jdPruneVk(J.jenjang,K.kelas,o)}
+  jdView();
 }
-function jdNext(d){var n=JD.hari.length?jdD(JD.hari[JD.hari.length-1].tgl):null;n=n?new Date(n.getFullYear(),n.getMonth(),n.getDate()+1):new Date();
-  while(!JD.wk&&(n.getDay()==0||n.getDay()==6))n=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1);return jdIso(n)}
+function jdChg(el){jdSync();if(el.dataset.s!=null&&el.dataset.f=='mapel')jdAutoKode(el.dataset);jdFill();jdView()}
 function jdGen(){
-  jdSync();var a=jdD(JD.t1),b=jdD(JD.t2);if(!a||!b||b<a)return alert('Isi rentang tanggal dengan benar (tanggal mulai sampai tanggal selesai).');
-  if((b-a)/864e5>60)return alert('Rentang maksimal 60 hari.');
-  var old={},out=[],set={};JD.hari.forEach(function(h){old[h.tgl]=h});
-  for(var d=new Date(a);d<=b;d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)){
-    if(!JD.wk&&(d.getDay()==0||d.getDay()==6))continue;var t=jdIso(d);set[t]=1;out.push(old[t]||{tgl:t,sesi:[jdSesi(null)]});
-  }
-  JD.hari.forEach(function(h){if(!set[h.tgl])out.push(h)});out.sort(function(x,y){return x.tgl<y.tgl?-1:1});JD.hari=out;jdView();
+  jdSync();var ds=jdDays();if(!ds.length)return alert('Isi tanggal mulai dan tanggal selesai dengan benar (maksimal 60 hari).');
+  JD.jj.forEach(function(J){J.kls.forEach(function(K){K.vk.forEach(function(V){var old={},set={},out=[];V.hari.forEach(function(h){old[h.tgl]=h});ds.forEach(function(t){set[t]=1;out.push(old[t]||{tgl:t,sesi:[jdSesi(null)]})});V.hari.forEach(function(h){if(h.tgl&&!set[h.tgl])out.push(h)});out.sort(function(a,b){return a.tgl<b.tgl?-1:1});V.hari=out})})});
+  jdView();toast('Kolom hari dibuat untuk semua tabel.');
 }
-function jdAddDay(){jdSync();JD.hari.push({tgl:jdNext(),sesi:[jdSesi(null)]});jdView();setTimeout(function(){var g=$('#jdg');if(g)g.scrollLeft=g.scrollWidth},30)}
-function jdRmDay(d){jdSync();JD.hari.splice(d,1);jdView()}
-function jdAddS(d){jdSync();var h=JD.hari[d];h.sesi.push(jdSesi(h.sesi[h.sesi.length-1]));jdView();jdFocus(d,h.sesi.length-1,'dari')}
-function jdRmS(d,s){jdSync();JD.hari[d].sesi.splice(s,1);jdFill();jdView()}
-function jdFocus(d,s,f){setTimeout(function(){var n=document.querySelector('#jdw [data-d="'+d+'"][data-s="'+s+'"][data-f="'+f+'"]');if(n){n.focus();if(n.scrollIntoView)n.scrollIntoView({block:'nearest',inline:'nearest'})}},40)}
-// Enter: pindah ke isian berikutnya; Enter di kolom pengawas = tambah jadwal (No. berikutnya) di bawahnya
+function jdAddDay(j,k,v){jdSync();var V=JD.jj[j].kls[k].vk[v],l=V.hari.length?jdD(V.hari[V.hari.length-1].tgl):null,n=l?new Date(l.getFullYear(),l.getMonth(),l.getDate()+1):new Date();while(!JD.wk&&(n.getDay()==0||n.getDay()==6))n=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1);V.hari.push({tgl:jdIso(n),sesi:[jdSesi(null)]});jdView()}
+function jdRmDay(j,k,v,d){jdSync();JD.jj[j].kls[k].vk[v].hari.splice(d,1);jdView()}
+function jdAddS(j,k,v,d){jdSync();var H=JD.jj[j].kls[k].vk[v].hari[d];H.sesi.push(jdSesi(H.sesi[H.sesi.length-1]));jdView();jdFocus(j,k,v,d,H.sesi.length-1,'dari')}
+function jdRmS(j,k,v,d,s){jdSync();JD.jj[j].kls[k].vk[v].hari[d].sesi.splice(s,1);jdFill();jdView()}
+function jdAddVk(j,k){jdSync();var J=JD.jj[j],K=J.kls[k];K.vk.push(jdNewVk(J.jenjang,K.kelas,K,K.vk[K.vk.length-1]));jdView();toast('Tabel variasi baru: jadwal disalin dari variasi sebelumnya (pengawas dikosongkan).')}
+function jdRmVk(j,k,v){jdSync();JD.jj[j].kls[k].vk.splice(v,1);jdView()}
+function jdAddKl(j){jdSync();var J=JD.jj[j],K=jdNewKl(J.jenjang,J);if(K)J.kls.push(K);jdView()}
+function jdRmKl(j,k){jdSync();JD.jj[j].kls.splice(k,1);jdView()}
+function jdAddJj(){jdSync();var J=jdNewJj();if(J)JD.jj.push(J);jdView()}
+function jdRmJj(j){jdSync();JD.jj.splice(j,1);jdView()}
+function jdMv(j,d){jdSync();var a=JD.jj,t=j+d;if(t<0||t>=a.length)return;var x=a[j];a[j]=a[t];a[t]=x;jdView();toast('Urutan jenjang diubah')}
+function jdFocus(j,k,v,d,s,f){setTimeout(function(){var n=document.querySelector('#jdw [data-j="'+j+'"][data-k="'+k+'"][data-v="'+v+'"][data-d="'+d+'"]'+(s==null?'':'[data-s="'+s+'"]')+'[data-f="'+f+'"]');if(n){n.focus();if(n.scrollIntoView)n.scrollIntoView({block:'nearest',inline:'nearest'})}},40)}
+// Enter: pindah ke isian berikutnya; Enter di kolom pengawas = tambah jadwal No. berikutnya di bawahnya
 function jdKey(e){
-  var D=e.target.dataset;if(e.key!='Enter'||!D||D.d==null)return;e.preventDefault();
-  jdSync();var d=+D.d,h=JD.hari[d];if(!h)return;if(D.s==null){jdView();return jdFocus(d,0,'dari')}
-  var s=+D.s,i=JF.indexOf(D.f),x=h.sesi[s];
-  if(D.f=='mapel'){x.kode='';var c=jdAs().filter(function(a){return a.MAPEL==x.mapel});if(c.length==1)x.kode=c[0].KODE}
+  var D=e.target.dataset;if(e.key!='Enter'||D.d==null||D.f==null)return;e.preventDefault();
+  jdSync();var j=+D.j,k=+D.k,v=+D.v,d=+D.d,H=JD.jj[j].kls[k].vk[v].hari[d];if(!H)return;
+  if(D.s==null){jdView();return jdFocus(j,k,v,d,0,'dari')}
+  var s=+D.s,i=JF.indexOf(D.f),x=H.sesi[s];
+  if(D.f=='mapel')jdAutoKode(D);
   jdFill();
-  if(i<JF.length-1){jdView();return jdFocus(d,s,JF[i+1])}
-  if(s==h.sesi.length-1)h.sesi.push(jdSesi(x));
-  jdView();jdFocus(d,s+1,'dari');
+  if(i<JF.length-1){jdView();return jdFocus(j,k,v,d,s,JF[i+1])}
+  if(s==H.sesi.length-1)H.sesi.push(jdSesi(x));
+  jdView();jdFocus(j,k,v,d,s+1,'dari');
 }
 function jdView(){
-  var w=$('#jdw');if(!w)return;var g0=$('#jdg'),sl=g0?g0.scrollLeft:0,y=window.scrollY;
-  var op=function(v,l,cur){return '<option value="'+esc(v)+'"'+(v==cur?' selected':'')+'>'+esc(l)+'</option>'},as=jdAs(),ms=[];
-  as.forEach(function(a){if(ms.indexOf(a.MAPEL)<0)ms.push(a.MAPEL)});ms.sort();
-  var cols=JD.hari.map(function(h,d){
-    var dt=jdD(h.tgl);
-    return '<div class=jdc><div class=jdt><div class=jdr><b>'+(dt?HRI[dt.getDay()]:'Hari '+(d+1))+'</b><button class="o jdx" onclick="jdRmDay('+d+')" title="Hapus kolom hari ini">\u2715</button></div>'
-      +'<input type=date data-d='+d+' data-f=tgl value="'+esc(h.tgl)+'" onchange="jdChg(this)"></div>'
-      +h.sesi.map(function(x,s){
-        var um=jdUsed('mapel',d,s),up=JD.rp?{}:jdUsed('pi',d,s),at='data-d='+d+' data-s='+s+' data-f=',
-            ka=as.filter(function(a){return a.MAPEL==x.mapel});
-        return '<div class=jds><div class=jdr><span class=jdb>No. '+(s+1)+'</span><button class="o jdx" onclick="jdRmS('+d+','+s+')" title="Hapus jadwal ini">\u2715</button></div>'
-          +'<div class=jdr><input type=time '+at+'dari value="'+esc(x.dari)+'" onchange="jdSync()"><span>s/d</span><input type=time '+at+'sampai value="'+esc(x.sampai)+'" onchange="jdSync()"></div>'
-          +'<select '+at+'mapel onchange="jdChg(this)"><option value="">\u2014 Mata pelajaran \u2014</option>'+ms.filter(function(m){return !um[m]||m==x.mapel}).map(function(m){return op(m,m,x.mapel)}).join('')+'</select>'
-          +'<select '+at+'kode onchange="jdChg(this)"'+(x.mapel?'':' disabled')+'><option value="">\u2014 Kode soal \u2014</option>'+ka.map(function(a){return op(a.KODE,a.KODE+' \u2022 '+a.NAMA,x.kode)}).join('')+'</select>'
-          +'<select '+at+'pi onchange="jdChg(this)"><option value="">\u2014 Pengawas \u2014</option>'+JG.filter(function(g){return !up[g.i]||g.i==x.pi}).map(function(g){return op(g.i,g.n,x.pi)}).join('')+'</select></div>';
-      }).join('')+'<div class=jdf><button class=o onclick="jdAddS('+d+')">'+ic('plus',14)+' Tambah jadwal</button></div></div>';
+  var w=$('#jdw');if(!w)return;var sl=[],y=window.scrollY;document.querySelectorAll('#jdw .jdg').forEach(function(g){sl.push(g.scrollLeft)});
+  jdOrd(JD);var all=[];jdEach(function(x,c){all.push({x:x,c:c})});
+  var busy=function(x,H){var b={},a1=jdMin(x.dari),a2=jdMin(x.sampai);if(!H.tgl||a1<0||a2<=a1)return b;all.forEach(function(o){if(o.x===x||!o.x.pi||o.c.H.tgl!=H.tgl)return;var b1=jdMin(o.x.dari),b2=jdMin(o.x.sampai);if(b1>=0&&b2>b1&&a1<b2&&b1<a2)b[o.x.pi]=1});return b};
+  var op=function(v,l,cur){return '<option value="'+esc(v)+'"'+(v==cur?' selected':'')+'>'+esc(l)+'</option>'};
+  var P=function(j,k,v,d,s){return 'data-j='+j+' data-k='+k+' data-v='+v+(d==null?'':' data-d='+d)+(s==null?'':' data-s='+s)+' data-f='};
+  var usedJ={};JD.jj.forEach(function(J){usedJ[J.jenjang]=1});
+  var body=JD.jj.map(function(J,j){
+    var usedK={};J.kls.forEach(function(K){usedK[K.kelas]=1});
+    var ks=J.kls.map(function(K,k){
+      var usedV={};K.vk.forEach(function(V){if(V.v)usedV[V.v]=1});var allV=jdVarsOf(J.jenjang,K.kelas),vl=allV.filter(function(x){return !usedV[x]});
+      var tbs=K.vk.map(function(V,v){
+        var as=jdAsF(J.jenjang,K.kelas,V.v),ms=[];as.forEach(function(a){if(ms.indexOf(a.MAPEL)<0)ms.push(a.MAPEL)});ms.sort();
+        var vo=allV.filter(function(x){return !usedV[x]||x==V.v});
+        var head='<div class=jdvh>'+(v?'<b>Kelas '+esc(K.kelas)+'</b>':'<label>Kelas<select data-x=1 data-j='+j+' data-k='+k+' data-f=kelas onchange="jdSt(this)">'+TK[J.jenjang].filter(function(t){return !usedK[t]||t==K.kelas}).map(function(t){return op(t,t,K.kelas)}).join('')+'</select></label>')
+          +'<label>Variasi Kelas<select data-x=1 data-j='+j+' data-k='+k+' data-v='+v+' data-f=v onchange="jdSt(this)"><option value=""'+(V.v?'':' selected')+'>'+(vo.length?'\u2014 pilih variasi \u2014':'\u2014 belum ada variasi \u2014')+'</option>'+vo.map(function(x){return op(x,x,V.v)}).join('')+'</select></label><span class=jdsp></span>'
+          +'<button class="o jdx" onclick="jdAddDay('+j+','+k+','+v+')">'+ic('plus',13)+' Hari</button><button class="o jdx" onclick="jdRmVk('+j+','+k+','+v+')" title="Hapus tabel variasi ini">\u2715 Hapus tabel</button></div>';
+        var cols=V.hari.map(function(H,d){
+          var dt=jdD(H.tgl);
+          return '<div class=jdc><div class=jdt><div class=jdr><b>'+(dt?HRI[dt.getDay()]:'Hari '+(d+1))+'</b><button class="o jdx" onclick="jdRmDay('+j+','+k+','+v+','+d+')" title="Hapus kolom hari ini">\u2715</button></div><input type=date '+P(j,k,v,d)+'tgl value="'+esc(H.tgl)+'" onchange="jdChg(this)"></div>'
+            +H.sesi.map(function(x,s){
+              var um={},up={};V.hari.forEach(function(H2,d2){H2.sesi.forEach(function(x2,s2){if(d2==d&&s2==s)return;if(x2.mapel)um[x2.mapel]=1;if(x2.pi)up[x2.pi]=1})});
+              if(JD.rp)up={};var bz=busy(x,H),at=P(j,k,v,d,s),ka=as.filter(function(a){return a.MAPEL==x.mapel});
+              return '<div class=jds><div class=jdr><span class=jdb>No. '+(s+1)+'</span><button class="o jdx" onclick="jdRmS('+j+','+k+','+v+','+d+','+s+')" title="Hapus jadwal ini">\u2715</button></div>'
+                +'<div class=jdr><input type=time '+at+'dari value="'+esc(x.dari)+'" onchange="jdChg(this)"><span>s/d</span><input type=time '+at+'sampai value="'+esc(x.sampai)+'" onchange="jdChg(this)"></div>'
+                +'<select '+at+'mapel onchange="jdChg(this)"><option value="">\u2014 Mata pelajaran \u2014</option>'+ms.filter(function(m){return !um[m]||m==x.mapel}).map(function(m){return op(m,m,x.mapel)}).join('')+'</select>'
+                +'<select '+at+'kode onchange="jdChg(this)"'+(x.mapel?'':' disabled')+'><option value="">\u2014 Kode soal \u2014</option>'+ka.map(function(a){return op(a.KODE,a.KODE+' \u2022 '+a.NAMA,x.kode)}).join('')+'</select>'
+                +'<select '+at+'pi onchange="jdChg(this)"><option value="">\u2014 Pengawas \u2014</option>'+JG.filter(function(g){return !(up[g.i]||bz[g.i])||g.i==x.pi}).map(function(g){return op(g.i,g.n,x.pi)}).join('')+'</select></div>';
+            }).join('')+'<div class=jdf><button class=o onclick="jdAddS('+j+','+k+','+v+','+d+')">'+ic('plus',14)+' Tambah jadwal</button></div></div>';
+        }).join('');
+        return '<div class=jdkb>'+head+(V.hari.length?'<div class=jdg onkeydown="jdKey(event)">'+cols+'</div>':'<p class=em style="padding:8px 14px">Belum ada hari. Klik <b>+ Hari</b> atau <b>Buat Kolom Hari</b>.</p>')+'</div>';
+      }).join('');
+      return '<div class=jdk>'+tbs+'<div class=jdad>'+(vl.length?'<button class=o onclick="jdAddVk('+j+','+k+')">'+ic('plus',14)+' Tambah Variasi Kelas</button>':'<small style="color:'+(allV.length?'#2e9e5b':'#7b6a6d')+';font-weight:600">'+(allV.length?'\u2713 Semua variasi kelas '+esc(K.kelas)+' sudah terisi':'Belum ada soal/variasi kelas untuk '+esc(J.jenjang)+' '+esc(K.kelas))+'</small>')+'<span class=jdsp></span><button class="o jdx" onclick="jdRmKl('+j+','+k+')">\u2715 Hapus Kelas '+esc(K.kelas)+'</button></div></div>';
+    }).join('');
+    var left=TK[J.jenjang].filter(function(t){return !usedK[t]});
+    return '<div class=jdj><div class=jdjh>'+ic('school',18)+'<span>Jenjang</span><select data-x=1 data-j='+j+' data-f=jenjang onchange="jdSt(this)">'+jdKeys().filter(function(k){return !usedJ[k]||k==J.jenjang}).map(function(k){return op(k,k,J.jenjang)}).join('')+'</select><span class=jdsp></span>'
+      +'<button class="o jdx" onclick="jdMv('+j+',-1)"'+(j?'':' disabled')+' title="Geser jenjang ke atas">\u2191 Naik</button><button class="o jdx" onclick="jdMv('+j+',1)"'+(j<JD.jj.length-1?'':' disabled')+' title="Geser jenjang ke bawah">\u2193 Turun</button><button class="o jdx" onclick="jdRmJj('+j+')">\u2715 Hapus Jenjang</button></div>'
+      +ks+(left.length?'<div class=jdad><button onclick="jdAddKl('+j+')">'+ic('plus',14)+' Tambah Kelas (tingkat berikutnya)</button></div>':'')+'</div>';
   }).join('');
+  var nJ=jdKeys().filter(function(k){return !usedJ[k]}).length;
   var sv=JL.map(function(P,i){
-    var n=0;P.hari.forEach(function(h){n+=h.sesi.length});
-    return '<div class=box><h3>'+esc(P.nama)+' <small>'+esc(P.jenjang)+' \u2022 Kelas '+esc(P.kelas)+(P.vars&&P.vars.length?' \u2022 '+esc(P.vars.join(', ')):'')+' \u2022 '+jdTgl(P.hari[0].tgl,1)+' s/d '+jdTgl(P.hari[P.hari.length-1].tgl,1)+' \u2022 '+n+' sesi</small></h3>'
+    var s=jdSum(P);
+    return '<div class=box><h3>'+esc(P.nama)+' <small>'+esc(s.jn.join(', '))+' \u2022 '+s.nk+' kelas \u2022 '+s.nv+' variasi kelas \u2022 '+s.ns+' sesi \u2022 '+jdTgl(s.a,1)+' s/d '+jdTgl(s.b,1)+'</small></h3>'
       +'<div data-h=1 style="margin-bottom:10px"><button onclick="jdShot('+i+',\'jpg\')">'+ic('download',15)+' JPG</button> <button onclick="jdShot('+i+',\'pdf\')">'+ic('download',15)+' PDF</button> <button onclick="jdWord('+i+')">'+ic('download',15)+' Word</button> '+prnB('jdPrint('+i+')','Print')
-      +' <button class=o onclick="jdEdit('+i+')">'+ic('edit',15)+' Ubah</button> <button class=d onclick="jdDel('+i+')">'+ic('trash',15)+' Hapus</button></div>'
-      +'<div class=sc>'+jdDoc(P,0)+'</div></div>';
+      +' <button class=o onclick="jdEdit('+i+')">'+ic('edit',15)+' Ubah</button> <button class=d onclick="jdDel('+i+')">'+ic('trash',15)+' Hapus</button></div><div class=sc>'+jdDoc(P,0)+'</div></div>';
   }).join('');
   w.innerHTML='<h3>'+ic('calendar',18)+' '+(JD.id?'Ubah':'Buat')+' Periode Asesmen</h3>'
     +'<div class=lkb>'+ic('lock',16)+'<span>Setelah disimpan, soal pada kode yang masuk jadwal <b>terkunci</b>: tidak dapat dikerjakan siswa maupun diubah guru pembuat soal (kecuali Staf Kurikulum / Super Admin) sampai <b>10 menit sebelum ujian dimulai</b>.</span></div>'
     +'<div class=jdh><label>Nama periode asesmen<input id=jdn value="'+esc(JD.nama)+'" placeholder="mis. ASTS Ganjil 2026/2027"></label>'
-    +'<label>Jenjang<select id=jdj onchange="jdHead(1)">'+Object.keys(TK).map(function(k){return op(k,k,JD.jenjang)}).join('')+'</select></label>'
-    +'<label>Kelas<select id=jdk onchange="jdHead(2)">'+TK[JD.jenjang].map(function(k){return op(k,k,JD.kelas)}).join('')+'</select></label>'
     +'<label>Tanggal mulai<input type=date id=jd1 value="'+esc(JD.t1)+'"></label><label>Tanggal selesai<input type=date id=jd2 value="'+esc(JD.t2)+'"></label></div>'
-    +'<div style="font-size:12.5px;font-weight:600;color:#6b5a5d">Variasi kelas <span style="font-weight:400">(klik untuk memilih; kosong = semua variasi)</span></div><div class=jdv>'
-    +(jdVars().map(function(v){return '<button class="'+(JD.vars.indexOf(v)>=0?'':'o')+'" onclick="jdVar(\''+esc(v).replace(/'/g,'')+'\')">'+esc(v)+'</button>'}).join('')||'<small style="color:#7b6a6d">Belum ada asesmen untuk jenjang dan kelas ini.</small>')+'</div>'
     +'<label style="display:inline-flex;gap:6px;align-items:center;margin-right:16px"><input type=checkbox id=jdwk style="width:auto;margin:0" '+(JD.wk?'checked':'')+'> Sertakan Sabtu &amp; Minggu</label>'
-    +'<label style="display:inline-flex;gap:6px;align-items:center;margin-right:16px"><input type=checkbox id=jdrp style="width:auto;margin:0" '+(JD.rp?'checked':'')+' onchange="jdChg(this)"> Pengawas boleh bertugas lebih dari sekali</label>'
-    +'<button onclick="jdGen()">'+ic('calendar',15)+' Buat Kolom Hari</button> <button class=o onclick="jdAddDay()">'+ic('plus',15)+' Tambah Hari</button>'
-    +'<p style="color:#7b6a6d;font-size:12.5px;margin:10px 0 4px">Isi jadwal tiap hari. Tekan <b>Enter</b> untuk pindah isian; Enter di kolom pengawas menambah jadwal No. berikutnya. Mata pelajaran dan pengawas yang sudah dipilih tidak muncul lagi di pilihan berikutnya.</p>'
-    +(JD.hari.length?'<div class=jdg id=jdg onkeydown="jdKey(event)">'+cols+'</div>':'<p class=em>Isi rentang tanggal lalu klik <b>Buat Kolom Hari</b>.</p>')
-    +'<button onclick="jdSave()">'+ic('save',15)+' Simpan Jadwal Periode</button>'+(JD.id?' <button class=o onclick="JD=jdNew();jdView()">Batal Ubah</button>':'')
+    +'<label style="display:inline-flex;gap:6px;align-items:center;margin-right:16px"><input type=checkbox id=jdrp style="width:auto;margin:0" '+(JD.rp?'checked':'')+' onchange="jdChg(this)"> Pengawas boleh bertugas lebih dari sekali dalam satu tabel</label>'
+    +'<button onclick="jdGen()">'+ic('calendar',15)+' Buat Kolom Hari (semua tabel)</button>'
+    +'<p style="color:#7b6a6d;font-size:12.5px;margin:10px 0 4px">Susunan: Jenjang \u203A Kelas \u203A Variasi Kelas (satu variasi = satu tabel jadwal). Tekan <b>Enter</b> untuk pindah isian; Enter di kolom pengawas menambah jadwal No. berikutnya. Mata pelajaran dan pengawas yang sudah dipilih tidak muncul lagi di tabel yang sama; pengawas juga tidak bisa ditugaskan di dua kelas pada jam yang bertumpuk.</p>'
+    +body+(nJ?'<button class=o onclick="jdAddJj()">'+ic('plus',15)+' Tambah Jenjang</button> ':'')+'<button onclick="jdSave()">'+ic('save',15)+' Simpan Jadwal Periode</button>'+(JD.id?' <button class=o onclick="jdNew();jdView()">Batal Ubah</button>':'')
     +(sv?'<br><br><h3>Jadwal Periode Tersimpan</h3>'+sv:'');
-  var g=$('#jdg');if(g)g.scrollLeft=sl;window.scrollTo(0,y);
+  document.querySelectorAll('#jdw .jdg').forEach(function(g,i){if(sl[i])g.scrollLeft=sl[i]});window.scrollTo(0,y);
 }
+function jdSum(P){var o={jn:[],nk:0,nv:0,ns:0,a:'9999-99-99',b:''};P.jj.forEach(function(J){o.jn.push(J.jenjang);J.kls.forEach(function(K){o.nk++;K.vk.forEach(function(V){o.nv++;V.hari.forEach(function(H){o.ns+=H.sesi.length;if(H.tgl<o.a)o.a=H.tgl;if(H.tgl>o.b)o.b=H.tgl})})})});return o}
+function jdClean(){JD.jj.forEach(function(J){J.kls.forEach(function(K){K.vk.forEach(function(V){V.hari.forEach(function(H){H.sesi=H.sesi.filter(function(x){return x.mapel||x.kode||x.pi}).sort(function(a,b){return jdMin(a.dari)-jdMin(b.dari)})});V.hari=V.hari.filter(function(H){return H.sesi.length})});K.vk=K.vk.filter(function(V){return V.hari.length})});J.kls=J.kls.filter(function(K){return K.vk.length})});JD.jj=JD.jj.filter(function(J){return J.kls.length})}
 function jdCheck(){
   if(!JD.nama.trim())return 'Isi nama periode asesmen.';
-  if(!JD.hari.length)return 'Jadwal masih kosong. Isi rentang tanggal lalu klik Buat Kolom Hari.';
-  var seen={};
-  for(var i=0;i<JD.hari.length;i++){
-    var h=JD.hari[i];if(!jdD(h.tgl))return 'Tanggal pada kolom ke-'+(i+1)+' belum diisi.';
-    if(seen[h.tgl])return 'Tanggal '+jdTgl(h.tgl)+' dipakai dua kali.';seen[h.tgl]=1;
-    for(var j=0;j<h.sesi.length;j++){
-      var x=h.sesi[j],p=jdTgl(h.tgl)+' No. '+(j+1);
-      if(!x.mapel||!x.kode||!x.pi)return 'Lengkapi mata pelajaran, kode soal, dan pengawas pada '+p+'.';
-      if(jdMin(x.dari)<0||jdMin(x.sampai)<=jdMin(x.dari))return 'Rentang waktu tidak valid pada '+p+' (jam selesai harus setelah jam mulai).';
-      if(j&&jdMin(x.dari)<jdMin(h.sesi[j-1].sampai))return 'Waktu pada '+p+' bertabrakan dengan jadwal sebelumnya.';
-    }
-  }
-  return '';
+  if(!JD.jj.length)return 'Jadwal masih kosong. Isi minimal satu sesi ujian.';
+  var err='',sv={},ps=[];
+  JD.jj.forEach(function(J){J.kls.forEach(function(K){var sk={};K.vk.forEach(function(V){
+    if(err)return;var p=J.jenjang+' '+K.kelas+(V.v?' '+V.v:'');
+    if(!V.v)return err='Pilih variasi kelas pada tabel '+p+'.';
+    if(sk[V.v])return err='Variasi kelas '+V.v+' dipakai dua kali.';sk[V.v]=1;var td={};
+    V.hari.forEach(function(H){
+      if(err)return;if(!jdD(H.tgl))return err='Tanggal belum diisi pada '+p+'.';
+      if(td[H.tgl])return err='Tanggal '+jdTgl(H.tgl)+' dipakai dua kali pada '+p+'.';td[H.tgl]=1;
+      H.sesi.forEach(function(x,i){
+        if(err)return;var q=p+' \u2022 '+jdTgl(H.tgl)+' No. '+(i+1);
+        if(!x.mapel||!x.kode||!x.pi)return err='Lengkapi mata pelajaran, kode soal, dan pengawas pada '+q+'.';
+        if(jdMin(x.dari)<0||jdMin(x.sampai)<=jdMin(x.dari))return err='Jam selesai harus setelah jam mulai pada '+q+'.';
+        if(i&&jdMin(x.dari)<jdMin(H.sesi[i-1].sampai))return err='Waktu bertabrakan dengan jadwal sebelumnya pada '+q+'.';
+        ps.push({t:H.tgl,a:jdMin(x.dari),b:jdMin(x.sampai),p:x.pi,n:x.pn,w:q});
+      });
+    });
+  })})});
+  for(var i=0;i<ps.length&&!err;i++)for(var j=i+1;j<ps.length;j++){var x=ps[i],y=ps[j];if(x.t==y.t&&x.p==y.p&&x.a<y.b&&y.a<x.b){err='Pengawas '+x.n+' bertugas di dua kelas pada jam yang bertumpuk: '+x.w+' dan '+y.w+'.';break}}
+  return err;
 }
 function jdSave(){
-  jdSync();jdFill();
-  JD.hari.forEach(function(h){h.sesi=h.sesi.filter(function(x){return x.mapel||x.kode||x.pi}).sort(function(a,b){return jdMin(a.dari)-jdMin(b.dari)})});
-  JD.hari=JD.hari.filter(function(h){return h.sesi.length});
-  var e=jdCheck();if(e){jdView();return alert(e)}
-  api('jadwalSave',U.nik,PW,JD).then(function(){toast('Jadwal disimpan. Soal pada jadwal kini terkunci hingga 10 menit sebelum ujian.');JD=jdNew();jdInit()}).catch(function(e){alert(e)});
+  jdSync();jdFill();var bak=jdCp(JD);jdClean();var e=jdCheck();
+  if(e){JD=bak;jdView();return alert(e)}
+  api('jadwalSave',U.nik,PW,JD).then(function(){toast('Jadwal disimpan. Soal pada jadwal kini terkunci hingga 10 menit sebelum ujian.');JD=null;jdNew();jdInit()}).catch(function(e){JD=bak;alert(e)});
 }
-function jdEdit(i){JD=JSON.parse(JSON.stringify(JL[i]));jdView();scrollTo(0,0)}
+function jdEdit(i){JD=jdCp(JL[i]);jdView();scrollTo(0,0)}
 function jdDel(i){ask('Hapus jadwal periode ini? Soal-soal pada jadwal ini akan terbuka kembali (tidak terkunci lagi).','Iya, Hapus',function(){return api('jadwalDel',U.nik,PW,JL[i].id).then(jdInit)},1,'Batal')}
-// ---- Dokumen jadwal (tampilan web, JPG, PDF, Print = W:0; Word = W:1 tanpa gambar) ----
-function jdDoc(P,W){
-  var T=TC(),m=T.m,m2=T.m2,mt=T.mt,F=T.f+',Georgia,serif',G='#f3dd8a',ch=[];
-  for(var i=0;i<P.hari.length;i+=5)ch.push(P.hari.slice(i,i+5));
-  var kp=(!W&&KOPD)?'<img src="'+KOPD.u+'" style="width:100%;display:block">'
-    :'<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')
-    +'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:'+G+'">JADWAL PELAKSANAAN ASESMEN</div></td></tr></table>';
-  var tb=ch.map(function(c){
+// ---- Dokumen jadwal (web, JPG, PDF, Print = W:0; Word = W:1 tanpa gambar). Urutan: jenjang (sesuai susunan) > kelas (tingkat) > variasi ----
+function jdTbl(hari,T,W){
+  var m=T.m,m2=T.m2,mt=T.mt,F=T.f+',Georgia,serif',G='#f3dd8a',ch=[];
+  for(var i=0;i<hari.length;i+=5)ch.push(hari.slice(i,i+5));
+  return ch.map(function(c){
     var th='',td='';
     for(var k=0;k<5;k++){var h=c[k];
       if(!h){th+='<td width=20% style="background:#f3eded"></td>';td+='<td width=20% style="border:1px solid #e5d0d3;background:#fcfafa"></td>';continue}
       var d=jdD(h.tgl);
-      th+='<td width=20% align=center style="background:'+m+';color:#fff;padding:8px 4px;border:1px solid #fff;font-family:'+F+'"><div style="font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff">'+HRI[d.getDay()]+'</div><div style="font-size:11px;color:'+G+'">'+jdTgl(h.tgl,1)+'</div></td>';
-      td+='<td width=20% valign=top style="border:1px solid #e5d0d3;padding:4px;background:#fff">'+h.sesi.map(function(x,s){
-        return '<div style="margin:4px 2px;padding:7px 8px;background:'+mt+';border-left:4px solid '+m2+'">'
+      th+='<td width=20% align=center style="background:'+m+';color:#fff;padding:7px 4px;border:1px solid #fff;font-family:'+F+'"><div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff">'+HRI[d.getDay()]+'</div><div style="font-size:10.5px;color:'+G+'">'+jdTgl(h.tgl,1)+'</div></td>';
+      td+='<td width=20% valign=top style="border:1px solid #e5d0d3;padding:3px;background:#fff">'+h.sesi.map(function(x,s){
+        return '<div style="margin:3px 2px;padding:6px 8px;background:'+mt+';border-left:4px solid '+m2+'">'
           +'<div style="font-size:10px;font-weight:700;color:'+m2+'">No. '+(s+1)+' &nbsp;|&nbsp; '+jdJam(x.dari)+' \u2013 '+jdJam(x.sampai)+'</div>'
-          +'<div style="font-size:12.5px;font-weight:700;color:#222;margin:2px 0">'+esc(x.mapel)+'</div>'
+          +'<div style="font-size:12px;font-weight:700;color:#222;margin:2px 0">'+esc(x.mapel)+'</div>'
           +'<div style="font-size:10.5px;color:#555">Kode soal: <b style="color:'+m+'">'+esc(x.kode)+'</b></div>'
           +'<div style="font-size:10.5px;color:#555">Pengawas: <b>'+esc(x.pn)+'</b></div></div>';
       }).join('')+'</td>';
     }
-    return '<table width=100% cellspacing=0 cellpadding=0 style="border-collapse:collapse;table-layout:fixed;margin-top:12px;page-break-inside:avoid"><tr>'+th+'</tr><tr>'+td+'</tr></table>';
+    return '<table width=100% cellspacing=0 cellpadding=0 style="border-collapse:collapse;table-layout:fixed;margin-top:6px;page-break-inside:avoid"><tr>'+th+'</tr><tr>'+td+'</tr></table>';
+  }).join('');
+}
+function jdBar(html,bg,fg,fs,F,bl){return '<table width=100% cellspacing=0 cellpadding=0 style="border-collapse:collapse;margin-top:8px"><tr><td style="background:'+bg+';color:'+fg+';padding:7px 14px;font-family:'+F+';font-size:'+fs+'px;font-weight:700;letter-spacing:1px'+(bl?';border-left:7px solid '+bl:'')+'">'+html+'</td></tr></table>'}
+function jdDoc(P,W){
+  P=jdOrd(jdCp(P));var T=TC(),m=T.m,m2=T.m2,mt=T.mt,F=T.f+',Georgia,serif',G='#f3dd8a',s=jdSum(P);
+  var kp=(!W&&KOPD)?'<img src="'+KOPD.u+'" style="width:100%;display:block">'
+    :'<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')
+    +'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:'+G+'">JADWAL PELAKSANAAN ASESMEN</div></td></tr></table>';
+  var body=P.jj.map(function(J,ji){
+    var h='';
+    J.kls.forEach(function(K,ki){K.vk.forEach(function(V,vi){
+      var pre='';
+      if(!ki&&!vi)pre+=jdBar('JENJANG '+esc(J.jenjang),m2,'#fff',16,F);
+      if(!vi)pre+=jdBar('KELAS '+esc(K.kelas),mt,m,14,F,m2);
+      h+='<div data-pb=1 style="page-break-inside:avoid;margin-top:6px">'+pre
+        +'<table cellspacing=0 cellpadding=0 style="margin-top:8px"><tr><td style="background:'+m+';color:#fff;padding:3px 16px;font-weight:700;font-size:12px;font-family:'+F+'">Variasi Kelas '+esc(V.v)+'</td></tr></table>'+jdTbl(V.hari,T,W)+'</div>';
+    })});
+    return '<div'+(ji?' data-pj=1 style="page-break-before:always"':'')+'>'+h+'</div>';
   }).join('');
   return '<div style="font-family:Inter,Segoe UI,Arial,sans-serif;color:#222;background:#fff">'+kp
-    +'<div style="text-align:center;padding:14px 0 4px;font-family:'+F+'"><div style="font-size:21px;font-weight:700;color:'+m+';letter-spacing:.5px">'+esc(P.nama)+'</div>'
-    +'<div style="font-size:12px;color:#555;margin-top:3px">Jenjang '+esc(P.jenjang)+' &bull; Kelas '+esc(P.kelas)+(P.vars&&P.vars.length?' &bull; Variasi '+esc(P.vars.join(', ')):'')+' &bull; '+jdTgl(P.hari[0].tgl,1)+' s/d '+jdTgl(P.hari[P.hari.length-1].tgl,1)+'</div>'
-    +'<div style="height:3px;width:120px;margin:8px auto 0;background:'+m2+'"></div></div>'+tb
-    +'<div style="font-size:10px;color:#7b6a6d;margin-top:10px">Catatan: soal terkunci dan baru dapat dikerjakan siswa mulai 10 menit sebelum ujian dimulai. Peserta wajib hadir tepat waktu.</div></div>';
+    +'<div style="text-align:center;padding:12px 0 2px;font-family:'+F+'"><div style="font-size:21px;font-weight:700;color:'+m+';letter-spacing:.5px">'+esc(P.nama)+'</div>'
+    +'<div style="font-size:12px;color:#555;margin-top:3px">'+esc(s.jn.join(' &bull; '))+' &bull; '+jdTgl(s.a,1)+' s/d '+jdTgl(s.b,1)+'</div>'
+    +'<div style="height:3px;width:120px;margin:8px auto 0;background:'+m2+'"></div></div>'+body
+    +'<div style="font-size:10px;color:#7b6a6d;margin-top:12px">Catatan: soal terkunci dan baru dapat dikerjakan siswa mulai 10 menit sebelum ujian dimulai. Peserta wajib hadir tepat waktu.</div></div>';
 }
 function jdFn(P,x){return ('Jadwal Asesmen '+P.nama+x).replace(/[\\\/:*?"<>|]/g,'-')}
+// titik pemotongan halaman PDF: tidak memotong tabel; tiap jenjang mulai halaman baru
+function jdBreaks(h,ph){
+  var top=h.getBoundingClientRect().top,r=[],st=0;
+  [].slice.call(h.querySelectorAll('[data-pb]')).forEach(function(b,i){var R=b.getBoundingClientRect(),t=R.top-top,e=R.bottom-top,f=b.parentNode.hasAttribute('data-pj')&&b===b.parentNode.firstElementChild;if(i&&t>st&&(f||e-st>ph)){r.push([st,t]);st=t}});
+  r.push([st,h.scrollHeight]);return r;
+}
 function jdShot(i,t){
   var P=JL[i];toast('Menyiapkan jadwal...');
   kopReady().then(function(){
     var h=document.createElement('div');h.style.cssText='position:fixed;left:-9999px;top:0;width:1123px;background:#fff;padding:24px;box-sizing:border-box';h.innerHTML=jdDoc(P,0);document.body.appendChild(h);
+    var W=1123,ph=Math.floor(190*W/277),rg=jdBreaks(h,ph);
     return html2canvas(h,{scale:2,backgroundColor:'#fff',useCORS:true}).then(function(c){
       h.remove();
-      if(t=='jpg'){var a=document.createElement('a');a.href=c.toDataURL('image/jpeg',.92);a.download=jdFn(P,'.jpg');document.body.appendChild(a);a.click();a.remove()}
-      else{var p=new window.jspdf.jsPDF('l','mm','a4');pdfPages(p,c,10,10,277,190);p.save(jdFn(P,'.pdf'))}
+      if(t=='jpg'){var a=document.createElement('a');a.href=c.toDataURL('image/jpeg',.92);a.download=jdFn(P,'.jpg');document.body.appendChild(a);a.click();a.remove();return}
+      var p=new window.jspdf.jsPDF('l','mm','a4'),sc2=c.width/W,n=0;
+      rg.forEach(function(r){for(var a=r[0];a<r[1]-1;a+=ph){var e=Math.min(r[1],a+ph),cv=document.createElement('canvas');cv.width=c.width;cv.height=Math.max(1,Math.round((e-a)*sc2));var g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,cv.width,cv.height);g.drawImage(c,0,Math.round(a*sc2),c.width,cv.height,0,0,c.width,cv.height);if(n++)p.addPage();p.addImage(cv.toDataURL('image/jpeg',.92),'JPEG',10,10,277,(e-a)*277/W)}});
+      p.save(jdFn(P,'.pdf'));
     },function(e){h.remove();throw e});
   }).catch(function(e){alert('Gagal membuat file: '+e)});
 }
