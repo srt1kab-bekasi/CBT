@@ -260,7 +260,7 @@ header{background:rgba(255,255,255,.94)!important}
 .pgc .piew{flex-direction:column;gap:12px;margin:0;width:100%;align-items:center}
 .pgc .piew>svg{width:230px;max-width:100%;height:auto}
 .pgc .pil,.pgc .pil2{width:100%;max-width:300px;margin:0 auto}
-@media(max-width:760px){.pg2{grid-template-columns:1fr}}
+@media screen and (max-width:760px){.pg2{grid-template-columns:1fr}}
 /* tombol koreksi nilai: satu baris rapi */
 .wcw{display:flex;flex-direction:column;align-items:center;gap:6px}
 .wcs{display:flex;flex-wrap:nowrap;gap:6px;justify-content:center}
@@ -342,6 +342,38 @@ td.pn{white-space:nowrap;min-width:290px}
 .rt img,.box.q p>img{max-width:100%}
 .box.q p>img:not([data-ok]){min-height:110px;min-width:60%;border-radius:10px;background:linear-gradient(100deg,#f1e9eb 30%,#faf5f6 50%,#f1e9eb 70%) 0 0/200% 100%;animation:imsk 1.2s linear infinite}
 @keyframes imsk{to{background-position:-200% 0}}
+
+/* detail siswa: kolom Jawaban lebar & nyaman dibaca (koreksi Jawaban Singkat / Essay Uraian) */
+#app[data-s=det] .wrap{max-width:1180px}
+table.dtb{table-layout:fixed;min-width:920px}
+table.dtb th:nth-child(1){width:46px}table.dtb th:nth-child(2){width:132px}table.dtb th:nth-child(4){width:64px}table.dtb th:nth-child(5){width:78px}table.dtb th:nth-child(6){width:300px}
+table.dtb td{vertical-align:top}
+table.dtb td:nth-child(3){white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:15px;line-height:1.6;padding:10px 14px}
+table.dtb td.pn{min-width:0;width:300px}
+/* cetak laporan: dua pie chart tetap sejajar & simetris seperti tampilan web */
+@media print{
+  .pg2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;break-inside:avoid;page-break-inside:avoid}
+  .pgc{padding:10px 8px!important;break-inside:avoid}
+  .pgc h3{font-size:12.5px!important}
+  .pgc .piew>svg{width:170px!important;height:auto!important}
+  .pgc .pil,.pgc .pil2{max-width:100%!important;font-size:11.5px}
+}
+/* penjadwalan asesmen */
+.jdh{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0}
+.jdh label{font-size:12.5px;font-weight:600;color:#6b5a5d;display:flex;flex-direction:column;gap:4px}
+.jdh input,.jdh select{margin:0;width:100%}
+.jdv{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}.jdv button{padding:5px 14px;font-size:12.5px;border-radius:20px}
+.jdg{display:flex;gap:14px;overflow-x:auto;padding:8px 2px 14px;align-items:flex-start;scroll-snap-type:x proximity}
+.jdc{flex:0 0 304px;border:1px solid rgba(var(--mr),.2);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 6px 18px rgba(var(--mr),.10);scroll-snap-align:start}
+.jdt{background:linear-gradient(135deg,var(--md),var(--m));color:#fff;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.jdt b{font-family:var(--fh);font-size:16px;letter-spacing:.5px}.jdt input{margin:0;padding:6px 8px}
+.jds{padding:10px 12px;border-top:1px solid rgba(var(--mr),.12);display:flex;flex-direction:column;gap:6px}
+.jds:nth-of-type(even){background:rgba(var(--mr),.04)}
+.jdr{display:flex;align-items:center;gap:6px}.jds input,.jds select{margin:0;padding:6px 8px;min-width:0;width:100%}
+.jdb{background:var(--m);color:#fff;border-radius:20px;padding:2px 12px;font-size:12px;font-weight:700}
+.jdx{margin-left:auto;padding:3px 9px!important;font-size:12px}
+.jdf{padding:10px 12px;border-top:1px dashed rgba(var(--mr),.25);text-align:center}
+.lkb{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;margin:8px 0 10px;border-radius:12px;background:#fff6dc;border:1px solid #e6c766;color:#6a4b00;font-size:13px;line-height:1.45}.lkb svg{flex:none;margin-top:1px}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -408,7 +440,7 @@ function refL() { if (LC.p) return LC.p; var v = LC.v, p = api('listAsesmen', U.
 function getL() { var age = Date.now() - LC.t; if (LC.d && age < 90000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
 function refU(tp) { var c = UC[tp] = UC[tp] || { d: null, t: 0, p: null }; if (c.p) return c.p; var v = LC.v, p = api('listUsers', U.nik, PW, tp).then(function (d) { if (v === LC.v) { c.d = d; c.t = Date.now(); } c.p = null; return d; }, function (e) { c.p = null; throw e; }); c.p = p; return p; }
 function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 90000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
-var RDONLY = /^(list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
+var RDONLY = /^(list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|jadwalList|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
 /* ===== Penghubung ke server =====
    Jika halaman ini dibuka DI DALAM Apps Script (link script.google.com) -> memakai google.script.run bawaan.
    Jika halaman ini DIHOSTING DI LUAR Apps Script (GitHub Pages / Netlify / dll.) -> memanggil Web App Apps Script lewat fetch.
@@ -622,12 +654,12 @@ function mgmt() {
                     LVL = _a.sent();
                     _a.label = 3;
                 case 3:
-                    tabs = [['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar']].concat(U.sa ? [['Guru', 'Data Guru', 'users'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Ujian', 'book'], ['kp', 'Cetak Kartu Pengawas', 'users']] : []);
+                    tabs = [['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar']] : []).concat(U.sa ? [['Guru', 'Data Guru', 'users'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Ujian', 'book'], ['kp', 'Cetak Kartu Pengawas', 'users']] : []);
                     c = '';
                     if (t == 'as')
-                        c = L.map(function (a, i) { return "<div class=\"box ac\"><div class=ach><div><h3>".concat(esc(a.NAMA), "</h3><small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(esc(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, " \u2022 ").concat(a.DURASI, " menit \u2022 ").concat(a.soal.length, " soal").concat(U.sa ? ' • ' + esc(a['NAMA GURU']) : '', "</small></div><span class=kd>").concat(ic('key', 14), " ").concat(a.KODE, "<button class=cpb title=\"Salin kode\" onclick=\"cpk('").concat(a.KODE, "',this)\">").concat(ic('copy', 14), "</button></span></div><p class=rl>").concat(a.rooms.map(function (r) { return "<a href=\"".concat(r.url, "\" target=_blank>").concat(ic('sheet', 14), " ").concat(esc(r.n), "</a>"); }).join(''), "</p>\n <div class=acb><button onclick=\"view(").concat(i, ",1)\">").concat(ic('list', 15), " Lihat Soal</button><button class=o onclick=\"preview(").concat(i, ")\">").concat(ic('eye', 15), " Preview Soal</button><button class=o onclick=\"edit(").concat(i, ")\">").concat(ic('edit', 15), " Edit Soal</button><button class=o onclick=\"salin(").concat(i, ",this)\">").concat(ic('copy', 15), " Salin Soal</button><button onclick=\"pantau(").concat(i, ")\">").concat(ic('radar', 15), " Pantau Ujian</button><button class=o onclick=\"dlSoal(this,").concat(i, ",1)\">").concat(ic('download', 15), " Download Soal</button>", prnB('printSoal(' + i + ',1)', 'Print Soal'), "<button class=o onclick=\"dlSoal(this,").concat(i, ",0)\">").concat(ic('file', 15), " Lembar Siswa</button>", prnB('printSoal(' + i + ',0)', 'Print Lembar'), "<button class=d onclick=\"del(").concat(i, ")\">").concat(ic('trash', 15), " Hapus Soal</button></div></div>"); }).join('') || '<div class="box em">Belum ada asesmen. Klik "Buat Asesmen Baru" untuk memulai.</div>';
+                        c = L.map(function (a, i) { if (a.LOCK && !U.sa) return lkCard(a); return "<div class=\"box ac\">".concat(lkBn(a), "<div class=ach><div><h3>").concat(esc(a.NAMA), "</h3><small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(esc(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, " \u2022 ").concat(a.DURASI, " menit \u2022 ").concat(a.soal.length, " soal").concat(U.sa ? ' • ' + esc(a['NAMA GURU']) : '', "</small></div><span class=kd>").concat(ic('key', 14), " ").concat(a.KODE, "<button class=cpb title=\"Salin kode\" onclick=\"cpk('").concat(a.KODE, "',this)\">").concat(ic('copy', 14), "</button></span></div><p class=rl>").concat(a.rooms.map(function (r) { return "<a href=\"".concat(r.url, "\" target=_blank>").concat(ic('sheet', 14), " ").concat(esc(r.n), "</a>"); }).join(''), "</p>\n <div class=acb><button onclick=\"view(").concat(i, ",1)\">").concat(ic('list', 15), " Lihat Soal</button><button class=o onclick=\"preview(").concat(i, ")\">").concat(ic('eye', 15), " Preview Soal</button><button class=o onclick=\"edit(").concat(i, ")\">").concat(ic('edit', 15), " Edit Soal</button><button class=o onclick=\"salin(").concat(i, ",this)\">").concat(ic('copy', 15), " Salin Soal</button><button onclick=\"pantau(").concat(i, ")\">").concat(ic('radar', 15), " Pantau Ujian</button><button class=o onclick=\"dlSoal(this,").concat(i, ",1)\">").concat(ic('download', 15), " Download Soal</button>", prnB('printSoal(' + i + ',1)', 'Print Soal'), "<button class=o onclick=\"dlSoal(this,").concat(i, ",0)\">").concat(ic('file', 15), " Lembar Siswa</button>", prnB('printSoal(' + i + ',0)', 'Print Lembar'), "<button class=d onclick=\"del(").concat(i, ")\">").concat(ic('trash', 15), " Hapus Soal</button></div></div>"); }).join('') || '<div class="box em">Belum ada asesmen. Klik "Buat Asesmen Baru" untuk memulai.</div>';
                     if (t == 'lap')
-                        c = L.map(function (a, i) { return "<div class=box><h3>".concat(esc(a.NAMA), " <small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(esc(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, "</small></h3>").concat(a.rooms.map(function (r) { return "<div class=rr><span>".concat(ic('users', 16), " <b>").concat(esc(r.n), "</b></span><span><button onclick=\"lap(").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('chart', 15), " Lihat laporan</button><button class=o onclick=\"dl(this,").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('download', 15), " Download Excel</button>", spLink(r), "</span></div>"); }).join(''), "</div>"); }).join('') || '<div class=box>Belum ada laporan.</div>';
+                        c = L.map(function (a, i) { if (a.LOCK && !U.sa) return ''; return "<div class=box><h3>".concat(esc(a.NAMA), " <small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(esc(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, "</small></h3>").concat(a.rooms.map(function (r) { return "<div class=rr><span>".concat(ic('users', 16), " <b>").concat(esc(r.n), "</b></span><span><button onclick=\"lap(").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('chart', 15), " Lihat laporan</button><button class=o onclick=\"dl(this,").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('download', 15), " Download Excel</button>", spLink(r), "</span></div>"); }).join(''), "</div>"); }).join('') || '<div class=box>Belum ada laporan.</div>';
                     if (!(t == 'Guru' || t == 'Siswa')) return [3, 5];
                     UT = t;
                     return [4, getU(t)];
@@ -650,6 +682,10 @@ function mgmt() {
                     if (t == 'kp') {
                         c = "<div id=kpw class=box>Memuat...</div>";
                         setTimeout(kpInit, 0);
+                    }
+                    if (t == 'jd' && U.sa) {
+                        c = "<div id=jdw class=box>Memuat...</div>";
+                        setTimeout(jdInit, 0);
                     }
                     if (t == 'sk')
                         c = skBox();
@@ -775,7 +811,7 @@ function det(n) {
     scr('det');
     var x = R.rows[n];
     var grade = function (q, k) { return q.t == 'pg' ? "<span class=\"bdg ".concat(q.ok ? 'bg' : 'bd', "\">").concat(q.ok ? 'Benar' : 'Salah', "</span>") : "<div class=wcw>".concat(q.g ? '' : '<span class="bdg by">Belum dinilai</span>', "<span data-h=1 class=wcs>").concat(OPTW[q.t].map(function (o) { return "<button class=\"wc ".concat(q.g && q.pts == o ? 'on' : '', "\" onclick=\"ver(").concat(n, ",").concat(k, ",").concat(o, ")\">").concat(fp(o), "</button>"); }).join(''), "</span></div>"); };
-    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"cls()\">").concat(ic('list', 15), " Kembali</button></header><div class=wrap><div id=rep class=box>").concat(kop(), "<div style=\"display:flex;align-items:center;gap:16px;flex-wrap:wrap\">").concat(donut(x.pts, Math.max(0, x.max - x.pts - x.pm), x.pm), "<div><h2 style=\"margin:0\">").concat(esc(x.nm), "</h2><small>").concat(esc(R.a.NAMA), " \u2022 ").concat(esc(R.room), "</small><h1 style=\"margin:4px 0;font-size:44px\">").concat(x.n, "</h1><small>Skor ").concat(fp(x.pts), " dari ").concat(x.max, " \u2022 PG benar ").concat(x.b, ", salah ").concat(x.s, " \u2022 Belum dinilai ").concat(x.p, " soal<br>Waktu: ").concat(wkp(x.tm), "<br>Kecurangan: ").concat(esc(x.c), "</small><div data-h=1 style=\"margin-top:8px\"><button class=o onclick=\"resetRpt(").concat(n, ")\">").concat(ic('undo', 15), " Izinkan siswa mengulang</button> <button class=o onclick=\"clearKorUI(").concat(n, ")\">Kosongkan nilai koreksi</button></div></div><div class=pfoto id=pfoto style=\"display:none\"><img alt=\"\"><small>").concat(esc(x.nm), "</small></div></div>\n <small data-h=1 class=hint>Urutan nomor sesuai urutan soal yang dibuat guru (sama seperti dokumen Word). Klik label soal untuk melihat isi soal.</small><div class=sc><table><tr><th>No</th><th>Soal</th><th>Jawaban</th><th>Kunci</th><th>Poin</th><th>Penilaian</th></tr>").concat(x.res.map(function (q, k) { return "<tr class=\"".concat(q.t == 'pg' ? (q.ok ? 'ok' : 'no') : q.g ? (q.pts > 0 ? 'ok' : 'no') : '', "\"><td>").concat(k + 1, "</td><td><span class=\"qt ").concat(q.t, " clk\" onclick=\"qpv(").concat(k, ")\" title=\"Klik untuk melihat isi soal\">").concat(TN[q.t], " ").concat(ic('eye', 12), "</span></td><td>").concat(esc(q.x) || '-', "</td><td>").concat(q.t == 'pg' ? q.k : '-', "</td><td>").concat(fp(q.pts), " / ").concat(q.mx, "</td><td class=pn>").concat(grade(q, k), "</td></tr>"); }).join(''), "</table></div></div><button onclick=\"shot('jpg')\">").concat(ic('download', 15), " Unduh JPG</button><button onclick=\"shot('pdf')\">").concat(ic('download', 15), " Unduh PDF</button>", prnB('printRep()', 'Print'), "</div>");
+    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"cls()\">").concat(ic('list', 15), " Kembali</button></header><div class=wrap><div id=rep class=box>").concat(kop(), "<div style=\"display:flex;align-items:center;gap:16px;flex-wrap:wrap\">").concat(donut(x.pts, Math.max(0, x.max - x.pts - x.pm), x.pm), "<div><h2 style=\"margin:0\">").concat(esc(x.nm), "</h2><small>").concat(esc(R.a.NAMA), " \u2022 ").concat(esc(R.room), "</small><h1 style=\"margin:4px 0;font-size:44px\">").concat(x.n, "</h1><small>Skor ").concat(fp(x.pts), " dari ").concat(x.max, " \u2022 PG benar ").concat(x.b, ", salah ").concat(x.s, " \u2022 Belum dinilai ").concat(x.p, " soal<br>Waktu: ").concat(wkp(x.tm), "<br>Kecurangan: ").concat(esc(x.c), "</small><div data-h=1 style=\"margin-top:8px\"><button class=o onclick=\"resetRpt(").concat(n, ")\">").concat(ic('undo', 15), " Izinkan siswa mengulang</button> <button class=o onclick=\"clearKorUI(").concat(n, ")\">Kosongkan nilai koreksi</button></div></div><div class=pfoto id=pfoto style=\"display:none\"><img alt=\"\"><small>").concat(esc(x.nm), "</small></div></div>\n <small data-h=1 class=hint>Urutan nomor sesuai urutan soal yang dibuat guru (sama seperti dokumen Word). Klik label soal untuk melihat isi soal.</small><div class=sc><table class=dtb><tr><th>No</th><th>Soal</th><th>Jawaban</th><th>Kunci</th><th>Poin</th><th>Penilaian</th></tr>").concat(x.res.map(function (q, k) { return "<tr class=\"".concat(q.t == 'pg' ? (q.ok ? 'ok' : 'no') : q.g ? (q.pts > 0 ? 'ok' : 'no') : '', "\"><td>").concat(k + 1, "</td><td><span class=\"qt ").concat(q.t, " clk\" onclick=\"qpv(").concat(k, ")\" title=\"Klik untuk melihat isi soal\">").concat(TN[q.t], " ").concat(ic('eye', 12), "</span></td><td>").concat(esc(q.x) || '-', "</td><td>").concat(q.t == 'pg' ? q.k : '-', "</td><td>").concat(fp(q.pts), " / ").concat(q.mx, "</td><td class=pn>").concat(grade(q, k), "</td></tr>"); }).join(''), "</table></div></div><button onclick=\"shot('jpg')\">").concat(ic('download', 15), " Unduh JPG</button><button onclick=\"shot('pdf')\">").concat(ic('download', 15), " Unduh PDF</button>", prnB('printRep()', 'Print'), "</div>");
     R.cur = n;
     loadFoto(x.nis);
 }
@@ -1892,6 +1928,187 @@ function kpPrint(i,k,prn){
     one().catch(function(e){alert('Gagal membuat PDF: '+e);host.remove()});
   });
 }
+
+/* ===== Penjadwalan Asesmen (khusus Staf Kurikulum & Super Admin) ===== */
+Object.assign(IC,{calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'});
+var JD=null,JL=[],JG=[],JA=[],JF=['dari','sampai','mapel','kode','pi'];
+var HRI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+function jdNew(){return {id:'',nama:'',jenjang:'SMA',kelas:'X',vars:[],t1:'',t2:'',wk:0,rp:0,hari:[]}}
+function jdD(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?new Date(+m[1],+m[2]-1,+m[3]):null}
+function jdIso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function jdTgl(s,p){var d=jdD(s);return d?(p?'':HRI[d.getDay()]+', ')+d.getDate()+' '+BLN[d.getMonth()]+' '+d.getFullYear():'-'}
+function jdJam(s){return String(s||'').replace(':','.')}
+function jdMin(t){var m=/^(\d\d):(\d\d)/.exec(t||'');return m?+m[1]*60+ +m[2]:-1}
+function jdHM(n){n=Math.max(0,Math.min(1439,n));return ('0'+Math.floor(n/60)).slice(-2)+':'+('0'+n%60).slice(-2)}
+function jdSesi(p){var a=p?jdMin(p.dari):-1,b=p?jdMin(p.sampai):-1;if(a<0||b<=a){a=450;b=570}else{var u=b-a;a=b;b=a+u}return {dari:jdHM(a),sampai:jdHM(b),mapel:'',kode:'',nama:'',pi:'',pn:''}}
+function jdInit(){
+  Promise.all([api('jadwalList',U.nik,PW),api('guruList',U.nik,PW),getL()]).then(function(r){JL=r[0]||[];JG=r[1]||[];JA=r[2]||[];JD=JD||jdNew();jdView()})
+  .catch(function(e){var w=$('#jdw');if(w)w.textContent='Gagal memuat: '+e});
+}
+function jdAs(){return JA.filter(function(a){return a.JENJANG==JD.jenjang&&a.TINGKAT==JD.kelas&&(!JD.vars.length||(a.rooms||[]).some(function(r){return JD.vars.indexOf(r.n)>=0}))})}
+function jdVars(){var m={};JA.forEach(function(a){if(a.JENJANG==JD.jenjang&&a.TINGKAT==JD.kelas)(a.rooms||[]).forEach(function(r){m[r.n]=1})});JD.vars.forEach(function(v){m[v]=1});return Object.keys(m).sort()}
+function jdUsed(f,d,s){var u={};JD.hari.forEach(function(h,i){h.sesi.forEach(function(x,j){if(x[f]&&!(i==d&&j==s))u[x[f]]=1})});return u}
+function jdSync(){
+  if(!$('#jdn'))return;
+  Object.assign(JD,{nama:$('#jdn').value,jenjang:$('#jdj').value,kelas:$('#jdk').value,t1:$('#jd1').value,t2:$('#jd2').value,wk:$('#jdwk').checked?1:0,rp:$('#jdrp').checked?1:0});
+  document.querySelectorAll('#jdw [data-d]').forEach(function(e){var h=JD.hari[+e.dataset.d];if(!h)return;if(e.dataset.s==null)h[e.dataset.f]=e.value;else if(h.sesi[+e.dataset.s])h.sesi[+e.dataset.s][e.dataset.f]=e.value});
+}
+function jdFill(){JD.hari.forEach(function(h){h.sesi.forEach(function(x){
+  var a=JA.filter(function(y){return y.KODE==x.kode})[0],g=JG.filter(function(y){return y.i==x.pi})[0];
+  if(a){x.nama=a.NAMA;x.mapel=a.MAPEL}else if(x.kode){x.kode=''}
+  x.pn=g?g.n:'';
+})})}
+function jdPrune(){var ms={},ks={};jdAs().forEach(function(a){ms[a.MAPEL]=1;ks[a.KODE]=1});JD.hari.forEach(function(h){h.sesi.forEach(function(x){if(x.mapel&&!ms[x.mapel]){x.mapel='';x.kode='';x.nama=''}if(x.kode&&!ks[x.kode]){x.kode='';x.nama=''}})})}
+function jdHead(k){jdSync();if(k==1)JD.kelas=TK[JD.jenjang][0];JD.vars=[];jdPrune();jdView()}
+function jdVar(v){jdSync();var i=JD.vars.indexOf(v);if(i<0)JD.vars.push(v);else JD.vars.splice(i,1);jdPrune();jdView()}
+function jdChg(el){
+  jdSync();var d=+el.dataset.d,s=el.dataset.s,f=el.dataset.f;
+  if(s!=null&&f=='mapel'){var x=JD.hari[d].sesi[+s];x.kode='';var c=jdAs().filter(function(a){return a.MAPEL==x.mapel});if(c.length==1)x.kode=c[0].KODE}
+  jdFill();jdView();
+}
+function jdNext(d){var n=JD.hari.length?jdD(JD.hari[JD.hari.length-1].tgl):null;n=n?new Date(n.getFullYear(),n.getMonth(),n.getDate()+1):new Date();
+  while(!JD.wk&&(n.getDay()==0||n.getDay()==6))n=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1);return jdIso(n)}
+function jdGen(){
+  jdSync();var a=jdD(JD.t1),b=jdD(JD.t2);if(!a||!b||b<a)return alert('Isi rentang tanggal dengan benar (tanggal mulai sampai tanggal selesai).');
+  if((b-a)/864e5>60)return alert('Rentang maksimal 60 hari.');
+  var old={},out=[],set={};JD.hari.forEach(function(h){old[h.tgl]=h});
+  for(var d=new Date(a);d<=b;d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)){
+    if(!JD.wk&&(d.getDay()==0||d.getDay()==6))continue;var t=jdIso(d);set[t]=1;out.push(old[t]||{tgl:t,sesi:[jdSesi(null)]});
+  }
+  JD.hari.forEach(function(h){if(!set[h.tgl])out.push(h)});out.sort(function(x,y){return x.tgl<y.tgl?-1:1});JD.hari=out;jdView();
+}
+function jdAddDay(){jdSync();JD.hari.push({tgl:jdNext(),sesi:[jdSesi(null)]});jdView();setTimeout(function(){var g=$('#jdg');if(g)g.scrollLeft=g.scrollWidth},30)}
+function jdRmDay(d){jdSync();JD.hari.splice(d,1);jdView()}
+function jdAddS(d){jdSync();var h=JD.hari[d];h.sesi.push(jdSesi(h.sesi[h.sesi.length-1]));jdView();jdFocus(d,h.sesi.length-1,'dari')}
+function jdRmS(d,s){jdSync();JD.hari[d].sesi.splice(s,1);jdFill();jdView()}
+function jdFocus(d,s,f){setTimeout(function(){var n=document.querySelector('#jdw [data-d="'+d+'"][data-s="'+s+'"][data-f="'+f+'"]');if(n){n.focus();if(n.scrollIntoView)n.scrollIntoView({block:'nearest',inline:'nearest'})}},40)}
+// Enter: pindah ke isian berikutnya; Enter di kolom pengawas = tambah jadwal (No. berikutnya) di bawahnya
+function jdKey(e){
+  var D=e.target.dataset;if(e.key!='Enter'||!D||D.d==null)return;e.preventDefault();
+  jdSync();var d=+D.d,h=JD.hari[d];if(!h)return;if(D.s==null){jdView();return jdFocus(d,0,'dari')}
+  var s=+D.s,i=JF.indexOf(D.f),x=h.sesi[s];
+  if(D.f=='mapel'){x.kode='';var c=jdAs().filter(function(a){return a.MAPEL==x.mapel});if(c.length==1)x.kode=c[0].KODE}
+  jdFill();
+  if(i<JF.length-1){jdView();return jdFocus(d,s,JF[i+1])}
+  if(s==h.sesi.length-1)h.sesi.push(jdSesi(x));
+  jdView();jdFocus(d,s+1,'dari');
+}
+function jdView(){
+  var w=$('#jdw');if(!w)return;var g0=$('#jdg'),sl=g0?g0.scrollLeft:0,y=window.scrollY;
+  var op=function(v,l,cur){return '<option value="'+esc(v)+'"'+(v==cur?' selected':'')+'>'+esc(l)+'</option>'},as=jdAs(),ms=[];
+  as.forEach(function(a){if(ms.indexOf(a.MAPEL)<0)ms.push(a.MAPEL)});ms.sort();
+  var cols=JD.hari.map(function(h,d){
+    var dt=jdD(h.tgl);
+    return '<div class=jdc><div class=jdt><div class=jdr><b>'+(dt?HRI[dt.getDay()]:'Hari '+(d+1))+'</b><button class="o jdx" onclick="jdRmDay('+d+')" title="Hapus kolom hari ini">\u2715</button></div>'
+      +'<input type=date data-d='+d+' data-f=tgl value="'+esc(h.tgl)+'" onchange="jdChg(this)"></div>'
+      +h.sesi.map(function(x,s){
+        var um=jdUsed('mapel',d,s),up=JD.rp?{}:jdUsed('pi',d,s),at='data-d='+d+' data-s='+s+' data-f=',
+            ka=as.filter(function(a){return a.MAPEL==x.mapel});
+        return '<div class=jds><div class=jdr><span class=jdb>No. '+(s+1)+'</span><button class="o jdx" onclick="jdRmS('+d+','+s+')" title="Hapus jadwal ini">\u2715</button></div>'
+          +'<div class=jdr><input type=time '+at+'dari value="'+esc(x.dari)+'" onchange="jdSync()"><span>s/d</span><input type=time '+at+'sampai value="'+esc(x.sampai)+'" onchange="jdSync()"></div>'
+          +'<select '+at+'mapel onchange="jdChg(this)"><option value="">\u2014 Mata pelajaran \u2014</option>'+ms.filter(function(m){return !um[m]||m==x.mapel}).map(function(m){return op(m,m,x.mapel)}).join('')+'</select>'
+          +'<select '+at+'kode onchange="jdChg(this)"'+(x.mapel?'':' disabled')+'><option value="">\u2014 Kode soal \u2014</option>'+ka.map(function(a){return op(a.KODE,a.KODE+' \u2022 '+a.NAMA,x.kode)}).join('')+'</select>'
+          +'<select '+at+'pi onchange="jdChg(this)"><option value="">\u2014 Pengawas \u2014</option>'+JG.filter(function(g){return !up[g.i]||g.i==x.pi}).map(function(g){return op(g.i,g.n,x.pi)}).join('')+'</select></div>';
+      }).join('')+'<div class=jdf><button class=o onclick="jdAddS('+d+')">'+ic('plus',14)+' Tambah jadwal</button></div></div>';
+  }).join('');
+  var sv=JL.map(function(P,i){
+    var n=0;P.hari.forEach(function(h){n+=h.sesi.length});
+    return '<div class=box><h3>'+esc(P.nama)+' <small>'+esc(P.jenjang)+' \u2022 Kelas '+esc(P.kelas)+(P.vars&&P.vars.length?' \u2022 '+esc(P.vars.join(', ')):'')+' \u2022 '+jdTgl(P.hari[0].tgl,1)+' s/d '+jdTgl(P.hari[P.hari.length-1].tgl,1)+' \u2022 '+n+' sesi</small></h3>'
+      +'<div data-h=1 style="margin-bottom:10px"><button onclick="jdShot('+i+',\'jpg\')">'+ic('download',15)+' JPG</button> <button onclick="jdShot('+i+',\'pdf\')">'+ic('download',15)+' PDF</button> <button onclick="jdWord('+i+')">'+ic('download',15)+' Word</button> '+prnB('jdPrint('+i+')','Print')
+      +' <button class=o onclick="jdEdit('+i+')">'+ic('edit',15)+' Ubah</button> <button class=d onclick="jdDel('+i+')">'+ic('trash',15)+' Hapus</button></div>'
+      +'<div class=sc>'+jdDoc(P,0)+'</div></div>';
+  }).join('');
+  w.innerHTML='<h3>'+ic('calendar',18)+' '+(JD.id?'Ubah':'Buat')+' Periode Asesmen</h3>'
+    +'<div class=lkb>'+ic('lock',16)+'<span>Setelah disimpan, soal pada kode yang masuk jadwal <b>terkunci</b>: tidak dapat dikerjakan siswa maupun diubah guru pembuat soal (kecuali Staf Kurikulum / Super Admin) sampai <b>10 menit sebelum ujian dimulai</b>.</span></div>'
+    +'<div class=jdh><label>Nama periode asesmen<input id=jdn value="'+esc(JD.nama)+'" placeholder="mis. ASTS Ganjil 2026/2027"></label>'
+    +'<label>Jenjang<select id=jdj onchange="jdHead(1)">'+Object.keys(TK).map(function(k){return op(k,k,JD.jenjang)}).join('')+'</select></label>'
+    +'<label>Kelas<select id=jdk onchange="jdHead(2)">'+TK[JD.jenjang].map(function(k){return op(k,k,JD.kelas)}).join('')+'</select></label>'
+    +'<label>Tanggal mulai<input type=date id=jd1 value="'+esc(JD.t1)+'"></label><label>Tanggal selesai<input type=date id=jd2 value="'+esc(JD.t2)+'"></label></div>'
+    +'<div style="font-size:12.5px;font-weight:600;color:#6b5a5d">Variasi kelas <span style="font-weight:400">(klik untuk memilih; kosong = semua variasi)</span></div><div class=jdv>'
+    +(jdVars().map(function(v){return '<button class="'+(JD.vars.indexOf(v)>=0?'':'o')+'" onclick="jdVar(\''+esc(v).replace(/'/g,'')+'\')">'+esc(v)+'</button>'}).join('')||'<small style="color:#7b6a6d">Belum ada asesmen untuk jenjang dan kelas ini.</small>')+'</div>'
+    +'<label style="display:inline-flex;gap:6px;align-items:center;margin-right:16px"><input type=checkbox id=jdwk style="width:auto;margin:0" '+(JD.wk?'checked':'')+'> Sertakan Sabtu &amp; Minggu</label>'
+    +'<label style="display:inline-flex;gap:6px;align-items:center;margin-right:16px"><input type=checkbox id=jdrp style="width:auto;margin:0" '+(JD.rp?'checked':'')+' onchange="jdChg(this)"> Pengawas boleh bertugas lebih dari sekali</label>'
+    +'<button onclick="jdGen()">'+ic('calendar',15)+' Buat Kolom Hari</button> <button class=o onclick="jdAddDay()">'+ic('plus',15)+' Tambah Hari</button>'
+    +'<p style="color:#7b6a6d;font-size:12.5px;margin:10px 0 4px">Isi jadwal tiap hari. Tekan <b>Enter</b> untuk pindah isian; Enter di kolom pengawas menambah jadwal No. berikutnya. Mata pelajaran dan pengawas yang sudah dipilih tidak muncul lagi di pilihan berikutnya.</p>'
+    +(JD.hari.length?'<div class=jdg id=jdg onkeydown="jdKey(event)">'+cols+'</div>':'<p class=em>Isi rentang tanggal lalu klik <b>Buat Kolom Hari</b>.</p>')
+    +'<button onclick="jdSave()">'+ic('save',15)+' Simpan Jadwal Periode</button>'+(JD.id?' <button class=o onclick="JD=jdNew();jdView()">Batal Ubah</button>':'')
+    +(sv?'<br><br><h3>Jadwal Periode Tersimpan</h3>'+sv:'');
+  var g=$('#jdg');if(g)g.scrollLeft=sl;window.scrollTo(0,y);
+}
+function jdCheck(){
+  if(!JD.nama.trim())return 'Isi nama periode asesmen.';
+  if(!JD.hari.length)return 'Jadwal masih kosong. Isi rentang tanggal lalu klik Buat Kolom Hari.';
+  var seen={};
+  for(var i=0;i<JD.hari.length;i++){
+    var h=JD.hari[i];if(!jdD(h.tgl))return 'Tanggal pada kolom ke-'+(i+1)+' belum diisi.';
+    if(seen[h.tgl])return 'Tanggal '+jdTgl(h.tgl)+' dipakai dua kali.';seen[h.tgl]=1;
+    for(var j=0;j<h.sesi.length;j++){
+      var x=h.sesi[j],p=jdTgl(h.tgl)+' No. '+(j+1);
+      if(!x.mapel||!x.kode||!x.pi)return 'Lengkapi mata pelajaran, kode soal, dan pengawas pada '+p+'.';
+      if(jdMin(x.dari)<0||jdMin(x.sampai)<=jdMin(x.dari))return 'Rentang waktu tidak valid pada '+p+' (jam selesai harus setelah jam mulai).';
+      if(j&&jdMin(x.dari)<jdMin(h.sesi[j-1].sampai))return 'Waktu pada '+p+' bertabrakan dengan jadwal sebelumnya.';
+    }
+  }
+  return '';
+}
+function jdSave(){
+  jdSync();jdFill();
+  JD.hari.forEach(function(h){h.sesi=h.sesi.filter(function(x){return x.mapel||x.kode||x.pi}).sort(function(a,b){return jdMin(a.dari)-jdMin(b.dari)})});
+  JD.hari=JD.hari.filter(function(h){return h.sesi.length});
+  var e=jdCheck();if(e){jdView();return alert(e)}
+  api('jadwalSave',U.nik,PW,JD).then(function(){toast('Jadwal disimpan. Soal pada jadwal kini terkunci hingga 10 menit sebelum ujian.');JD=jdNew();jdInit()}).catch(function(e){alert(e)});
+}
+function jdEdit(i){JD=JSON.parse(JSON.stringify(JL[i]));jdView();scrollTo(0,0)}
+function jdDel(i){ask('Hapus jadwal periode ini? Soal-soal pada jadwal ini akan terbuka kembali (tidak terkunci lagi).','Iya, Hapus',function(){return api('jadwalDel',U.nik,PW,JL[i].id).then(jdInit)},1,'Batal')}
+// ---- Dokumen jadwal (tampilan web, JPG, PDF, Print = W:0; Word = W:1 tanpa gambar) ----
+function jdDoc(P,W){
+  var T=TC(),m=T.m,m2=T.m2,mt=T.mt,F=T.f+',Georgia,serif',G='#f3dd8a',ch=[];
+  for(var i=0;i<P.hari.length;i+=5)ch.push(P.hari.slice(i,i+5));
+  var kp=(!W&&KOPD)?'<img src="'+KOPD.u+'" style="width:100%;display:block">'
+    :'<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')
+    +'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:'+G+'">JADWAL PELAKSANAAN ASESMEN</div></td></tr></table>';
+  var tb=ch.map(function(c){
+    var th='',td='';
+    for(var k=0;k<5;k++){var h=c[k];
+      if(!h){th+='<td width=20% style="background:#f3eded"></td>';td+='<td width=20% style="border:1px solid #e5d0d3;background:#fcfafa"></td>';continue}
+      var d=jdD(h.tgl);
+      th+='<td width=20% align=center style="background:'+m+';color:#fff;padding:8px 4px;border:1px solid #fff;font-family:'+F+'"><div style="font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff">'+HRI[d.getDay()]+'</div><div style="font-size:11px;color:'+G+'">'+jdTgl(h.tgl,1)+'</div></td>';
+      td+='<td width=20% valign=top style="border:1px solid #e5d0d3;padding:4px;background:#fff">'+h.sesi.map(function(x,s){
+        return '<div style="margin:4px 2px;padding:7px 8px;background:'+mt+';border-left:4px solid '+m2+'">'
+          +'<div style="font-size:10px;font-weight:700;color:'+m2+'">No. '+(s+1)+' &nbsp;|&nbsp; '+jdJam(x.dari)+' \u2013 '+jdJam(x.sampai)+'</div>'
+          +'<div style="font-size:12.5px;font-weight:700;color:#222;margin:2px 0">'+esc(x.mapel)+'</div>'
+          +'<div style="font-size:10.5px;color:#555">Kode soal: <b style="color:'+m+'">'+esc(x.kode)+'</b></div>'
+          +'<div style="font-size:10.5px;color:#555">Pengawas: <b>'+esc(x.pn)+'</b></div></div>';
+      }).join('')+'</td>';
+    }
+    return '<table width=100% cellspacing=0 cellpadding=0 style="border-collapse:collapse;table-layout:fixed;margin-top:12px;page-break-inside:avoid"><tr>'+th+'</tr><tr>'+td+'</tr></table>';
+  }).join('');
+  return '<div style="font-family:Inter,Segoe UI,Arial,sans-serif;color:#222;background:#fff">'+kp
+    +'<div style="text-align:center;padding:14px 0 4px;font-family:'+F+'"><div style="font-size:21px;font-weight:700;color:'+m+';letter-spacing:.5px">'+esc(P.nama)+'</div>'
+    +'<div style="font-size:12px;color:#555;margin-top:3px">Jenjang '+esc(P.jenjang)+' &bull; Kelas '+esc(P.kelas)+(P.vars&&P.vars.length?' &bull; Variasi '+esc(P.vars.join(', ')):'')+' &bull; '+jdTgl(P.hari[0].tgl,1)+' s/d '+jdTgl(P.hari[P.hari.length-1].tgl,1)+'</div>'
+    +'<div style="height:3px;width:120px;margin:8px auto 0;background:'+m2+'"></div></div>'+tb
+    +'<div style="font-size:10px;color:#7b6a6d;margin-top:10px">Catatan: soal terkunci dan baru dapat dikerjakan siswa mulai 10 menit sebelum ujian dimulai. Peserta wajib hadir tepat waktu.</div></div>';
+}
+function jdFn(P,x){return ('Jadwal Asesmen '+P.nama+x).replace(/[\\\/:*?"<>|]/g,'-')}
+function jdShot(i,t){
+  var P=JL[i];toast('Menyiapkan jadwal...');
+  kopReady().then(function(){
+    var h=document.createElement('div');h.style.cssText='position:fixed;left:-9999px;top:0;width:1123px;background:#fff;padding:24px;box-sizing:border-box';h.innerHTML=jdDoc(P,0);document.body.appendChild(h);
+    return html2canvas(h,{scale:2,backgroundColor:'#fff',useCORS:true}).then(function(c){
+      h.remove();
+      if(t=='jpg'){var a=document.createElement('a');a.href=c.toDataURL('image/jpeg',.92);a.download=jdFn(P,'.jpg');document.body.appendChild(a);a.click();a.remove()}
+      else{var p=new window.jspdf.jsPDF('l','mm','a4');pdfPages(p,c,10,10,277,190);p.save(jdFn(P,'.pdf'))}
+    },function(e){h.remove();throw e});
+  }).catch(function(e){alert('Gagal membuat file: '+e)});
+}
+function jdPrint(i){kopReady().then(function(){prnHTML('<div style="width:100%">'+jdDoc(JL[i],0)+'</div>','size:A4 landscape;margin:10mm')})}
+function jdWord(i){
+  var P=JL[i],h="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><style>@page Section1{size:841.9pt 595.3pt;mso-page-orientation:landscape;margin:36pt}div.Section1{page:Section1}body{font-family:Calibri}</style></head><body><div class=Section1>"+jdDoc(P,1)+"</div></body></html>",
+      u=document.createElement('a');u.href=URL.createObjectURL(new Blob(['\ufeff'+h],{type:'application/msword'}));u.download=jdFn(P,'.doc');document.body.appendChild(u);u.click();u.remove();
+}
+// ---- Tampilan soal terkunci di Daftar Asesmen ----
+function lkBn(a){if(!a.LOCK)return '';var x=a.LOCK;return '<div class=lkb>'+ic('lock',16)+'<span><b>Soal terkunci</b> \u2014 masuk jadwal \u201C'+esc(x.n)+'\u201D: ujian '+jdTgl(x.d)+' pukul '+jdJam(x.j)+'. Siswa baru dapat mengerjakan 10 menit sebelumnya.'+(U.sa?'':' Soal tidak dapat dibuka atau diubah sampai saat itu.')+'</span></div>'}
+function lkCard(a){return '<div class="box ac">'+lkBn(a)+'<div class=ach><div><h3>'+esc(a.NAMA)+'</h3><small>'+a.JENJANG+' '+a.TINGKAT+' \u2022 '+esc(a.MAPEL)+' \u2022 '+a.TAHUN+' Smt '+a.SEMESTER+' \u2022 '+a.DURASI+' menit \u2022 '+a.soal.length+' soal</small></div><span class=kd>'+ic('key',14)+' '+esc(a.KODE)+'</span></div></div>'}
 
 /* ===== Gambar Kop Sekolah (header dokumen Word / PDF) ===== */
 var KOPD=null,KOPP=null;
