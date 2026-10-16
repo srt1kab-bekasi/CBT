@@ -469,6 +469,18 @@ table.dtb td.pn{min-width:0;width:300px}
 .lpch{display:inline-block;margin:2px 3px 2px 0;padding:2px 9px;border-radius:12px;font-size:11.5px;white-space:nowrap}.lpch b{font-weight:800}
 .lpch.bad{background:#fdecea;color:#b3261e}.lpch.good{background:#e6f4ea;color:#1b5e20}.lpch.warn{background:#fff4d6;color:#7a5200}.lpn{color:#aaa}
 .lpt2{min-width:1100px}.lpt2 td{vertical-align:top}
+
+/* pemuatan laporan periode + pemeriksaan kelengkapan */
+.lpld{display:flex;gap:18px;align-items:center;padding:18px 20px;border-radius:18px;background:linear-gradient(135deg,#fff,var(--mt));border:1px solid rgba(var(--mr),.2);box-shadow:0 8px 24px rgba(var(--mr),.12)}
+.lpsp{flex:none;width:54px;height:54px;border-radius:50%;border:5px solid rgba(var(--mr),.15);border-top-color:var(--m);animation:lpspin 1s linear infinite}
+@keyframes lpspin{to{transform:rotate(360deg)}}
+.lpldb{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.lpldb b{color:var(--m);font-size:15px}.lpldb small{color:#7b6a6d}#lpt2{font-size:13px;font-weight:600;color:#4a3a3d}
+.lpbar{height:14px;border-radius:10px;background:rgba(var(--mr),.12);overflow:hidden}
+.lpbar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--m),var(--m2),var(--m));background-size:200% 100%;animation:lpshine 1.4s linear infinite;transition:width .5s ease}
+@keyframes lpshine{to{background-position:-200% 0}}
+.lpck.lpok{border-color:#2e9e5b}.lpck.lpok::before{background:#2e9e5b}.lpck.lpwarn{border-color:#e6b422}.lpck.lpwarn::before{background:#e6b422}.lpck.lpbad{border-color:#c0392b}.lpck.lpbad::before{background:#c0392b}
+.lpbn{margin:6px 0 4px 8px;font-weight:600;font-size:13.5px}.lpok .lpbn{color:#1b5e20}.lpwarn .lpbn{color:#7a5200}.lpbad .lpbn{color:#b3261e}
+.lpck .lpb td{vertical-align:top}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -535,7 +547,7 @@ function refL() { if (LC.p) return LC.p; var v = LC.v, p = api('listAsesmen', U.
 function getL() { var age = Date.now() - LC.t; if (LC.d && age < 90000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
 function refU(tp) { var c = UC[tp] = UC[tp] || { d: null, t: 0, p: null }; if (c.p) return c.p; var v = LC.v, p = api('listUsers', U.nik, PW, tp).then(function (d) { if (v === LC.v) { c.d = d; c.t = Date.now(); } c.p = null; return d; }, function (e) { c.p = null; throw e; }); c.p = p; return p; }
 function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 90000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
-var RDONLY = /^(list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|jadwalList|periodeLap|rombelAll|agendaList|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
+var RDONLY = /^(list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
 /* ===== Penghubung ke server =====
    Jika halaman ini dibuka DI DALAM Apps Script (link script.google.com) -> memakai google.script.run bawaan.
    Jika halaman ini DIHOSTING DI LUAR Apps Script (GitHub Pages / Netlify / dll.) -> memanggil Web App Apps Script lewat fetch.
@@ -749,7 +761,7 @@ function mgmt() {
                     LVL = _a.sent();
                     _a.label = 3;
                 case 3:
-                    tabs = [['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Agenda Pengawas', 'clock']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'chart']] : []).concat(U.sa ? [['Guru', 'Data Guru', 'users'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Ujian', 'book'], ['kp', 'Cetak Kartu Pengawas', 'users']] : []);
+                    tabs = [['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Agenda Pengawas', 'clock']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'award']] : []).concat(U.sa ? [['Guru', 'Data Guru', 'teacher'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Ujian', 'idcard'], ['kp', 'Cetak Kartu Pengawas', 'shield']] : []);
                     tabs = tabOrd(tabs);
                     c = '';
                     if (t == 'as')
@@ -2948,34 +2960,34 @@ function lpSet(){
 }
 /* ---- grafik SVG (ukuran seragam supaya simetris) ---- */
 var CH={W:520,H:290,F:'Inter,Segoe UI,Arial,sans-serif'};
-function svgBox(t,inner){return '<svg xmlns="http://www.w3.org/2000/svg" width="'+CH.W+'" height="'+CH.H+'" viewBox="0 0 '+CH.W+' '+CH.H+'" style="max-width:100%;height:auto;font-family:'+CH.F+'"><rect width="'+CH.W+'" height="'+CH.H+'" rx="14" fill="#fff" stroke="#ead7da"/><text x="18" y="28" font-size="14" font-weight="700" fill="'+TC().m+'">'+esc(t)+'</text>'+inner+'</svg>'}
+function svgBox(t,inner){return '<svg xmlns="http://www.w3.org/2000/svg" width="'+CH.W+'" height="'+CH.H+'" viewBox="0 0 '+CH.W+' '+CH.H+'" style="max-width:100%;height:auto;font-family:'+CH.F+'"><rect width="'+CH.W+'" height="'+CH.H+'" rx="14" fill="#fff" stroke="#ead7da"/><text x="18" y="28" font-size="17" font-weight="700" fill="'+TC().m+'">'+esc(t)+'</text>'+inner+'</svg>'}
 function pieSvg(t,parts){
   var tot=parts.reduce(function(a,p){return a+p.v},0),cx=130,cy=162,r=92,ri=52,a0=-Math.PI/2,o='';
-  if(!tot)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="13">Belum ada data</text>');
+  if(!tot)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="15">Belum ada data</text>');
   var pt=function(a,R){return (cx+R*Math.cos(a)).toFixed(2)+' '+(cy+R*Math.sin(a)).toFixed(2)};
   parts.forEach(function(p){if(!p.v)return;var a1=a0+p.v/tot*2*Math.PI-(p.v==tot?.0001:0),lg=a1-a0>Math.PI?1:0;
     o+='<path d="M'+pt(a0,r)+' A'+r+' '+r+' 0 '+lg+' 1 '+pt(a1,r)+' L'+pt(a1,ri)+' A'+ri+' '+ri+' 0 '+lg+' 0 '+pt(a0,ri)+'Z" fill="'+p.c+'" stroke="#fff" stroke-width="2"/>';
-    if(p.v/tot>.07){var am=(a0+a1)/2;o+='<text x="'+(cx+(r+ri)/2*Math.cos(am)).toFixed(1)+'" y="'+(cy+(r+ri)/2*Math.sin(am)+4).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+Math.round(p.v/tot*100)+'%</text>'}a0=a1});
-  o+='<text x="'+cx+'" y="'+(cy-2)+'" text-anchor="middle" font-size="22" font-weight="700" fill="#333">'+tot+'</text><text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" font-size="10" fill="#777">total</text>';
-  parts.forEach(function(p,i){var y=78+i*34;o+='<rect x="262" y="'+y+'" width="14" height="14" rx="4" fill="'+p.c+'"/><text x="284" y="'+(y+11)+'" font-size="12" fill="#333">'+esc(p.l)+'</text><text x="284" y="'+(y+24)+'" font-size="11" fill="#777">'+p.v+' ('+Math.round(p.v/tot*100)+'%)</text>'});
+    if(p.v/tot>.07){var am=(a0+a1)/2;o+='<text x="'+(cx+(r+ri)/2*Math.cos(am)).toFixed(1)+'" y="'+(cy+(r+ri)/2*Math.sin(am)+4).toFixed(1)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">'+Math.round(p.v/tot*100)+'%</text>'}a0=a1});
+  o+='<text x="'+cx+'" y="'+(cy-2)+'" text-anchor="middle" font-size="25" font-weight="700" fill="#333">'+tot+'</text><text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" font-size="12" fill="#777">total</text>';
+  parts.forEach(function(p,i){var y=78+i*34;o+='<rect x="262" y="'+y+'" width="14" height="14" rx="4" fill="'+p.c+'"/><text x="284" y="'+(y+11)+'" font-size="14" fill="#333">'+esc(p.l)+'</text><text x="284" y="'+(y+24)+'" font-size="13" fill="#777">'+p.v+' ('+Math.round(p.v/tot*100)+'%)</text>'});
   return svgBox(t,o);
 }
 function barSvg(t,items,o){
   o=o||{};var mx=o.max||100,L=46,B=o.rot?74:48,T=44,w=CH.W-L-18,h=CH.H-T-B,n=items.length,s='';
-  if(!n)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="13">Belum ada data</text>');
-  [0,1,2,3,4].map(function(i){return Math.round(mx*i/4*10)/10}).forEach(function(g){var y=T+h-(g/mx)*h;s+='<line x1="'+L+'" x2="'+(L+w)+'" y1="'+y+'" y2="'+y+'" stroke="#eee"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#888">'+g+'</text>'});
+  if(!n)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="15">Belum ada data</text>');
+  [0,1,2,3,4].map(function(i){return Math.round(mx*i/4*10)/10}).forEach(function(g){var y=T+h-(g/mx)*h;s+='<line x1="'+L+'" x2="'+(L+w)+'" y1="'+y+'" y2="'+y+'" stroke="#eee"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="12" fill="#888">'+g+'</text>'});
   var bw=Math.min(46,w/n*.62),gap=w/n;
   items.forEach(function(x,i){var bh=Math.max(1,x.v/mx*h),bx=L+gap*i+(gap-bw)/2,by=T+h-bh,lb=String(x.l).length>(o.rot?16:11)?String(x.l).slice(0,o.rot?15:10)+'\u2026':x.l;
-    s+='<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="5" fill="'+(x.c||TC().m)+'"/><text x="'+(bx+bw/2).toFixed(1)+'" y="'+(by-5).toFixed(1)+'" text-anchor="middle" font-size="10.5" font-weight="700" fill="#333">'+(x.t||nf(x.v,o.d==null?1:o.d))+'</text>'
-     +(o.rot?'<text transform="translate('+(bx+bw/2).toFixed(1)+' '+(T+h+12)+') rotate(-38)" text-anchor="end" font-size="10" fill="#555">'+esc(lb)+'</text>':'<text x="'+(bx+bw/2).toFixed(1)+'" y="'+(T+h+16)+'" text-anchor="middle" font-size="10.5" fill="#555">'+esc(lb)+'</text>')});
-  if(o.line!=null){var ly=T+h-o.line/mx*h;s+='<line x1="'+L+'" x2="'+(L+w)+'" y1="'+ly+'" y2="'+ly+'" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="6 4"/><text x="'+(L+w)+'" y="'+(ly-4)+'" text-anchor="end" font-size="10" font-weight="700" fill="#c0392b">KKM '+o.line+'</text>'}
+    s+='<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="5" fill="'+(x.c||TC().m)+'"/><text x="'+(bx+bw/2).toFixed(1)+'" y="'+(by-5).toFixed(1)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#333">'+(x.t||nf(x.v,o.d==null?1:o.d))+'</text>'
+     +(o.rot?'<text transform="translate('+(bx+bw/2).toFixed(1)+' '+(T+h+12)+') rotate(-38)" text-anchor="end" font-size="12" fill="#555">'+esc(lb)+'</text>':'<text x="'+(bx+bw/2).toFixed(1)+'" y="'+(T+h+16)+'" text-anchor="middle" font-size="12.5" fill="#555">'+esc(lb)+'</text>')});
+  if(o.line!=null){var ly=T+h-o.line/mx*h;s+='<line x1="'+L+'" x2="'+(L+w)+'" y1="'+ly+'" y2="'+ly+'" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="6 4"/><text x="'+(L+w)+'" y="'+(ly-4)+'" text-anchor="end" font-size="12" font-weight="700" fill="#c0392b">KKM '+o.line+'</text>'}
   return svgBox(t,s);
 }
 function hbarSvg(t,items){
-  var L=140,R=40,T=42,n=items.length,h=(CH.H-T-14)/Math.max(n,1),s='';
-  if(!n)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="13">Belum ada data</text>');
+  var L=156,R=44,T=42,n=items.length,h=(CH.H-T-14)/Math.max(n,1),s='';
+  if(!n)return svgBox(t,'<text x="'+CH.W/2+'" y="160" text-anchor="middle" fill="#999" font-size="15">Belum ada data</text>');
   items.forEach(function(x,i){var y=T+i*h,bw=(CH.W-L-R)*x.v/100,lb=String(x.l).length>20?String(x.l).slice(0,19)+'\u2026':x.l;
-    s+='<text x="'+(L-8)+'" y="'+(y+h*.62)+'" text-anchor="end" font-size="11" fill="#444">'+(i+1)+'. '+esc(lb)+'</text><rect x="'+L+'" y="'+(y+h*.14)+'" width="'+bw.toFixed(1)+'" height="'+(h*.66).toFixed(1)+'" rx="5" fill="'+(x.c||TC().m)+'"/><text x="'+(L+bw+6).toFixed(1)+'" y="'+(y+h*.62)+'" font-size="11" font-weight="700" fill="#333">'+nf(x.v)+'</text>'});
+    s+='<text x="'+(L-8)+'" y="'+(y+h*.62)+'" text-anchor="end" font-size="13" fill="#444">'+(i+1)+'. '+esc(lb)+'</text><rect x="'+L+'" y="'+(y+h*.14)+'" width="'+bw.toFixed(1)+'" height="'+(h*.66).toFixed(1)+'" rx="5" fill="'+(x.c||TC().m)+'"/><text x="'+(L+bw+6).toFixed(1)+'" y="'+(y+h*.62)+'" font-size="13" font-weight="700" fill="#333">'+nf(x.v)+'</text>'});
   return svgBox(t,s);
 }
 function lpCharts(S){
@@ -3092,6 +3104,128 @@ function xdDoc(P,W){
     });
   });
   return out.join('');
+}
+/* ===== Ikon tab berbeda ===== */
+Object.assign(IC,{
+  award:'<circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/>',
+  teacher:'<path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+  idcard:'<rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M13 10h6M13 14h4"/>',
+  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>'
+});
+/* ===== Laporan Periode: pemuatan bertahap dengan indikator waktu + pemeriksaan kelengkapan nilai ===== */
+LP.C={};LP.pg=null;LP.chk='';LP.tok=0;LP.wl=0;
+function lpClock(s){s=Math.max(0,Math.round(s));return ('0'+Math.floor(s/60)).slice(-2)+':'+('0'+s%60).slice(-2)}
+function lpPool(items,n,fn){return new Promise(function(res){var i=0,run=0,done=0,N=items.length;if(!N)return res();var fin=function(){run--;done++;if(done==N)res();else next()};var next=function(){while(run<n&&i<N){run++;fn(items[i++]).then(fin,fin)}};next()})}
+function lpTick(){
+  var g=LP.pg,e=$('#lpb');if(!g||!e)return;var el=(Date.now()-g.t0)/1000,pc=g.N?g.done/g.N*100:0,eta=g.done>0?el/g.done*(g.N-g.done):null;
+  e.style.width=Math.max(5,pc)+'%';$('#lpt1').textContent=g.msg;
+  $('#lpt2').textContent=(g.N?'Ruang ujian '+g.done+' dari '+g.N+' ('+Math.round(pc)+'%)':'Menyiapkan data periode')+'  \u2022  Berlalu '+lpClock(el)+'  \u2022  '+(eta!=null?'Perkiraan sisa \u00B1 '+lpClock(eta+1):'Menghitung perkiraan waktu...');
+}
+function lpLoadHtml(){return '<div class=lpld><div class=lpsp></div><div class=lpldb><b id=lpt1>Menyiapkan data periode...</b><div class=lpbar><i id=lpb style="width:5%"></i></div><div id=lpt2></div><small>Sistem sedang bekerja membaca hasil ujian dari banyak spreadsheet. Mohon tunggu dan jangan menutup halaman ini.</small></div></div>'}
+function lpInit(){
+  api('jadwalList',U.nik,PW).then(function(r){JL=(r||[]).map(jdMig);if(!LP.id||!JL.some(function(P){return P.id==LP.id}))LP.id=JL.length?JL[0].id:'';lpView();if(LP.id)lpCheck(0)}).catch(function(e){var w=$('#lpw');if(w)w.textContent='Gagal memuat: '+e});
+}
+function lpRe(){if(!$('#lpk'))return;LP.kkm=+$('#lpk').value||70;LP.hi=+$('#lph').value||85;LP.only=$('#lpo').checked?1:0;if(LP.D)lpView()}
+function lpSel(){LP.id=$('#lpp').value;LP.D=null;lpCheck(0)}
+function lpCheck(force){
+  var id=LP.id;if(!id)return;LP.D=null;lpRe();
+  if(!force&&LP.C[id]){LP.chk=lpChkHtml(LP.C[id]);return lpView()}
+  var tok=LP.tok=Date.now(),g=LP.pg={t0:Date.now(),done:0,N:0,msg:'Menyiapkan data periode...'};
+  LP.chk=lpLoadHtml();lpView();if(LP.iv)clearInterval(LP.iv);LP.iv=setInterval(lpTick,400);lpTick();
+  api('periodeBase',U.nik,PW,id).then(function(B){
+    if(LP.tok!=tok)return;g.N=B.rooms.length;g.msg='Membaca hasil ujian...';var R={};
+    return lpPool(B.rooms,4,function(r){
+      if(LP.tok!=tok)return Promise.resolve();g.msg='Membaca: '+r.mapel+' \u2022 '+r.room;
+      return api('periodeRoom',U.nik,PW,r.kode,r.room).then(function(x){R[r.kode+'|'+r.room]=x},function(e){R[r.kode+'|'+r.room]={err:String(e)}}).then(function(){g.done++;lpTick()});
+    }).then(function(){if(LP.tok!=tok)return;clearInterval(LP.iv);LP.C[id]={B:B,R:R,ts:Date.now(),sec:(Date.now()-g.t0)/1000};LP.chk=lpChkHtml(LP.C[id]);lpView()});
+  }).catch(function(e){if(LP.tok!=tok)return;clearInterval(LP.iv);LP.chk='<div class=lkb>'+ic('alert',16)+'<span>Gagal memuat: '+esc(e)+'</span></div>';lpView()});
+}
+function lpChkHtml(C){
+  var B=C.B,R=C.R,rows=[],tp=0,tm=0,te=0,np=0,names=function(a,n){return a.slice(0,n).map(function(x){return esc(x.n)}).join(', ')+(a.length>n?' +'+(a.length-n)+' lainnya':'')};
+  B.rooms.forEach(function(r){
+    var x=R[r.kode+'|'+r.room]||{},T=B.tabs.filter(function(t){return t.v==r.room&&t.mapel.some(function(m){return m.kode==r.kode})})[0]||{j:r.j,k:r.k,v:r.room};
+    if(x.err){te++;rows.push({T:T,r:r,err:x.err,w:3});return}
+    var arr=Object.keys(x.rows||{}).map(function(k){return x.rows[k]}),pend=arr.filter(function(a){return a.pend>0}),got={};arr.forEach(function(a){got[a.nis||a.n]=1});
+    var ros=B.roster.filter(function(f){return f.j==T.j&&f.k==T.k&&f.v==T.v}),miss=ros.filter(function(f){return !got[f.nis]&&!arr.some(function(a){return a.n==f.n})});
+    tp+=pend.length;tm+=miss.length;np+=arr.length;rows.push({T:T,r:r,n:arr.length,pend:pend,miss:miss,ros:ros.length,w:pend.length?2:miss.length?1:0});
+  });
+  rows.sort(function(a,b){return b.w-a.w});
+  var ok=!tp&&!te,cls=ok?(tm?'lpwarn':'lpok'):'lpbad';
+  var banner=ok?(tm?'Semua nilai peserta sudah dikoreksi, tetapi '+tm+' siswa belum mengikuti sebagian ujian.':'Semua nilai sudah lengkap dan sudah dikoreksi oleh guru. Laporan siap direkap.')
+    :(tp?tp+' nilai siswa belum dikoreksi pada '+rows.filter(function(x){return x.pend&&x.pend.length}).length+' mata pelajaran. Mohon minta guru terkait memeriksa kembali sebelum laporan direkap.':'')+(te?' '+te+' ruang ujian gagal dibaca.':'');
+  var tr=rows.map(function(x){
+    var ch=function(t,c){return '<span class="lpch '+c+'">'+t+'</span>'};
+    if(x.err)return '<tr><td>'+esc(x.T.j+' '+x.T.k+' / '+x.T.v)+'</td><td>'+mpb(x.r.mapel)+'</td><td>'+esc(x.r.kode)+'</td><td colspan=3>'+esc(x.err)+'</td><td>'+ch('Gagal dibaca','bad')+'</td></tr>';
+    return '<tr><td>'+esc(x.T.j+' '+x.T.k+' / '+x.T.v)+'</td><td>'+mpb(x.r.mapel)+'<br><small>Guru: '+esc(x.r.guru||'-')+'</small></td><td>'+esc(x.r.kode)+'</td><td align=center><b>'+x.n+'</b>/'+x.ros+'</td>'
+      +'<td>'+(x.pend.length?'<b style="color:#b3261e">'+x.pend.length+' siswa</b><br><small>'+names(x.pend,5)+'</small>':'<span class=lpn>\u2014</span>')+'</td>'
+      +'<td>'+(x.miss.length?'<b>'+x.miss.length+' siswa</b><br><small>'+names(x.miss,4)+'</small>':'<span class=lpn>\u2014</span>')+'</td>'
+      +'<td align=center>'+(x.pend.length?ch('Belum dikoreksi','bad'):x.miss.length?ch('Ada yang belum ikut','warn'):ch('Lengkap','good'))+'</td></tr>';
+  }).join('');
+  return '<div class="box lpc lpck '+cls+(ok&&!tm?' cl':'')+'"><h3 class=lph onclick="lpT(this)">'+ic(ok?'check':'alert',18)+' Pemeriksaan Kelengkapan Nilai <small>'+B.rooms.length+' ruang ujian \u2022 '+np+' hasil ujian \u2022 dibaca dalam '+lpClock(C.sec)+'</small><span class=lpt>'+(ok?(tm?'Perlu dicek':'Lengkap'):'Ada yang belum dikoreksi')+'</span></h3>'
+    +'<div class=lpbn>'+banner+'</div><div class=lpb><div class=sc><table><tr><th>Kelas / Variasi</th><th>Mata Pelajaran</th><th>Kode</th><th>Peserta</th><th>Belum dikoreksi guru</th><th>Belum mengikuti</th><th>Status</th></tr>'+tr+'</table></div></div></div>';
+}
+function lpWali(){
+  if(LP.wl)return Promise.resolve();
+  return Promise.all([api('guruList',U.nik,PW).catch(function(){return []}),api('gdAll',U.nik,PW).catch(function(){return []})]).then(function(r){LP.wali={};(r[1]||[]).forEach(function(x){var w=x.d&&x.d.wali;if(w){var g=(r[0]||[]).filter(function(y){return y.i==x.nik})[0];LP.wali[w.j+'|'+w.k+'|'+(w.v||'')]=g?g.n:''}});LP.wl=1});
+}
+function lpBuild(C){
+  var B=C.B,R=C.R,sis={},ix=0,info={},errs=[];B.roster.forEach(function(f){info[f.nis]=f});
+  var get=function(T,nis,nm){var sk=[T.j,T.k,T.v,nis||nm].join('|');return sis[sk]=sis[sk]||{ix:ix++,nis:nis||('N:'+nm),nisn:(info[nis]||{}).nisn||'',n:(info[nis]||{}).n||nm,j:T.j,k:T.k,v:T.v,m:{}}};
+  B.tabs.forEach(function(T){
+    T.mapel.forEach(function(m){var rr=R[m.kode+'|'+T.v];if(rr&&rr.err)errs.push(T.v+' '+m.mapel+': '+rr.err);if(rr&&rr.rows)Object.keys(rr.rows).forEach(function(k){var x=rr.rows[k];get(T,x.nis,x.n).m[m.kode]={n:x.nilai,p:x.pend}})});
+    B.roster.forEach(function(f){if(f.j==T.j&&f.k==T.k&&f.v==T.v)get(T,f.nis,f.n)});
+  });
+  return {id:B.id,nama:B.nama,ta:B.ta,t1:B.t1,t2:B.t2,tabs:B.tabs,siswa:Object.keys(sis).map(function(k){return sis[k]}),agenda:B.agenda,errs:errs};
+}
+function lpShow(){
+  var C=LP.C[LP.id];if(!C)return alert('Tunggu pemeriksaan kelengkapan nilai selesai terlebih dahulu.');lpRe();
+  lpWali().then(function(){LP.D=lpBuild(C);LP.jn=LP.kl=LP.vr='';lpView()});
+}
+function lpView(){
+  var w=$('#lpw');if(!w)return;
+  var busy=LP.pg&&!LP.C[LP.id]&&LP.iv&&LP.tok&&!/lkb/.test(LP.chk),head='<h3>'+ic('award',18)+' Laporan Periode Asesmen <small>gabungan nilai seluruh mata pelajaran yang sudah dikoreksi guru</small></h3><div class=jdh><label>Periode Asesmen<select id=lpp onchange="lpSel()">'+JL.map(function(P){return '<option value="'+esc(P.id)+'"'+(P.id==LP.id?' selected':'')+'>'+esc(P.nama)+'</option>'}).join('')+'</select></label>'
+   +'<label>Batas perbaikan (KKM)<input id=lpk type=number min=0 max=100 value='+LP.kkm+' onchange="lpRe()"></label><label>Batas pertahankan<input id=lph type=number min=0 max=100 value='+LP.hi+' onchange="lpRe()"></label></div>'
+   +'<label style="display:inline-flex;gap:6px;align-items:center;margin:0 14px 10px 0"><input type=checkbox id=lpo style="width:auto;margin:0" '+(LP.only?'checked':'')+' onchange="lpRe()"> Hanya hitung nilai yang sudah selesai dikoreksi</label>'
+   +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button onclick="lpShow()"'+(LP.C[LP.id]?'':' disabled')+'>'+ic('chart',15)+' '+(LP.D?'Perbarui Tampilan Laporan':'Tampilkan Laporan')+'</button><button class=o onclick="lpCheck(1)">'+ic('scan',15)+' Periksa Ulang Kelengkapan Nilai</button></div>'
+   +(JL.length?'':'<p class=em>Belum ada periode asesmen. Buat dulu di tab Penjadwalan Asesmen.</p>')+'<div id=lpm>'+LP.chk+'</div>';
+  if(!LP.D){w.innerHTML=head;lpTick();return}
+  var D=LP.D,S=lpSet(),js=D.tabs.map(function(t){return t.j}).filter(function(x,i,a){return a.indexOf(x)==i}),ks=D.tabs.filter(function(t){return !LP.jn||t.j==LP.jn}).map(function(t){return t.k}).filter(function(x,i,a){return a.indexOf(x)==i}),vs=D.tabs.filter(function(t){return (!LP.jn||t.j==LP.jn)&&(!LP.kl||t.k==LP.kl)}).map(function(t){return t.v}).filter(function(x,i,a){return a.indexOf(x)==i});
+  var op=function(a,c){return a.map(function(x){return '<option'+(x==c?' selected':'')+'>'+esc(x)+'</option>'}).join('')},ch=lpCharts(S);
+  var rows=S.L.map(function(x){var s=x.s;return '<tr class=lpr><td align=center><b>'+x.rk+'</b></td><td><a class=lnk onclick="lpDet('+s.ix+')">'+esc(s.n)+'</a><br><small>NIS '+esc(/^N:/.test(s.nis)?'-':s.nis)+'</small></td><td>'+esc(s.j+' '+s.k+(s.v?' / '+s.v:''))+'</td><td align=center><b>'+(x.c.length?x.sum:'-')+'</b></td><td align=center><b>'+nf(x.avg)+'</b></td>'
+    +'<td>'+(x.hi?mpb(x.hi.m)+' <b>'+x.hi.n+'</b>':'-')+'</td><td>'+(x.lo?mpb(x.lo.m)+' <b>'+x.lo.n+'</b>':'-')+'</td><td align=center>'+(x.ag?'<b>'+x.H+'</b>/'+x.tot+'<br><small>S'+x.S+' I'+x.I+' A'+x.A+'</small>':'<small>belum ada agenda</small>')+'</td>'
+    +'<td>'+lpChips(x.imp,'bad')+'</td><td>'+lpChips(x.keep,'good')+'</td><td align=center>'+(x.pend||x.none?'<span class="lpch warn">'+(x.pend?x.pend+' menunggu koreksi':'')+(x.pend&&x.none?', ':'')+(x.none?x.none+' belum ikut':'')+'</span>':'<span class="lpch good">Lengkap</span>')+'</td><td><button class=o onclick="lpDet('+s.ix+')">'+ic('eye',14)+' Detail</button></td></tr>'}).join('');
+  w.innerHTML=head+(D.errs&&D.errs.length?'<div class=lkb>'+ic('alert',16)+'<span><b>Perhatian:</b> '+D.errs.map(esc).join('; ')+'</span></div>':'')
+   +'<div class=jdh style="margin-top:14px"><label>Jenjang<select onchange="LP.jn=this.value;LP.kl=LP.vr=\'\';lpView()"><option value="">Semua</option>'+op(js,LP.jn)+'</select></label><label>Kelas<select onchange="LP.kl=this.value;LP.vr=\'\';lpView()"><option value="">Semua</option>'+op(ks,LP.kl)+'</select></label><label>Variasi Kelas<select onchange="LP.vr=this.value;lpView()"><option value="">Semua</option>'+op(vs,LP.vr)+'</select></label></div>'
+   +'<div data-h=1 style="margin:6px 0 12px"><b>Unduh laporan periode:</b> '+xdBtns('lpAct(@)')+' <button class=o onclick="lpAct(\'print\')">'+ic('print',15)+' Print</button></div>'
+   +lpStats(S)+'<div class=lpg>'+ch.map(function(c){return '<div class=lpgc>'+c+'</div>'}).join('')+'</div>'
+   +'<h3 style="margin-top:20px">Daftar Nilai Siswa <small>'+esc(D.nama)+' \u2022 TA '+esc(D.ta)+'</small></h3>'+srchBar('#lpw .lpr','Cari siswa: nama, NIS, kelas, mata pelajaran...')
+   +'<div class=sc><table class=lpt2><tr><th>Rank</th><th>Nama Siswa</th><th>Kelas</th><th>Total Nilai</th><th>Rata-rata</th><th>Nilai Tertinggi</th><th>Nilai Terendah</th><th>Kehadiran</th><th>Perlu Perbaikan (&lt; '+LP.kkm+')</th><th>Dipertahankan (\u2265 '+LP.hi+')</th><th>Status</th><th></th></tr>'+(rows||'<tr><td colspan=12 class=em>Tidak ada siswa.</td></tr>')+'</table></div>';
+}
+/* ===== Dokumen: lembar 1 = semua grafik (3 x 2), lembar berikut = tabel nilai siswa ===== */
+function chartGrid(ch){var c=function(x){return '<td width=33.3% align=center valign=top style="padding:4px">'+x+'</td>'};return '<table width=100% cellspacing=0 cellpadding=0 style="table-layout:fixed;margin-top:8px"><tr>'+ch.slice(0,3).map(c).join('')+'</tr><tr>'+ch.slice(3,6).map(c).join('')+'</tr></table>'}
+function lpDoc(){
+  var S=lpSet(),D=LP.D,ch=lpCharts(S),T=TC(),mpl=[];
+  S.L.forEach(function(x){x.it.forEach(function(y){if(mpl.indexOf(y.m)<0)mpl.push(y.m)})});mpl.sort(jdNat);
+  var stat='<table width=100% cellspacing=8 cellpadding=0 style="table-layout:fixed;margin-top:2px"><tr>'+[['Jumlah Siswa',S.n],['Rata-rata',nf(S.avg)],['Tertinggi',S.hi==null?'-':S.hi],['Terendah',S.lo==null?'-':S.lo],['Perlu Perbaikan',S.pie[2]+' siswa'],['Dipertahankan',S.pie[0]+' siswa']].map(function(x){return '<td align=center style="background:'+T.mt+';padding:6px"><div style="font-size:10.5px;color:#666">'+x[0]+'</div><div style="font-size:18px;font-weight:700;color:'+T.m+'">'+x[1]+'</div></td>'}).join('')+'</tr></table>';
+  var sub=lpScope()+' \u2022 TA '+D.ta+' \u2022 KKM '+LP.kkm+' \u2022 Dipertahankan \u2265 '+LP.hi;
+  var xr=[['Periode',D.nama],['Cakupan',lpScope()],['Tahun Ajaran',D.ta],['Jumlah Siswa',S.n],['Rata-rata Keseluruhan',nf(S.avg)],['Nilai Tertinggi',S.hi==null?'-':S.hi],['Nilai Terendah',S.lo==null?'-':S.lo],['Siswa perlu perbaikan (< '+LP.kkm+')',S.pie[2]],['Siswa dipertahankan (>= '+LP.hi+')',S.pie[0]]];
+  var tx=function(a){return a.length?a.map(function(x){return x.m+' ('+x.n+')'}).join(', '):'-'},kls=function(s){return s.j+' '+s.k+(s.v?' '+s.v:'')};
+  var wm=Math.round(670/Math.max(mpl.length,1))/10,colsA=[{h:'Rank',w:3.5,a:'center'},{h:'Nama Siswa',w:13},{h:'Kelas',w:7}].concat(mpl.map(function(m){return {h:m,w:wm,a:'center'}})).concat([{h:'Total',w:4.5,a:'center'},{h:'Rata-rata',w:4.5,a:'center'}]);
+  var rowsA=S.L.map(function(x){var mp={};x.it.forEach(function(y){mp[y.m]=y});return [x.rk,x.s.n,kls(x.s)].concat(mpl.map(function(m){var y=mp[m];return !y||y.n==null?'-':y.n+(y.st=='pend'?'*':'')})).concat([x.c.length?x.sum:'-',nf(x.avg)])});
+  var colsB=[{h:'Rank',w:4,a:'center'},{h:'Nama Siswa',w:14},{h:'Kelas',w:8},{h:'Nilai Tertinggi',w:11},{h:'Nilai Terendah',w:11},{h:'Kehadiran',w:10,a:'center'},{h:'Perlu Perbaikan (< '+LP.kkm+')',w:18},{h:'Dipertahankan (\u2265 '+LP.hi+')',w:17},{h:'Status',w:7,a:'center'}];
+  var rowsB=S.L.map(function(x){return [x.rk,x.s.n,kls(x.s),x.hi?x.hi.n+' - '+x.hi.m:'-',x.lo?x.lo.n+' - '+x.lo.m:'-',x.ag?x.H+'/'+x.tot+' (S'+x.S+' I'+x.I+' A'+x.A+')':'-',tx(x.imp),tx(x.keep),x.pend||x.none?(x.pend?x.pend+' menunggu':'')+(x.none?(x.pend?', ':'')+x.none+' belum ikut':''):'Lengkap']});
+  var mr=S.mp.map(function(x){return [x.m,nf(x.avg),x.hi,x.lo,x.n,x.avg<LP.kkm?'Perlu perbaikan':x.avg>=LP.hi?'Dipertahankan':'Tuntas']});
+  return {title:'LAPORAN PERIODE ASESMEN',cap:[11,14],blocks:[
+    {banner:D.nama+' \u2022 Ringkasan & Grafik',sub:sub,html:stat+chartGrid(ch),xr:xr,cw:330},
+    {banner:'Nilai Siswa per Mata Pelajaran',sub:sub+(LP.only?' \u2022 * = menunggu koreksi (tidak dihitung)':''),sm:1,cols:colsA,rows:rowsA},
+    {banner:'Analisis Nilai Siswa',sub:sub,sm:1,cols:colsB,rows:rowsB},
+    {banner:'Rekapitulasi per Mata Pelajaran',sub:sub,cols:[{h:'Mata Pelajaran',w:30},{h:'Rata-rata',w:14,a:'center'},{h:'Tertinggi',w:14,a:'center'},{h:'Terendah',w:14,a:'center'},{h:'Peserta',w:12,a:'center'},{h:'Keterangan',w:16,a:'center'}],rows:mr}]};
+}
+function inl2png(html,cw){var ps=html.match(/<svg[\s\S]*?<\/svg>/g)||[];cw=cw||360;return Promise.all(ps.map(svg2png)).then(function(u){ps.forEach(function(p,i){var m=/width="(\d+)" height="(\d+)"/.exec(p);html=html.split(p).join(u[i]?'<img src="'+u[i]+'" width='+cw+' height='+Math.round(cw*m[2]/m[1])+'>':'')});return html})}
+function lpOut(P,t,fn){
+  if(t!='doc')return xdOut(P,t,fn);
+  toast('Menyiapkan grafik untuk Word...');
+  Promise.all(P.blocks.map(function(b){return b.html!=null?inl2png(b.html,b.cw||360).then(function(h){b.html=h}):0})).then(function(){xdOut(P,t,fn)});
 }
 /* ===== Gambar Kop Sekolah (header dokumen Word / PDF) ===== */
 var KOPD=null,KOPP=null;
