@@ -534,6 +534,79 @@ html[data-xt=mil] #app[data-s=exam] .box h3,html[data-xt=f100] #app[data-s=exam]
 .xtp[data-t=def]{--xb:linear-gradient(180deg,#fff,#f7ecee);--xc:#fff;--xo:#fff;--xs:#f7ecee;--xbd:#e5d0d3}
 .xph{height:10px;border-radius:6px;background:var(--xc);border:1px solid var(--xbd)}.xpq{height:28px;border-radius:var(--xr2,10px);background:var(--xc);border:1px solid var(--xbd)}
 .xpo i{display:block;height:11px;border-radius:var(--xr,6px);background:var(--xo);border:1px solid var(--xbd);margin-bottom:4px}.xpo i.s{background:var(--xs)}
+
+/* kolom Soal pada detail laporan: label jenis soal tidak keluar kolom */
+table.dtb{min-width:960px}table.dtb th:nth-child(2){width:156px}
+table.dtb td:nth-child(2){overflow:hidden}
+table.dtb td:nth-child(2) .qt{white-space:normal;display:inline-flex;align-items:center;gap:4px;margin:0;max-width:100%;box-sizing:border-box;line-height:1.25;font-size:10.5px;letter-spacing:.3px;text-align:left;word-break:break-word;border-radius:14px;padding:4px 9px}
+/* ===== Tema ujian: variabel tambahan & tema baru ===== */
+html[data-xt=mil],.xtp[data-t=mil]{--xy:#ff7043;--xpg:#f5b301;--xjs:#4fc3f7;--xes:#ce93d8;--xw:#ffb300;--xcr:#ff1744;--xd:radial-gradient(circle,rgba(245,179,1,.28) 1px,transparent 1.6px),conic-gradient(from 160deg at 50% -8%,transparent 0 8deg,rgba(255,255,255,.07) 8deg 14deg,transparent 14deg 24deg,rgba(255,255,255,.06) 24deg 30deg,transparent 30deg 360deg);--xds:46px 46px,100% 100%}
+html[data-xt=f100],.xtp[data-t=f100]{--xy:#ff5252;--xpg:#ffd23f;--xjs:#ff8a65;--xes:#80deea;--xw:#ffb300;--xcr:#ff1744;--xd:repeating-conic-gradient(from 0deg at 50% -10%,rgba(255,255,255,.08) 0 5deg,transparent 5deg 10deg);--xds:100% 100%}
+html[data-xt=adv],.xtp[data-t=adv]{--xy:#d84315;--xpg:#8a5a1f;--xjs:#2e7d32;--xes:#6a1b9a;--xw:#f9a825;--xcr:#c62828;--xd:radial-gradient(circle at 25% 25%,rgba(255,255,255,.08) 0 16px,transparent 17px),radial-gradient(circle at 75% 75%,rgba(0,0,0,.10) 0 12px,transparent 13px);--xds:96px 96px,96px 96px}
+html[data-xt=clr],.xtp[data-t=clr]{--xy:#f59e0b;--xpg:#2563eb;--xjs:#0d9488;--xes:#7c3aed;--xw:#f59e0b;--xcr:#dc2626;--xd:radial-gradient(circle,#cbd5e1 1px,transparent 1.4px);--xds:22px 22px}
+html[data-xt=game],.xtp[data-t=game]{--xy:#ffb300;--xpg:#00f0ff;--xjs:#ff2bd6;--xes:#b8ff3d;--xw:#ffb300;--xcr:#ff1744;--xd:linear-gradient(rgba(0,240,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,43,214,.12) 1px,transparent 1px);--xds:40px 40px,40px 40px}
+html[data-xt=spc],.xtp[data-t=spc]{--xb:linear-gradient(180deg,#02031a,#0b1240 70%,#1a0b4a);--xc:rgba(14,20,70,.9);--xa:#8ab4ff;--xo:#141c5c;--xs:#6d83ff;--xst:#fff;--xt:#eef1ff;--xbd:#5b6bd6;--xbt:#071040;--xr:16px;--xr2:20px;--xf:'Trebuchet MS',sans-serif;--xg:0 0 18px rgba(109,131,255,.7);--xy:#ffcf5c;--xpg:#7c9cff;--xjs:#ff7ad9;--xes:#7af7d1;--xw:#ffcf5c;--xcr:#ff4d6d;
+  --xd:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 70px,#fff,transparent),radial-gradient(1.6px 1.6px at 150px 130px,#bcd,transparent),radial-gradient(1px 1px at 60px 150px,#fff,transparent),radial-gradient(circle at 85% 12%,rgba(139,92,246,.35),transparent 28%),radial-gradient(circle at 10% 90%,rgba(56,189,248,.22),transparent 30%);--xds:200px 200px,200px 200px,200px 200px,200px 200px,100% 100%,100% 100%}
+html[data-xt=ocn],.xtp[data-t=ocn]{--xb:linear-gradient(180deg,#0077b6,#00b4d8 55%,#90e0ef);--xc:rgba(255,255,255,.93);--xa:#0077b6;--xo:#e8f9ff;--xs:#00b4d8;--xst:#fff;--xt:#0b3a53;--xbd:#48cae4;--xbt:#fff;--xr:999px;--xr2:22px;--xf:'Trebuchet MS',sans-serif;--xg:0 0 14px rgba(0,180,216,.6);--xy:#ff9f1c;--xpg:#00b4d8;--xjs:#f4a100;--xes:#ef476f;--xw:#ffb703;--xcr:#e63946;
+  --xd:radial-gradient(circle at 50% 100%,rgba(255,255,255,.16) 0 34%,transparent 35%),radial-gradient(circle,rgba(255,255,255,.38) 3px,transparent 4px),radial-gradient(circle,rgba(255,255,255,.26) 5px,transparent 6px);--xds:120px 56px,140px 140px,230px 230px}
+html[data-xt=cnd],.xtp[data-t=cnd]{--xb:linear-gradient(135deg,#ffe0f0,#fff3c4 60%,#d6f5ff);--xc:rgba(255,255,255,.94);--xa:#ff4f9a;--xo:#fff0f7;--xs:#ff6fa5;--xst:#fff;--xt:#5a2745;--xbd:#ff9ec8;--xbt:#fff;--xr:22px;--xr2:26px;--xf:'Comic Sans MS','Trebuchet MS',sans-serif;--xg:0 4px 0 #d63a82;--xy:#ff7043;--xpg:#ff6fa5;--xjs:#ffb347;--xes:#5bb8e8;--xw:#ffb347;--xcr:#e53935;
+  --xd:radial-gradient(circle,rgba(255,255,255,.8) 7px,transparent 8px),radial-gradient(circle,rgba(255,158,200,.35) 5px,transparent 6px);--xds:60px 60px,90px 90px}
+html[data-xt=kls],.xtp[data-t=kls]{--xb:linear-gradient(180deg,#1f4d3a,#163a2b);--xc:rgba(10,40,28,.88);--xa:#f2e96b;--xo:rgba(255,255,255,.08);--xs:#f2e96b;--xst:#1b3a2a;--xt:#f5f7ef;--xbd:#d9d4a8;--xbt:#1b3a2a;--xr:10px;--xr2:12px;--xf:'Segoe Print','Comic Sans MS',cursive;--xg:0 0 12px rgba(242,233,107,.5);--xy:#ffa94d;--xpg:#f2e96b;--xjs:#9be7ff;--xes:#ffb3c1;--xw:#ffd43b;--xcr:#ff6b6b;
+  --xd:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 36px),radial-gradient(ellipse at 20% 20%,rgba(255,255,255,.07),transparent 50%);--xds:100% 100%,100% 100%}
+/* menutupi seluruh layar (tidak ada area putih di bawah) + dekorasi latar */
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]){background:var(--xb) fixed!important;min-height:100%}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) body{background:transparent!important;min-height:100vh;color:var(--xt)}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin])::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--xd);background-size:var(--xds)}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) #app{position:relative;z-index:1;min-height:100vh;background:transparent!important}
+/* layar pengantar & selesai */
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) header{background:var(--xc)!important;color:var(--xt)!important;border-bottom:2px solid var(--xbd)!important;box-shadow:none!important}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) :is(.box,.card){background:var(--xc)!important;color:var(--xt)!important;border:2px solid var(--xbd)!important;border-radius:var(--xr2)!important;box-shadow:var(--xg)}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) :is(h1,h2,h3){color:var(--xa)!important;font-family:var(--xf)}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) :is(p,li,small,label,td,th){color:var(--xt)!important}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) :is(select,input){background:var(--xo)!important;color:var(--xt)!important;border:2px solid var(--xbd)!important;border-radius:var(--xr)!important}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=sintro],#app[data-s=fin]) button{background:var(--xa)!important;color:var(--xbt)!important;border:0!important;border-radius:var(--xr)!important;font-weight:700}
+html[data-xt]:not([data-xt=def]) #app[data-s=fin] .ck{background:var(--xa)!important;color:var(--xbt)!important;box-shadow:var(--xg)}
+html[data-xt]:not([data-xt=def]) #app[data-s=fin] h1{text-shadow:var(--xg)}
+/* waktu */
+html[data-xt]:not([data-xt=def]) .tmr{background:var(--xo)!important;color:var(--xt)!important;border:2px solid var(--xbd)!important;border-radius:var(--xr)!important;font-family:var(--xf);box-shadow:var(--xg)}
+html[data-xt]:not([data-xt=def]) .tmr b{font-family:var(--xf)!important;color:var(--xa)}
+html[data-xt]:not([data-xt=def]) .tmr.warn{background:var(--xw)!important;border-color:var(--xw)!important;color:#2b1d00!important}html[data-xt]:not([data-xt=def]) .tmr.warn b{color:#2b1d00}
+html[data-xt]:not([data-xt=def]) .tmr.crit{background:var(--xcr)!important;border-color:var(--xcr)!important;color:#fff!important}html[data-xt]:not([data-xt=def]) .tmr.crit b{color:#fff}
+html[data-xt]:not([data-xt=def]) #tpg{background:rgba(255,255,255,.18)!important}html[data-xt]:not([data-xt=def]) #tpg i{background:linear-gradient(90deg,var(--xa),var(--xs))!important}
+html[data-xt]:not([data-xt=def]) #tpg.warn i{background:var(--xw)!important}html[data-xt]:not([data-xt=def]) #tpg.crit i{background:var(--xcr)!important}
+/* soal dilewati / belum diisi + legenda */
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .map b.y{background:var(--xy)!important;color:#2b1d00!important;border-color:var(--xy)!important;animation:ytw 1.8s ease-in-out infinite}
+@keyframes ytw{0%,100%{box-shadow:0 0 0 0 rgba(255,160,0,0)}50%{box-shadow:0 0 0 5px rgba(255,160,0,.35)}}
+.lgd{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:10px;font-size:11.5px;opacity:.92}
+.lgd i{display:inline-block;width:14px;height:14px;border-radius:4px;border:2px solid var(--xbd,#cfc3c6);vertical-align:-2px;margin-right:4px}
+.lgd i.g{background:var(--xa,#2e9e5b);border-color:var(--xa,#2e9e5b)}.lgd i.y{background:var(--xy,#f5a623);border-color:var(--xy,#f5a623)}
+/* pembeda jenis soal */
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .box.q.t-pg{border-left:12px solid var(--xpg)!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .box.q.t-js{border-left:12px solid var(--xjs)!important;border-style:solid dashed solid solid!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .box.q.t-es{border-left:12px double var(--xes)!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.pg{background:var(--xpg)!important;color:#14142b!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.js{background:var(--xjs)!important;color:#14142b!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.es{background:var(--xes)!important;color:#14142b!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .t-js .jsin{border-style:dashed!important;border-color:var(--xjs)!important;font-size:18px;text-align:center;letter-spacing:.5px}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .t-es textarea{border-color:var(--xes)!important;line-height:28px;background-image:repeating-linear-gradient(transparent 0 27px,rgba(127,127,127,.28) 27px 28px)!important;background-attachment:local}
+.xtsel{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(var(--mr),.25)}.xtsel .xtg{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.xtsel .xtc{padding:8px}
+/* saklar suara */
+.sw{display:inline-flex;align-items:center;gap:10px;cursor:pointer}.sw input{position:absolute;opacity:0}
+.swt{position:relative;width:52px;height:28px;border-radius:20px;background:#c9bfc1;transition:background .25s}.swt::after{content:'';position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s}
+.sw input:checked+.swt{background:var(--m)}.sw input:checked+.swt::after{transform:translateX(24px)}
+/* popup laporan belum siap */
+.wn{display:flex;flex-direction:column;gap:14px}
+.wnh{display:flex;gap:16px;align-items:center;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,#fff3e0,#ffe0e0);border:1px solid #f5c2b8}
+.wnh h3{margin:0 0 4px;color:#b3261e;font-size:20px}.wnh p{margin:0;color:#6b4a46;font-size:13.5px}
+.wnic{flex:none;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff7043,#d32f2f);color:#fff;animation:wnp 1.8s infinite}
+@keyframes wnp{0%{box-shadow:0 0 0 0 rgba(211,47,47,.45)}70%{box-shadow:0 0 0 16px rgba(211,47,47,0)}100%{box-shadow:0 0 0 0 rgba(211,47,47,0)}}
+.wnsg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.wnc{background:#fff;border:1px solid rgba(0,0,0,.08);border-top:4px solid var(--k);border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.06)}.wnc b{display:block;font-size:26px;color:var(--k)}.wnc span{font-size:12px;font-weight:700;color:#555}
+.wnl{max-height:36vh;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+.wni{border-left:5px solid var(--k);background:#fff;border-radius:0 12px 12px 0;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.wnk{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--k);margin-right:6px}.wnd{font-size:12.5px;color:#4a3a3d;margin-top:3px}.wnm{text-align:center;color:#7b6a6d;font-size:12.5px}
+.wnf{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.wnb{background:linear-gradient(135deg,#ff7043,#d32f2f)!important;color:#fff!important;border:0!important}
+@media(max-width:560px){.wnh{flex-direction:column;text-align:center}.wnf{flex-direction:column-reverse}.wnf button{width:100%}}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -712,7 +785,7 @@ var media1 = function (m) { return /#a$/.test(m) ? "<p><iframe src=\"".concat(es
 var media = function (m) { return !m ? '' : String(m).split(/\s+/).filter(Boolean).map(media1).join(''); };
 var $ = function (s) { return document.querySelector(s); };
 var cfgd = 0;
-function scr(n) { app.classList.toggle('na', app.dataset.s === n); app.dataset.s = n; document.documentElement.dataset.sc = n; }
+function scr(n) { app.classList.toggle('na', app.dataset.s === n); app.dataset.s = n; var HR = document.documentElement; HR.dataset.sc = n; HR.dataset.xt = (/^(sintro|exam|fin)$/.test(n) && typeof X != 'undefined' && X && X.xt) || 'def'; }
 var ftx = function () { return "\u00A9 ".concat(new Date().getFullYear(), " ").concat(esc(sc.nama), "<br>Dibuat oleh <b>PT. Entry Data Media</b><br>Kejujuran adalah kehormatan seorang pelajar.<br><small style=\"opacity:.6\">Versi 3.0</small>"); };
 function login(mode) {
     if (mode === void 0) { mode = 'g'; }
@@ -861,7 +934,7 @@ function mgmt() {
                     if (t == 'sk')
                         c = skBox();
                     if (t == 'sk' && U.sa)
-                        c += taBox() + xtBox() + themeBox();
+                        c += taBox() + sndBox() + themeBox();
                     if (t == 'sk' && U.su)
                         c += pwBox();
                     app.innerHTML = "<header>".concat(brand().replace('<h1>', (U.sa ? "<button class=\"o\" onclick=\"mgmt('sk')\">" + ic('school', 15) + " Sekolah</button>" : '') + (U.su ? "<button class=\"o\" onclick=\"tabSet()\">" + ic('sliders', 15) + " Atur Tab</button>" : '') + '<h1>')).concat(av(), "<button class=o onclick=\"login()\">").concat(ic('logout', 15), " Keluar</button></header>\n <div class=wrap><div class=nav>").concat(tabs.map(function (x) { return "<button class=\"nt ".concat(x[0] == t ? 'on' : '', "\" data-k=\"").concat(x[0], "\" onclick=\"mgmt('").concat(x[0], "')\"><i class=ni>").concat(ic(x[2], 20), "</i><span>").concat(x[1], "</span></button>"); }).join(''), "</div><br>").concat(c, "</div><footer class=pf>").concat(ftx(), "</footer>").concat(t == 'as' ? "<button class=fab onclick=\"edit()\">".concat(ic('plus', 20), " Buat Asesmen Baru</button>") : '');
@@ -877,7 +950,7 @@ function saveS() {
             case 0: return [4, go('saveSchool', U.nik, PW, $('#sn').value, $('#sl').value, $('#sk').value)];
             case 1:
                 _a.sent();
-                sc = { nama: $('#sn').value, logo: $('#sl').value, kop: $('#sk').value, tema: sc.tema, tab: sc.tab, ta: sc.ta, xt: sc.xt };
+                sc = { nama: $('#sn').value, logo: $('#sl').value, kop: $('#sk').value, tema: sc.tema, tab: sc.tab, ta: sc.ta, xt: sc.xt, snd: sc.snd };
                 KOPD = null; KOPP = null; loadKop();
                 mgmt('sk');
                 return [2];
@@ -1148,7 +1221,7 @@ function imp(t, inp) {
 }
 var Q = [], E = {};
 function edit(i) {
-    E = i == null ? { jenjang: 'SMA', tingkat: 'X', mapel: '', tahun: 2026, semester: 1, nama: '', durasi: 60, rooms: [], soal: [] } : JSON.parse(JSON.stringify({ kode: L[i].KODE, jenjang: L[i].JENJANG, tingkat: L[i].TINGKAT, mapel: L[i].MAPEL, tahun: L[i].TAHUN, semester: L[i].SEMESTER, nama: L[i].NAMA, durasi: L[i].DURASI, rooms: L[i].rooms.map(function (r) { return r.n; }), rurl: (function () { var m = {}; L[i].rooms.forEach(function (r) { m[r.n] = r.url; }); return m; })(), soal: L[i].soal }));
+    E = i == null ? { jenjang: 'SMA', tingkat: 'X', mapel: '', tahun: 2026, semester: 1, nama: '', xt: 'def', durasi: 60, rooms: [], soal: [] } : JSON.parse(JSON.stringify({ kode: L[i].KODE, jenjang: L[i].JENJANG, tingkat: L[i].TINGKAT, mapel: L[i].MAPEL, tahun: L[i].TAHUN, semester: L[i].SEMESTER, nama: L[i].NAMA, xt: L[i].xt || 'def', durasi: L[i].DURASI, rooms: L[i].rooms.map(function (r) { return r.n; }), rurl: (function () { var m = {}; L[i].rooms.forEach(function (r) { m[r.n] = r.url; }); return m; })(), soal: L[i].soal }));
     if (!E.soal.length)
         E.soal.push({ t: 'pg', q: '', m: '', o: ['', '', '', ''], k: 'A' });
     drawE();
@@ -1156,7 +1229,7 @@ function edit(i) {
 function drawE() {
     scr('edit');
     var sel = function (id, arr, v) { return "<select id=".concat(id, ">").concat(arr.map(function (x) { return "<option ".concat(x == v ? 'selected' : '', ">").concat(x, "</option>"); }).join(''), "</select>"); };
-    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt()\">Batal</button></header><div class=wrap><div class=box><h2>").concat(E.kode ? 'Edit' : 'Buat', " Asesmen ").concat(E.kode ? "<small>Kode ".concat(E.kode, "</small> <button class=\"o cpb\" onclick=\"cpk('").concat(E.kode, "',this)\">").concat(ic('copy', 14), " Salin</button>") : '', "</h2>\n Jenjang ").concat(sel('jj', Object.keys(TK), E.jenjang), " Kelas <select id=tk>").concat(TK[E.jenjang].map(function (x) { return "<option ".concat(x == E.tingkat ? 'selected' : '', ">").concat(x, "</option>"); }).join(''), "</select>\n ").concat(mpSel(E.jenjang, E.mapel), "<input id=th type=number min=2026 value=\"").concat(E.tahun, "\"> Semester ").concat(sel('sm', [1, 2], E.semester), "\n <input id=nm placeholder=\"Nama Asesmen\" value=\"").concat(esc(E.nama), "\">").concat(rmBox(), "</div>\n ").concat(tbHTML()).concat(E.soal.map(function (s, n) { return "<div class=box><b>Soal ".concat(n + 1, "</b> <select onchange=\"sv();E.soal[").concat(n, "].t=this.value;drawE()\"><option value=pg ").concat(s.t == 'pg' ? 'selected' : '', ">Pilihan Ganda</option><option value=js ").concat(s.t == 'js' ? 'selected' : '', ">Jawaban Singkat</option><option value=es ").concat(s.t == 'es' ? 'selected' : '', ">Essay Uraian</option></select> ").concat(tbadge(s.t), " <button class=d onclick=\"sv();E.soal.splice(").concat(n, ",1);drawE()\">\u2715</button>\n <div class=\"re rq\" contenteditable=true data-n=").concat(n, " data-ph=\"Tulis soal di sini... gunakan toolbar di atas untuk format, tabel, dan rumus\">").concat(rh(s.q), "</div><input class=sm data-n=").concat(n, " placeholder=\"Lampiran (URL gambar/video/audio, pisahkan dengan spasi)\" value=\"").concat(esc(s.m), "\"><input type=file accept=\"image/*,video/*,audio/*\" onchange=\"upm(").concat(n, ",this)\"><small>Unggah gambar, video, atau audio (maks 10 MB) ke Drive. Boleh lebih dari satu.</small>\n ").concat(s.t == 'pg' ? [0, 1, 2, 3, 4].map(function (j) { return "<div class=orow><input type=radio name=k".concat(n, " ").concat(s.k == 'ABCDE'[j] ? 'checked' : '', " onchange=\"E.soal[").concat(n, "].k='").concat('ABCDE'[j], "'\" style=\"width:auto\"> <div class=\"re ro so\" contenteditable=true data-n=").concat(n, " data-j=").concat(j, " data-ph=\"Pilihan ").concat('ABCDE'[j], "\">").concat(rh((s.o || [])[j] || ''), "</div></div>"); }).join('') : (s.t == 'js' ? '<small>Siswa menjawab <b>maksimal 60 karakter</b>. Guru menilai dengan bobot 0, ½, 1, 1½, atau 2.</small>' : '<small>Siswa menjawab dengan teks panjang <b>tanpa batas karakter</b>. Guru menilai dengan bobot 0, 1, 2, 3, atau 4.</small>'), "</div>"); }).join(''), "\n <div class=box><button class=o onclick=\"sv();E.soal.push({t:'pg',q:'',m:'',o:['','','','',''],k:'A'});drawE()\">\uFF0B Soal Berikutnya</button><hr><b>Selesai Membuat Soal</b> \u00B7 Durasi (menit) <input id=du type=number value=\"").concat(E.durasi, "\"><button onclick=\"saveE()\">Simpan Soal</button></div></div>");
+    app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt()\">Batal</button></header><div class=wrap><div class=box><h2>").concat(E.kode ? 'Edit' : 'Buat', " Asesmen ").concat(E.kode ? "<small>Kode ".concat(E.kode, "</small> <button class=\"o cpb\" onclick=\"cpk('").concat(E.kode, "',this)\">").concat(ic('copy', 14), " Salin</button>") : '', "</h2>\n Jenjang ").concat(sel('jj', Object.keys(TK), E.jenjang), " Kelas <select id=tk>").concat(TK[E.jenjang].map(function (x) { return "<option ".concat(x == E.tingkat ? 'selected' : '', ">").concat(x, "</option>"); }).join(''), "</select>\n ").concat(mpSel(E.jenjang, E.mapel), "<input id=th type=number min=2026 value=\"").concat(E.tahun, "\"> Semester ").concat(sel('sm', [1, 2], E.semester), "\n <input id=nm placeholder=\"Nama Asesmen\" value=\"").concat(esc(E.nama), "\">").concat(rmBox(), xtSel(), "</div>\n ").concat(tbHTML()).concat(E.soal.map(function (s, n) { return "<div class=box><b>Soal ".concat(n + 1, "</b> <select onchange=\"sv();E.soal[").concat(n, "].t=this.value;drawE()\"><option value=pg ").concat(s.t == 'pg' ? 'selected' : '', ">Pilihan Ganda</option><option value=js ").concat(s.t == 'js' ? 'selected' : '', ">Jawaban Singkat</option><option value=es ").concat(s.t == 'es' ? 'selected' : '', ">Essay Uraian</option></select> ").concat(tbadge(s.t), " <button class=d onclick=\"sv();E.soal.splice(").concat(n, ",1);drawE()\">\u2715</button>\n <div class=\"re rq\" contenteditable=true data-n=").concat(n, " data-ph=\"Tulis soal di sini... gunakan toolbar di atas untuk format, tabel, dan rumus\">").concat(rh(s.q), "</div><input class=sm data-n=").concat(n, " placeholder=\"Lampiran (URL gambar/video/audio, pisahkan dengan spasi)\" value=\"").concat(esc(s.m), "\"><input type=file accept=\"image/*,video/*,audio/*\" onchange=\"upm(").concat(n, ",this)\"><small>Unggah gambar, video, atau audio (maks 10 MB) ke Drive. Boleh lebih dari satu.</small>\n ").concat(s.t == 'pg' ? [0, 1, 2, 3, 4].map(function (j) { return "<div class=orow><input type=radio name=k".concat(n, " ").concat(s.k == 'ABCDE'[j] ? 'checked' : '', " onchange=\"E.soal[").concat(n, "].k='").concat('ABCDE'[j], "'\" style=\"width:auto\"> <div class=\"re ro so\" contenteditable=true data-n=").concat(n, " data-j=").concat(j, " data-ph=\"Pilihan ").concat('ABCDE'[j], "\">").concat(rh((s.o || [])[j] || ''), "</div></div>"); }).join('') : (s.t == 'js' ? '<small>Siswa menjawab <b>maksimal 60 karakter</b>. Guru menilai dengan bobot 0, ½, 1, 1½, atau 2.</small>' : '<small>Siswa menjawab dengan teks panjang <b>tanpa batas karakter</b>. Guru menilai dengan bobot 0, 1, 2, 3, atau 4.</small>'), "</div>"); }).join(''), "\n <div class=box><button class=o onclick=\"sv();E.soal.push({t:'pg',q:'',m:'',o:['','','','',''],k:'A'});drawE()\">\uFF0B Soal Berikutnya</button><hr><b>Selesai Membuat Soal</b> \u00B7 Durasi (menit) <input id=du type=number value=\"").concat(E.durasi, "\"><button onclick=\"saveE()\">Simpan Soal</button></div></div>");
     tbStick(); $('#jj').onchange = function () { sv(); E.jenjang = $('#jj').value; E.tingkat = TK[E.jenjang][0]; if ((MP[E.jenjang] || []).indexOf(E.mapel) < 0) E.mapel = ''; drawE(); };
 }
 function sv() {
@@ -1193,8 +1266,8 @@ function saveE() {
 var mob = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 var X, Qs, ans, seen, cur, endT, tm, pn, done, room, LR = '';
 function sIntro(i) {
-    scr('sintro');
     X = i;
+    scr('sintro');
     preloadMedia(i.soal);
     app.innerHTML = "<header>".concat(brand(), "<span>").concat(esc(i.nama), "</span></header><div class=wrap><div class=box><h2>").concat(esc(i.judul), "</h2><p style=\"color:#7b6a6d;margin-top:-6px\">").concat(esc(i.mapel), " \u2022 ").concat(i.durasi, " menit \u2022 ").concat(i.soal.length, " soal</p><div class=sg>\n<div class=st><i>").concat(ic('play', 15), "</i><span>Pilih kelas Anda lalu klik <b>Mulai Ujian</b>. Ujian hanya dapat dikerjakan <b>satu kali</b>.</span></div><div class=st><i>").concat(ic('lock', 15), "</i><span>Ujian berjalan layar penuh. Pindah tab, minimize, keluar layar penuh, atau split screen akan <b>mengakhiri ujian otomatis</b>.</span></div>\n<div class=st><i>").concat(ic('list', 15), "</i><span>Soal tampil acak. Peta soal: <b style=\"color:#2e9e5b\">hijau</b> terjawab, <b style=\"color:#c99a00\">kuning</b> dilewati, abu-abu belum diisi.</span></div><div class=st><i>").concat(ic('check', 15), "</i><span>Tombol <b>Akhiri Asesmen</b> muncul setelah semua soal terjawab. Jika waktu habis, ujian selesai otomatis.</span></div><div class=st><i>").concat(ic('camera', 15), "</i><span>Pengawas dapat melihat kamera Anda selama ujian. <button type=button class=o id=cmb onclick='camBtn()'>Aktifkan Kamera</button> <small id=cms style='color:#7b6a6d'>Wajib \u2022 kamera harus aktif untuk memulai ujian.</small></span></div></div>\n<select id=rs><option value=\"\">-- Pilih Kelas Anda --</option>").concat(i.rooms.map(function (r) { return "<option>".concat(esc(r), "</option>"); }).join(''), "</select><button onclick=\"start()\">Mulai Ujian</button><p style=\"font-style:italic;color:#8a1428;text-align:center;font-family:Georgia,serif\">\u201CKejujuran hari ini adalah kehormatan di masa depan.\u201D</p></div></div>");
 }
@@ -1307,7 +1380,7 @@ function draw() {
     scr('exam');
     var q = Qs[cur];
     seen[q.i] = 1;
-    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "</div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>") : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>"), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
+    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "<div class=lgd><span><i class=g></i>Terjawab</span><span><i class=y></i>Dilewati / belum diisi</span><span><i></i>Belum dibuka</span></div></div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>") : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>"), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
     if (TM)
         $('#tmslot').appendChild(TM);
     updEnd();
@@ -3339,17 +3412,17 @@ function lpDoc(){
 }
 /* ===== Pemeriksaan kelengkapan nilai (diperketat) ===== */
 function lpChkHtml(C){
-  var B=C.B,R=C.R,rows=[],tp=0,tm=0,te=0,nz=0,np=0,mpP={},names=function(a,n){return a.slice(0,n).map(function(x){return esc(x.n)}).join(', ')+(a.length>n?' +'+(a.length-n)+' lainnya':'')};
+  var B=C.B,R=C.R,rows=[],tp=0,tm=0,te=0,nz=0,np=0,mpP={},iss=[],names=function(a,n){return a.slice(0,n).map(function(x){return esc(x.n)}).join(', ')+(a.length>n?' +'+(a.length-n)+' lainnya':'')};
   B.rooms.forEach(function(r){
     var x=R[r.kode+'|'+r.room]||{},T=B.tabs.filter(function(t){return t.v==r.room&&t.mapel.some(function(m){return m.kode==r.kode})})[0]||{j:r.j,k:r.k,v:r.room};
-    if(x.err){te++;rows.push({T:T,r:r,err:x.err,w:5});return}
+    if(x.err){te++;iss.push({k:'err',T:T,r:r,d:x.err});rows.push({T:T,r:r,err:x.err,w:5});return}
     var arr=Object.keys(x.rows||{}).map(function(k){return x.rows[k]}),pend=arr.filter(function(a){return a.pend>0}),got={};arr.forEach(function(a){got[a.nis||a.n]=1});
     var ros=B.roster.filter(function(f){return f.j==T.j&&f.k==T.k&&f.v==T.v}),miss=ros.filter(function(f){return !got[f.nis]&&!arr.some(function(a){return a.n==f.n})});
-    np+=arr.length;if(!arr.length){nz++;rows.push({T:T,r:r,n:0,pend:[],miss:ros,ros:ros.length,w:4,zero:1});return}
-    tp+=pend.length;tm+=miss.length;if(pend.length)mpP[r.mapel+'|'+r.room]=1;rows.push({T:T,r:r,n:arr.length,pend:pend,miss:miss,ros:ros.length,w:pend.length?3:miss.length?1:0});
+    np+=arr.length;if(!arr.length){nz++;iss.push({k:'zero',T:T,r:r,d:'0 dari '+ros.length+' siswa rombel yang mengerjakan'});rows.push({T:T,r:r,n:0,pend:[],miss:ros,ros:ros.length,w:4,zero:1});return}
+    tp+=pend.length;tm+=miss.length;if(pend.length)iss.push({k:'pend',T:T,r:r,d:pend.length+' siswa belum dikoreksi: '+pend.slice(0,4).map(function(a){return a.n}).join(', ')+(pend.length>4?', dst.':'')});if(miss.length)iss.push({k:'miss',T:T,r:r,d:miss.length+' siswa belum mengikuti: '+miss.slice(0,4).map(function(a){return a.n}).join(', ')+(miss.length>4?', dst.':'')});if(pend.length)mpP[r.mapel+'|'+r.room]=1;rows.push({T:T,r:r,n:arr.length,pend:pend,miss:miss,ros:ros.length,w:pend.length?3:miss.length?1:0});
   });
   rows.sort(function(a,b){return b.w-a.w});
-  var bad=te+tp+nz>0,warn=!bad&&tm>0,ok=!bad&&!warn,pr=[];C.sev=bad?2:warn?1:0;
+  var bad=te+tp+nz>0,warn=!bad&&tm>0,ok=!bad&&!warn,pr=[];C.sev=bad?2:warn?1:0;C.iss=iss;
   if(nz)pr.push('<b>'+nz+' ruang ujian belum dikerjakan sama sekali (0 peserta)</b>');if(tp)pr.push('<b>'+tp+' nilai siswa belum dikoreksi guru</b> pada '+Object.keys(mpP).length+' ruang/mata pelajaran');if(te)pr.push('<b>'+te+' ruang gagal dibaca</b>');if(tm)pr.push('<b>'+tm+' siswa belum mengikuti</b> sebagian ujian');
   var banner=ok?'Semua ruang ujian sudah dikerjakan dan seluruh nilai sudah dikoreksi guru. Laporan siap direkap.':(bad?'Laporan BELUM siap direkap: ':'Hampir siap, tetapi ')+pr.join('; ')+'. '+(bad?'Mohon periksa kembali (hubungi guru terkait / pastikan siswa sudah mengerjakan) sebelum merekap.':'Siswa yang belum ikut akan ditandai "belum ikut" pada laporan.');
   var ch=function(t,c){return '<span class="lpch '+c+'">'+t+'</span>'};
@@ -3390,6 +3463,45 @@ function xtBox(){
 }
 function xtPick(r){document.querySelectorAll('.xtc').forEach(function(c){c.classList.toggle('on',c.dataset.k==r.value)})}
 function xtSave(){var r=document.querySelector('input[name=xt]:checked');if(!r)return;api('saveXT',U.nik,PW,r.value).then(function(){sc.xt=r.value;document.documentElement.dataset.xt=r.value;toast('Tema ujian siswa disimpan')}).catch(function(e){alert(e)})}
+/* ===== Tema tampilan ujian: dipilih guru pembuat soal PER ASESMEN ===== */
+XT=[['def','Klasik','Tampilan standar aplikasi.'],['mil','Kuis Jutawan','Biru gelap dramatis dengan emas, ala kuis jutawan.'],['f100','Family Seratus','Panggung biru cerah dengan sorot lampu & papan kuning.'],['adv','Petualangan','Hutan hijau & kartu perkamen peta harta karun.'],['clr','Clear','Putih bersih minimalis dengan titik halus.'],['game','Game Arcade','Neon ungu-gelap dengan grid ala arcade.'],['spc','Luar Angkasa','Langit bintang dan nebula untuk petualang antariksa.'],['ocn','Samudra','Biru laut dengan ombak dan gelembung.'],['cnd','Permen Ceria','Pastel manis berbintik, cocok untuk kelas bawah.'],['kls','Papan Tulis','Papan tulis hijau dengan kapur dan garis.']];
+function xtSel(){
+  var cur=E.xt||'def';
+  return '<div class=xtsel><b>Tema Tampilan Ujian Siswa</b> <small>Pilih desain layar ujian untuk asesmen ini (waktu, penanda soal dilewati, jenis soal, dan layar selesai ikut berubah).</small><div class=xtg>'
+   +XT.map(function(x){return '<label class="xtc'+(x[0]==cur?' on':'')+'" data-k="'+x[0]+'" title="'+esc(x[2])+'"><input type=radio name=xt value="'+x[0]+'"'+(x[0]==cur?' checked':'')+' onchange="xtPickE(this)"><div class=xtp data-t="'+x[0]+'"><div class=xph></div><div class=xpq></div><div class=xpo><i></i><i class=s></i><i></i><i></i></div></div><b>'+x[1]+'</b></label>'}).join('')+'</div></div>';
+}
+function xtPickE(r){E.xt=r.value;document.querySelectorAll('.xtsel .xtc').forEach(function(c){c.classList.toggle('on',c.dataset.k==r.value)})}
+/* ===== Pengaturan suara klik tab (Tab Sekolah) ===== */
+srchInit=_si2; // tombol suara di baris tab dihapus; pengaturan pindah ke Tab Sekolah
+SND.on=true;
+sndTab=function(k){
+  if(!SND.on||(sc&&sc.snd===false))return;
+  try{var C=SND.ctx||(SND.ctx=new (window.AudioContext||window.webkitAudioContext)());if(C.state=='suspended')C.resume();
+    var f=({as:523,lap:587,pt:659,ag:698,jd:784,lpp:880,Guru:494,Siswa:554,kt:622,kp:740})[k]||600,o=C.createOscillator(),g=C.createGain(),t=C.currentTime;
+    o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.5,t+.09);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.06,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g);g.connect(C.destination);o.start(t);o.stop(t+.18)}catch(e){}
+};
+function sndBox(){
+  var on=sc.snd!==false;
+  return '<div class=box><h3>\u266A Suara Klik Tab Menu</h3><small>Nada kecil yang terdengar saat tab menu utama diklik atau disentuh. Berlaku untuk semua pengguna.</small><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px"><label class=sw><input type=checkbox id=sndon'+(on?' checked':'')+'><span class=swt></span> <b id=sndl>'+(on?'Suara menyala':'Suara mati')+'</b></label><button class=o onclick="SND.on=true;var o=sc.snd;sc.snd=true;sndTab(\'jd\');sc.snd=o">Coba suara</button><button onclick="sndSave()">'+ic('save',15)+' Simpan</button></div></div>';
+}
+document.addEventListener('change',function(e){if(e.target&&e.target.id=='sndon')$('#sndl').textContent=e.target.checked?'Suara menyala':'Suara mati'});
+function sndSave(){var on=$('#sndon').checked;api('saveSnd',U.nik,PW,on).then(function(){sc.snd=on;toast(on?'Suara tab dinyalakan':'Suara tab dimatikan')}).catch(function(e){alert(e)})}
+/* ===== Popup peringatan: laporan belum siap ===== */
+Object.assign(IC,{warn:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18.5v.5"/>'});
+function lpShow(){
+  var C=LP.C[LP.id];if(!C)return alert('Tunggu pemeriksaan kelengkapan nilai selesai terlebih dahulu.');lpRe();
+  if(C.sev==2)return lpWarn(C);lpGo();
+}
+function lpGo(btn){if(btn)mclose(btn);var C=LP.C[LP.id];lpWali().then(function(){LP.D=lpBuild(C);LP.jn=LP.kl=LP.vr='';lpView()})}
+function lpWarn(C){
+  var iss=C.iss||[],cnt={zero:0,pend:0,err:0,miss:0};iss.forEach(function(x){cnt[x.k]++});
+  var T={zero:['Belum dikerjakan','#c0392b','Tidak ada siswa yang mengerjakan'],pend:['Belum dikoreksi','#e67e22','Guru perlu memeriksa'],err:['Gagal dibaca','#8e44ad','Periksa pengaturan ruang'],miss:['Belum ikut','#2980b9','Siswa belum mengerjakan']};
+  var ord=['zero','err','pend','miss'],chips=ord.filter(function(k){return cnt[k]}).map(function(k){return '<div class=wnc style="--k:'+T[k][1]+'"><b>'+cnt[k]+'</b><span>'+T[k][0]+'</span></div>'}).join('');
+  var list=iss.slice().sort(function(a,b){return ord.indexOf(a.k)-ord.indexOf(b.k)}).slice(0,14).map(function(x){return '<div class=wni style="--k:'+T[x.k][1]+'"><div class=wnt><span class=wnk>'+T[x.k][0]+'</span> '+mpb(x.r.mapel)+'</div><div class=wnd>'+esc(x.T.j+' '+x.T.k+' / '+x.T.v)+' \u2022 Kode '+esc(x.r.kode)+(x.r.guru?' \u2022 Guru: '+esc(x.r.guru):'')+'<br><small>'+esc(x.d)+'</small></div></div>'}).join('');
+  modal('<div class=wn><div class=wnh><div class=wnic>'+ic('warn',34)+'</div><div><h3>Laporan Belum Siap Direkap</h3><p>Masih ada data yang belum lengkap. Hasil rekap bisa belum akurat jika tetap ditampilkan.</p></div></div>'
+    +'<div class=wnsg>'+chips+'</div><div class=wnl>'+list+(iss.length>14?'<div class=wnm>+ '+(iss.length-14)+' catatan lain \u2014 lihat panel Pemeriksaan Kelengkapan Nilai</div>':'')+'</div>'
+    +'<div class=wnf><button class=o onclick="mclose(this)">'+ic('undo',15)+' Periksa Kembali</button><button class=wnb onclick="lpGo(this)">'+ic('chart',15)+' Tetap Tampilkan Laporan</button></div></div>','wide');
+}
 /* ===== Gambar Kop Sekolah (header dokumen Word / PDF) ===== */
 var KOPD=null,KOPP=null;
 function loadKop(force){
@@ -4016,7 +4128,7 @@ var FB=[['Inter','Inter'],['Jakarta','Plus Jakarta Sans'],['Poppins','Poppins'],
 var ISW=[['Ikon Tipis',1.3,0],['Ikon Normal',1.8,0],['Ikon Tebal',2.4,0],['Ikon Duotone',1.8,1]];
 function hx(h){h=String(h||'').replace('#','');if(h.length==3)h=h.replace(/./g,'$&$&');var n=parseInt(h,16)||0;return [n>>16&255,n>>8&255,n&255]}
 function mixc(a,b,t){return '#'+a.map(function(v,i){return ('0'+Math.round(v*(1-t)+b[i]*t).toString(16)).slice(-2)}).join('')}
-function applyTema(t){var R=document.documentElement,d=R.style;R.dataset.xt=(typeof sc!='undefined'&&sc&&sc.xt)||'def';(applyTema.k||[]).forEach(function(k){d.removeProperty(k)});try{TJ=JSON.parse(t||'{}')}catch(e){TJ={}}if(TJ.lwv!==2){if(TJ.lw!=null)TJ.lw=Math.max(0,TJ.lw-1);TJ.lwv=2}
+function applyTema(t){var R=document.documentElement,d=R.style;(applyTema.k||[]).forEach(function(k){d.removeProperty(k)});try{TJ=JSON.parse(t||'{}')}catch(e){TJ={}}if(TJ.lwv!==2){if(TJ.lw!=null)TJ.lw=Math.max(0,TJ.lw-1);TJ.lwv=2}
 var m=TJ['--m']||'#7a1022',m2=TJ['--m2']||'#a31d33',a=hx(m),b=hx(m2),rd=TJ.rd||20,fb=FB[TJ.fb||0]||FB[0],fh=FHS[TJ.fh||0]||FHS[0];
 var P={'--m':m,'--m2':m2,'--mr':a.join(','),'--mr2':b.join(','),'--md':mixc(a,[0,0,0],.3),'--mt':mixc(a,[255,255,255],.92),'--mt2':mixc(a,[255,255,255],.85),'--rad':rd+'px','--rb':Math.round(rd*.6)+'px','--fb':"'"+fb[1]+"',system-ui,'Segoe UI',sans-serif",'--fh':fh[1]};
 P['--lgbg']=TJ.lgu?"linear-gradient(155deg,rgba(var(--mr),.74),rgba(0,0,0,.5)),url('"+String(TJ.lgu).replace(/['"()\s]/g,'')+"') center/cover":(LW[TJ.lw||0]||LW[0])[1];Object.keys(TJ).forEach(function(k){if(k[0]=='-'&&!(k in P))P[k]=TJ[k]});applyTema.k=Object.keys(P);Object.keys(P).forEach(function(k){d.setProperty(k,P[k])});
@@ -4213,7 +4325,7 @@ function preview(i) {
     PV = 1;
     ENDSHOWN = false;
     ac();
-    X = { nama: 'Guru', nis: 'pv', kode: a.KODE, judul: a.NAMA, mapel: a.MAPEL, durasi: a.DURASI, soal: a.soal, tk: '' };
+    X = { nama: 'Guru', nis: 'pv', kode: a.KODE, judul: a.NAMA, mapel: a.MAPEL, durasi: a.DURASI, soal: a.soal, xt: a.xt, tk: '' };
     Qs = a.soal.map(function (q, k) { return Object.assign({}, q, { i: k }); });
     ans = [];
     seen = {};
