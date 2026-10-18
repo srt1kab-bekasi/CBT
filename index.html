@@ -123,7 +123,11 @@ th{background:linear-gradient(135deg,var(--m2),var(--md))}td{border-color:rgba(v
 .nav{display:flex;flex-wrap:wrap;gap:6px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.85);border-radius:16px;padding:6px;margin-bottom:16px;box-shadow:var(--sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .nav button{box-shadow:none}.nav button.o{background:transparent;border-color:transparent}.nav button.o:hover{background:rgba(var(--mr),.07)}
 .ach{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.ach h3{margin:0 0 4px}
-.kd{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#fff,var(--mt2));border:1px solid rgba(var(--mr),.2);color:var(--m);border-radius:20px;padding:4px 12px;font-weight:700;letter-spacing:1px;font-size:13px;white-space:nowrap}
+.kdk{display:inline-flex;align-items:stretch;flex:none;height:40px;border:1.5px solid rgba(var(--mr),.3);border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 3px 10px rgba(var(--mr),.1);color:var(--m)}
+.kdk .kdl{display:inline-flex;align-items:center;padding:0 13px;background:var(--mt);font-size:12px;font-weight:600;color:#6b5a5d;white-space:nowrap}
+.kdk .kdv{display:inline-flex;align-items:center;gap:8px;padding:0 15px;font-size:15px;font-weight:800;letter-spacing:2px;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.kdk .kdv svg{flex:none}
+.ach>div:first-child{flex:1 1 200px;min-width:0}
 .rl{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.rl a{display:inline-flex;gap:5px;align-items:center;font-size:13px;padding:4px 10px;border-radius:10px;background:rgba(var(--mr),.07);color:var(--m);text-decoration:none;transition:background .2s}.rl a:hover{background:rgba(var(--mr),.14)}
 .acb{display:flex;flex-wrap:wrap;gap:6px}.acb button{padding:8px 12px;font-size:13px}
 .rr{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0;border-top:1px solid rgba(var(--mr),.08)}.rr span{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
@@ -154,7 +158,7 @@ th{background:linear-gradient(135deg,var(--m2),var(--md))}td{border-color:rgba(v
 .wcs{display:inline-flex;gap:4px;flex-wrap:wrap}.wc{background:rgba(255,255,255,.8)!important;color:var(--m);border:1px solid rgba(var(--mr),.25);padding:4px 11px;min-width:38px;font-size:13px;box-shadow:none}.wc.on{background:linear-gradient(135deg,var(--m2),var(--md))!important;color:#fff}
 .mdl{background:rgba(255,255,255,.95)!important}
 
-.cpb{padding:3px 8px!important;font-size:12px;margin-left:6px;border-radius:9px!important;vertical-align:middle}.kd .cpb{background:transparent!important;color:var(--m)!important;box-shadow:none!important;border:0!important;margin-left:4px}.kd .cpb:hover{background:rgba(var(--mr),.12)!important}
+.cpb{padding:3px 8px!important;font-size:12px;margin-left:6px;border-radius:9px!important;vertical-align:middle}.kdk .cpb{align-self:stretch;margin:0!important;padding:0 14px!important;font-size:12.5px;gap:6px;background:transparent!important;color:var(--m)!important;box-shadow:none!important;border:0!important;border-left:1.5px solid rgba(var(--mr),.22)!important;border-radius:0!important}.kdk .cpb:hover{background:rgba(var(--mr),.1)!important;transform:none;filter:none}
 .kbig{font-family:'Playfair Display',Georgia,serif;font-size:34px;font-weight:700;letter-spacing:6px;color:var(--m);background:linear-gradient(135deg,#fff,var(--mt2));border:2px dashed rgba(var(--mr),.35);border-radius:16px;padding:12px 8px}
 .piew{display:flex;gap:26px;align-items:center;flex-wrap:wrap;justify-content:center;margin:8px 0 14px}.pies{filter:drop-shadow(0 8px 16px rgba(var(--mr),.18))}
 .pil>div{display:flex;align-items:center;gap:8px;margin:7px 0}.pil i{width:14px;height:14px;border-radius:5px;flex:none}.pil span{margin-left:auto;padding-left:14px;color:#6d5a5d;font-size:13px}.ps{margin:12px 0 0;color:#6d5a5d;font-size:14px}
@@ -691,6 +695,31 @@ html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin
 .rkb>.rbc{margin:0}
 .rjg.cl>.rjb,.rkg.cl>.rkb{display:none}
 .rkg.cl>.rkh{border-bottom-color:transparent}
+
+/* ===== Cetak Kartu: pembuatan periode & periode tersimpan dipisah, dengan tirai ===== */
+.kpf{margin-bottom:22px}
+.kps{background:linear-gradient(180deg,var(--mt2),#fff 160px)}
+.kps>.kph{margin:-4px -4px 10px;font-size:1.08em}
+.kps.cl>.kph{margin-bottom:-4px}
+.kps.cl>:not(.kph){display:none}
+.kph .lpl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kps>.kph .lpt::before{content:'Sembunyikan'}.kps.cl>.kph .lpt::before{content:'Tampilkan'}
+.kpi{background:#fff;margin-bottom:12px}
+.kpi>.lpb{max-height:none;overflow:visible;transform:none;padding-top:8px}
+.kpi.cl>.lpb{display:none}
+.kpi>.lph{margin:-4px -4px 0}
+/* ===== Laporan Hasil Asesmen: jenjang > kelas > mata pelajaran ===== */
+.lgx>.lpb{max-height:none;overflow:visible;transform:none;padding-top:8px}
+.lgx.cl>.lpb{display:none}
+.lgx.l2,.lgx.l3{margin:10px 0 0;padding:8px 12px;background:rgba(var(--mr),.04);box-shadow:none;border:1px solid rgba(var(--mr),.14);border-radius:14px}
+.lgx.l3{background:#fff;border-radius:12px}
+.lgx.l2::before{width:4px;opacity:.75}.lgx.l3::before{width:3px;opacity:.45}
+.lgx.l2:hover,.lgx.l3:hover{box-shadow:none}
+.lgx .lph{margin:0;padding:6px 6px 6px 10px}
+.lgx.l1>.lph{font-size:1.1em}.lgx.l2>.lph{font-size:15px}.lgx.l3>.lph{font-size:14px}
+.lgx .lpl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lgx .lpa{margin:10px 0 0}
+@media(max-width:560px){.ach{flex-wrap:wrap}.lgx.l2,.lgx.l3{padding:6px 8px}}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&family=Montserrat:wght@500;600;700&family=Nunito:wght@600;700;800&family=Fredoka:wght@500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -975,9 +1004,9 @@ function mgmt() {
                     tabs = tabOrd(tabs);
                     c = '';
                     if (t == 'as')
-                        c = L.map(function (a, i) { if (a.LOCK && !U.sa) return lkCard(a); return "<div class=\"box ac\">".concat(lkBn(a), "<div class=ach><div><h3>").concat(esc(a.NAMA), "</h3><small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(mpb(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, " \u2022 ").concat(a.DURASI, " menit \u2022 ").concat(a.soal.length, " soal").concat(U.sa ? ' • ' + esc(a['NAMA GURU']) : '', "</small></div><span class=kd>").concat(ic('key', 14), " ").concat(a.KODE, "<button class=cpb title=\"Salin kode\" onclick=\"cpk('").concat(a.KODE, "',this)\">").concat(ic('copy', 14), "</button></span></div><p class=rl>").concat(a.rooms.map(function (r) { return "<a href=\"".concat(r.url, "\" target=_blank>").concat(ic('sheet', 14), " ").concat(esc(r.n), "</a>"); }).join(''), "</p>\n <div class=acb><button onclick=\"view(").concat(i, ",1)\">").concat(ic('list', 15), " Lihat Soal</button><button class=o onclick=\"preview(").concat(i, ")\">").concat(ic('eye', 15), " Preview Soal</button><button class=o onclick=\"edit(").concat(i, ")\">").concat(ic('edit', 15), " Edit Soal</button><button class=o onclick=\"salin(").concat(i, ",this)\">").concat(ic('copy', 15), " Salin Soal</button><button onclick=\"pantau(").concat(i, ")\">").concat(ic('radar', 15), " Pantau Ujian</button><button class=o onclick=\"dlSoal(this,").concat(i, ",1)\">").concat(ic('download', 15), " Download Soal</button>", prnB('printSoal(' + i + ',1)', 'Print Soal'), "<button class=o onclick=\"dlSoal(this,").concat(i, ",0)\">").concat(ic('file', 15), " Lembar Siswa</button>", prnB('printSoal(' + i + ',0)', 'Print Lembar'), "<button class=d onclick=\"del(").concat(i, ")\">").concat(ic('trash', 15), " Hapus Soal</button></div></div>"); }).join('') || '<div class="box em">Belum ada asesmen. Klik "Buat Asesmen Baru" untuk memulai.</div>';
+                        c = L.map(function (a, i) { if (a.LOCK && !U.sa) return lkCard(a); return "<div class=\"box ac\">".concat(lkBn(a), "<div class=ach><div><h3>").concat(esc(a.NAMA), "</h3><small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(mpb(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, " \u2022 ").concat(a.DURASI, " menit \u2022 ").concat(a.soal.length, " soal").concat(U.sa ? ' • ' + esc(a['NAMA GURU']) : '', "</small></div><span class=kdk><span class=kdl>Kode soal</span><span class=kdv>").concat(ic('key', 15), " ").concat(a.KODE, "</span><button class=cpb title=\"Salin kode\" onclick=\"cpk('").concat(a.KODE, "',this)\">").concat(ic('copy', 14), " Salin</button></span></div><p class=rl>").concat(a.rooms.map(function (r) { return "<a href=\"".concat(r.url, "\" target=_blank>").concat(ic('sheet', 14), " ").concat(esc(r.n), "</a>"); }).join(''), "</p>\n <div class=acb><button onclick=\"view(").concat(i, ",1)\">").concat(ic('list', 15), " Lihat Soal</button><button class=o onclick=\"preview(").concat(i, ")\">").concat(ic('eye', 15), " Preview Soal</button><button class=o onclick=\"edit(").concat(i, ")\">").concat(ic('edit', 15), " Edit Soal</button><button class=o onclick=\"salin(").concat(i, ",this)\">").concat(ic('copy', 15), " Salin Soal</button><button onclick=\"pantau(").concat(i, ")\">").concat(ic('radar', 15), " Pantau Ujian</button><button class=o onclick=\"dlSoal(this,").concat(i, ",1)\">").concat(ic('download', 15), " Download Soal</button>", prnB('printSoal(' + i + ',1)', 'Print Soal'), "<button class=o onclick=\"dlSoal(this,").concat(i, ",0)\">").concat(ic('file', 15), " Lembar Siswa</button>", prnB('printSoal(' + i + ',0)', 'Print Lembar'), "<button class=d onclick=\"del(").concat(i, ")\">").concat(ic('trash', 15), " Hapus Soal</button></div></div>"); }).join('') || '<div class="box em">Belum ada asesmen. Klik "Buat Asesmen Baru" untuk memulai.</div>';
                     if (t == 'lap')
-                        c = L.map(function (a, i) { if (a.LOCK && !U.sa) return ''; return "<div class='box lpc'><h3 class=lph onclick=lpT(this)><div class=lpl>".concat(esc(a.NAMA), " <small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(mpb(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, "</small>", lpMeta(a), "</div><span class=lpt></span></h3><div class=lpb>").concat(a.rooms.map(function (r) { return "<div class=rr><span>".concat(ic('users', 16), " <b>").concat(esc(r.n), "</b></span><span><button onclick=\"lap(").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('chart', 15), " Lihat laporan</button><button class=o onclick=\"dl(this,").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('download', 15), " Download Excel</button>", spLink(r), "</span></div>"); }).join(''), "</div></div>"); }).join('') || '<div class=box>Belum ada laporan.</div>';
+                        c = lapGrp(L, function (a, i) { if (a.LOCK && !U.sa) return ''; return "<div class='box lpc lpa'><h3 class=lph onclick=lpT(this)><div class=lpl>".concat(esc(a.NAMA), " <small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(mpb(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, "</small>", lpMeta(a), "</div><span class=lpt></span></h3><div class=lpb>").concat(a.rooms.map(function (r) { return "<div class=rr><span>".concat(ic('users', 16), " <b>").concat(esc(r.n), "</b></span><span><button onclick=\"lap(").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('chart', 15), " Lihat laporan</button><button class=o onclick=\"dl(this,").concat(i, ",'").concat(esc(r.n), "')\">").concat(ic('download', 15), " Download Excel</button>", spLink(r), "</span></div>"); }).join(''), "</div></div>"); }).join('') || '<div class=box>Belum ada laporan.</div>';
                     if (!(t == 'Guru' || t == 'Siswa')) return [3, 5];
                     UT = t;
                     return [4, getU(t)];
@@ -996,11 +1025,11 @@ function mgmt() {
                     if (t == 'pt')
                         c = (U.sa ? "<div class=box><h3>Ujian Sedang Berlangsung</h3>".concat(LVL.map(function (x, k) { return "<div class=st style=\"margin:8px 0;justify-content:space-between;align-items:center\"><span><b>".concat(esc(x.nama), "</b><br><small>").concat(esc(x.tingkat), " \u2022 ").concat(esc(x.mapel), " \u2022 ").concat(esc(x.guru), " \u2022 Kode ").concat(esc(x.kode), " \u2022 ").concat(x.rooms.map(esc).join(', '), "</small></span><button onclick=\"openMon(LVL[").concat(k, "].kode,LVL[").concat(k, "].nama)\">").concat(ic('radar', 15), " Pantau</button></div>"); }).join('') || '<p class=em>Belum ada ujian yang sedang berlangsung.</p>', "<button class=o onclick=\"mgmt('pt')\">Muat ulang</button></div>") : "") + "<div class=box><h3>Pantau dengan Kode Asesmen</h3><small>Masukkan kode asesmen soal yang akan Anda awasi. Guru pengawas dapat mengawasi soal mana pun dengan memasukkan kodenya; setelah itu pemantauan, pesan, hentikan ujian, histori, dan kamera dapat dipakai untuk soal tersebut.</small><input id=pk2 placeholder=\"Kode asesmen, mis. A1B2C3\" style=\"text-transform:uppercase\"><button onclick=\"openMon($('#pk2').value.trim().toUpperCase(),'')\">".concat(ic('radar', 15), " Pantau</button></div>");
                     if (t == 'kt') {
-                        c = "<div id=ktw class=box>Memuat...</div>";
+                        c = "<div id=ktw><div class=box>Memuat...</div></div>";
                         setTimeout(ktInit, 0);
                     }
                     if (t == 'kp') {
-                        c = "<div id=kpw class=box>Memuat...</div>";
+                        c = "<div id=kpw><div class=box>Memuat...</div></div>";
                         setTimeout(kpInit, 0);
                     }
                     if (t == 'ag') {
@@ -2028,6 +2057,12 @@ var ccol=function(x){return x>=90?'#2e9e5b':x>=75?'#e6b422':x>=60?'#e9853b':'#a3
 function pieN(v){var m={};v.forEach(function(x){m[x]=(m[x]||0)+1});var k=Object.keys(m).sort(function(a,b){return b-a}),t=v.length;if(!t)return '<p class=em>Belum ada data nilai.</p>';var a0=-Math.PI/2,P=function(a){return [(50+46*Math.cos(a)).toFixed(2),(50+46*Math.sin(a)).toFixed(2)]},sl='',lg='';k.forEach(function(n,i){var c=m[n],a1=a0+c/t*2*Math.PI,col='hsl('+(i*47%360)+',62%,48%)',p0=P(a0),p1=P(a1);sl+=k.length==1?"<circle cx=50 cy=50 r=46 fill='"+col+"'/>":"<path d='M50 50 L"+p0[0]+" "+p0[1]+" A46 46 0 "+(a1-a0>Math.PI?1:0)+" 1 "+p1[0]+" "+p1[1]+" Z' fill='"+col+"' stroke='#fff' stroke-width='1'/>";lg+="<div style='font-size:12px;margin:2px 0'><i style='display:inline-block;width:11px;height:11px;border-radius:3px;background:"+col+";margin-right:6px'></i>Nilai <b>"+n+"</b>: "+c+" siswa ("+Math.round(c/t*100)+"%)</div>";a0=a1});return "<div class=piew><svg viewBox='0 0 100 100' width=220 class=pies>"+sl+"</svg><div class=pil2><div style='font-weight:700;margin-bottom:4px'>Total "+t+" siswa</div>"+lg+"</div></div>"}
 function wordRep(){var r=R.rows,t=document.querySelector('#rep table').cloneNode(true);t.querySelectorAll('[data-h]').forEach(function(e){e.remove()});t.setAttribute('border','1');t.setAttribute('cellpadding','5');t.style.borderCollapse='collapse';var J={pg:'Pilihan Ganda',js:'Jawaban Singkat',es:'Essay'},q=R.a.soal.map(function(s,k){var p=r.length?Math.round(r.reduce(function(a,x){return a+x.res[k].pts/x.res[k].mx},0)/r.length*100):0;return "<tr><td>"+(k+1)+"</td><td>"+J[s.t]+"</td><td>"+p+"%</td></tr>"}).join('');var h="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><style>body{font-family:Calibri}th{background:"+TC().m+";color:#fff}</style></head><body><h2 style='color:"+TC().m+";border-bottom:3px solid "+TC().m2+";padding-bottom:4px;font-family:"+TC().f+"'>"+esc(sc.nama)+"</h2><h3>Laporan "+esc(R.a.NAMA)+" - "+esc(R.room)+"</h3><p>"+esc(R.a.MAPEL)+" \u2022 "+r.length+" siswa \u2022 Kode "+esc(R.a.KODE)+"</p>"+t.outerHTML+"<h3>Capaian per Nomor Soal</h3><table border=1 cellpadding=5 style='border-collapse:collapse'><tr><th>No</th><th>Jenis</th><th>Capaian</th></tr>"+q+"</table></body></html>",u=document.createElement('a');u.href=URL.createObjectURL(new Blob(['\ufeff'+h],{type:'application/msword'}));u.download=('Laporan '+R.a.NAMA+' - '+R.room+'.doc').replace(/[\\\/:*?"<>|]/g,'-');document.body.appendChild(u);u.click();u.remove()}
 var KT={list:[],sis:[]},KD=null;
+/* tirai (susut / tampil) untuk Periode Tersimpan & Laporan; status tersimpan agar tidak menutup sendiri saat tampilan dimuat ulang */
+var KCT={};
+function kcOp(k,d){var v=KCT[k];return v===undefined?!!d:!!v}
+function kcCl(k,d){return kcOp(k,d)?'':' cl'}
+function kcTg(h,k){var b=h.parentNode,c=b.classList.toggle('cl');k=k||b.dataset.k;if(k)KCT[k]=c?0:1}
+function kcSec(k,t,sub,h){return "<div class='box lpc kps"+kcCl('sec_'+k,1)+"' data-k=\"sec_"+k+"\"><h3 class='lph kph' onclick=kcTg(this)><div class=lpl>"+ic('list',20)+" "+t+" <small>"+sub+"</small></div><span class=lpt></span></h3>"+(h||"<p class=em>Belum ada periode tersimpan. Periode yang Anda simpan akan tampil di sini.</p>")+"</div>"}
 var KJO={SD:1,SMP:2,SMA:3};
 function knat(a,b){return String(a).localeCompare(String(b),'id',{numeric:true})}
 function kuniq(a){var m={},o=[];a.forEach(function(x){x=String(x==null?'':x).trim();if(x&&!m[x]){m[x]=1;o.push(x)}});return o}
@@ -2063,13 +2098,13 @@ function ktGrpHTML(P,i,ed){
 function ktView(){var w=$('#ktw');if(!w)return;var f=function(id,l,v,ph){return "<label style='flex:1;min-width:140px'>"+l+"<input id="+id+" value='"+esc(v)+"' placeholder='"+(ph||'')+"'></label>"},
  sl=function(id,l,h,fn){return "<label style='flex:1;min-width:140px'>"+l+"<select id="+id+" onchange='"+fn+"'>"+h+"</select></label>"},
  ta=kuniq(ktAct().map(function(s){return s.ta}).concat([(typeof sc!='undefined'&&sc.ta)||''])),pool=ktPool(),fl=[KD.jenjang,KD.kelas&&'Kelas '+KD.kelas,KD.rombel&&'Rombel '+KD.rombel].filter(Boolean).join(' \u2022 ')||'semua jenjang',
- sv=KT.list.map(function(P,i){var jl=[P.jenjang,P.kelas&&'Kelas '+P.kelas,P.rombel&&'Rombel '+P.rombel].filter(Boolean).join(' \u2022 ')||'Semua jenjang';return "<div class=box><h3>"+esc(P.nama)+" <small>"+esc(jl)+" \u2022 "+esc(P.tahun)+" Smt "+esc(P.smt)+" \u2022 "+P.sis.length+" siswa</small></h3><button onclick=\"kcOut('s',"+i+",null,'pdf')\">"+ic('download',15)+" Cetak Semua (PDF)</button> <button class=o onclick=\"kcOut('s',"+i+",null,'jpg')\">"+ic('image',15)+" Semua JPG</button> "+prnB("kcOut('s',"+i+",null,'prn')",'Print Semua')+" <button class=o onclick='ktEdit("+i+")'>Ubah</button> <button class=o onclick='ktDel("+i+")'>Hapus</button>"+(KT.src?" <a href='"+esc(KT.src)+"' target=_blank><button class=o>"+ic('link',15)+" Buka Spreadsheet</button></a>":'')+"<div style='margin:8px 0'><b>Desain kartu:</b> <select onchange='ktSetTema("+i+",this.value)'>"+kcOpts('s',P.tema)+"</select> <small style='color:#7b6a6d'>Pilihan cepat. Warna, font, jenis kartu &amp; teks footer diatur lewat tombol Ubah. Kartu dicetak terpisah per jenjang, kelas, dan rombel.</small></div>"+ktGrpHTML(P,i,0)+"</div>"}).join('');
- w.innerHTML="<h3>"+(KD.id?'Ubah':'Buat')+" Periode Kartu Siswa</h3><p style='color:#7b6a6d'>Jenjang, kelas, dan rombel (variasi kelas) diambil dari Data Siswa. Biarkan &quot;Semua&quot; bila satu periode mencakup banyak kelas &mdash; siswa otomatis dikelompokkan per jenjang, kelas, dan rombel sehingga mudah dibedakan dan dicetak (PDF, JPG, atau Print).</p><div style='display:flex;gap:10px;flex-wrap:wrap'>"
+ sv=KT.list.map(function(P,i){var jl=[P.jenjang,P.kelas&&'Kelas '+P.kelas,P.rombel&&'Rombel '+P.rombel].filter(Boolean).join(' \u2022 ')||'Semua jenjang';return "<div class='box lpc kpi"+kcCl(P.id,0)+"' data-k=\""+esc(P.id)+"\"><h3 class=lph onclick=kcTg(this)><div class=lpl>"+esc(P.nama)+" <small>"+esc(jl)+" \u2022 "+esc(P.tahun)+" Smt "+esc(P.smt)+"</small></div><span class=lpt>"+P.sis.length+" siswa</span></h3><div class='lpb kpib'><button onclick=\"kcOut('s',"+i+",null,'pdf')\">"+ic('download',15)+" Cetak Semua (PDF)</button> <button class=o onclick=\"kcOut('s',"+i+",null,'jpg')\">"+ic('image',15)+" Semua JPG</button> "+prnB("kcOut('s',"+i+",null,'prn')",'Print Semua')+" <button class=o onclick='ktEdit("+i+")'>Ubah</button> <button class=o onclick='ktDel("+i+")'>Hapus</button>"+(KT.src?" <a href='"+esc(KT.src)+"' target=_blank><button class=o>"+ic('link',15)+" Buka Spreadsheet</button></a>":'')+"<div style='margin:8px 0'><b>Desain kartu:</b> <select onchange='ktSetTema("+i+",this.value)'>"+kcOpts('s',P.tema)+"</select> <small style='color:#7b6a6d'>Pilihan cepat. Warna, font, jenis kartu &amp; teks footer diatur lewat tombol Ubah. Kartu dicetak terpisah per jenjang, kelas, dan rombel.</small></div>"+ktGrpHTML(P,i,0)+"</div></div>"}).join('');
+ w.innerHTML="<div class='box kpf'><h3>"+(KD.id?'Ubah':'Buat')+" Periode Kartu Siswa</h3><p style='color:#7b6a6d'>Jenjang, kelas, dan rombel (variasi kelas) diambil dari Data Siswa. Biarkan &quot;Semua&quot; bila satu periode mencakup banyak kelas &mdash; siswa otomatis dikelompokkan per jenjang, kelas, dan rombel sehingga mudah dibedakan dan dicetak (PDF, JPG, atau Print).</p><div style='display:flex;gap:10px;flex-wrap:wrap'>"
  +f('zn','Nama periode',KD.nama,'mis. PTS Ganjil')+sl('zj','Jenjang',ktSelO(ktJL(),KD.jenjang,'Semua jenjang'),'ktSetJ()')+sl('zk','Kelas',ktSelO(ktKL(),KD.kelas,'Semua kelas'),'ktSetK()')+sl('zv','Rombel (variasi kelas)',ktSelO(ktVL(),KD.rombel,'Semua rombel'),'ktSetV()')
  +"<label style='flex:1;min-width:140px'>Tahun ajaran<input id=zy list=zyl value='"+esc(KD.tahun)+"' placeholder='2026/2027'><datalist id=zyl>"+ta.map(function(x){return "<option value=\""+esc(x)+"\">"}).join('')+"</datalist></label>"+f('zs','Semester',KD.smt)+"</div>"
  +kcUI('s')+"<h4>Tambah siswa dari Data Siswa</h4><small style='color:#7b6a6d'>Daftar di bawah mengikuti pilihan jenjang, kelas, dan rombel di atas ("+esc(fl)+"): "+pool.length+" siswa belum ditambahkan.</small><br><select id=zp>"+(pool.length?pool.map(function(s,j){return "<option value="+KT.sis.indexOf(s)+">"+esc(s.n)+" ("+esc(s.i)+")"+(s.j||s.k||s.v?" \u2014 "+esc([s.j,s.k,s.v].filter(Boolean).join(' / ')):'')+"</option>"}).join(''):"<option value=''>(tidak ada siswa yang sesuai)</option>")+"</select> <button onclick='ktAdd()'>Tambah</button> <button class=o onclick='ktAll()'>Tambah Semua Siswa ("+pool.length+")</button>"+(KD.sis.length?" <button class=o onclick='ktClr()'>Kosongkan Daftar</button>":'')
  +"<h4>Atau input siswa baru</h4><small style='color:#7b6a6d'>Siswa baru mengikuti jenjang, kelas, dan rombel yang dipilih di atas.</small><div style='display:flex;gap:10px;flex-wrap:wrap'>"+f('zmn','Nama siswa','')+f('zmi','NIS','')+f('zmp','Password','')+f('zmq','NISN (opsional)','')+"<div style='flex:1;min-width:140px'><small style='display:block'>Upload Foto (opsional)</small><input type=hidden id=zmf><span class=fup><label class=\"btn o\">"+ic('image',15)+" Pilih foto<input type=file hidden accept=\"image/*\" onchange=\"ktFoto(this)\"></label><img class=thb style=\"display:none\" alt=\"\"></span></div></div><button class=o onclick='ktNew()'>Tambah Siswa Baru</button>"
- +"<h4>Daftar siswa periode ini ("+KD.sis.length+")</h4>"+ktGrpHTML(KD,-1,1)+"<br><button onclick='ktSave()'>Simpan Periode</button>"+(KD.id?" <button class=o onclick='KD=ktNewD();ktView()'>Batal Ubah</button>":'')+(sv?"<br><br><h3>Periode Tersimpan</h3>"+sv:'')}
+ +"<h4>Daftar siswa periode ini ("+KD.sis.length+")</h4>"+ktGrpHTML(KD,-1,1)+"<br><button onclick='ktSave()'>Simpan Periode</button>"+(KD.id?" <button class=o onclick='KD=ktNewD();ktView()'>Batal Ubah</button>":'')+"</div>"+kcSec('kt','Periode Kartu Siswa Tersimpan',KT.list.length+' periode',sv)}
 function ktEnt(s){return {n:s.n,i:s.i,p:s.p,nisn:s.nisn||'',db:1,j:s.j||'',k:s.k||'',v:s.v||''}}
 function ktAdd(){ktSync();var s=KT.sis[+$('#zp').value];if(s&&!ktHas(s.i))KD.sis.push(ktEnt(s));ktView()}
 function ktAll(){ktSync();ktPool().forEach(function(s){if(!ktHas(s.i))KD.sis.push(ktEnt(s))});ktView()}
@@ -2257,21 +2292,21 @@ function kpView(){
   var aj=KE.jenis=='ajar',f=function(id,l,v,ph,ls){return "<label style='flex:1;min-width:140px'>"+l+"<input id="+id+(ls?" list="+ls:'')+" value='"+esc(v)+"' placeholder='"+(ph||'')+"'></label>"};
   var sv=KP.list.map(function(P,i){
     var pa=P.jenis=='ajar',wd=pa?'Guru':'Pengawas',bt=function(js,l){return "<button class=o onclick=\""+js+"\">"+l+"</button>"};
-    return "<div class=box><h3>"+esc(P.nama)+" <small>"+(pa?'Kartu Pengajar':'Kartu Pengawas Asesmen')+(P.jenjang?" \u2022 "+esc(P.jenjang):'')+" \u2022 "+esc(P.tahun)+" Smt "+esc(P.smt)+(P.tgl&&!pa?" \u2022 "+esc(P.tgl):'')+" \u2022 "+P.peng.length+" "+wd.toLowerCase()+"</small></h3>"
+    return "<div class='box lpc kpi"+kcCl(P.id,0)+"' data-k=\""+esc(P.id)+"\"><h3 class=lph onclick=kcTg(this)><div class=lpl>"+esc(P.nama)+" <small>"+(pa?'Kartu Pengajar':'Kartu Pengawas Asesmen')+(P.jenjang?" \u2022 "+esc(P.jenjang):'')+" \u2022 "+esc(P.tahun)+" Smt "+esc(P.smt)+(P.tgl&&!pa?" \u2022 "+esc(P.tgl):'')+"</small></div><span class=lpt>"+P.peng.length+" "+wd.toLowerCase()+"</span></h3><div class='lpb kpib'>"
       +"<button onclick=\"kcOut('p',"+i+",null,'pdf')\">"+ic('download',15)+" Cetak Kartu "+wd+" (PDF Semua)</button> <button class=o onclick=\"kcOut('p',"+i+",null,'jpg')\">"+ic('image',15)+" Semua JPG</button> "+prnB("kcOut('p',"+i+",null,'prn')",'Print Kartu')+" <button class=o onclick='kpEdit("+i+")'>Ubah</button> <button class=o onclick='kpDel("+i+")'>Hapus</button>"
       +(KP.src?" <a href='"+esc(KP.src)+"' target=_blank><button class=o>"+ic('link',15)+" Buka Spreadsheet</button></a>":'')
       +"<div style='margin:8px 0'><b>Desain kartu:</b> <select onchange='kpSetTema("+i+",this.value)'>"+kcOpts('p',P.tema)+"</select> <small style='color:#7b6a6d'>Pilihan cepat. Warna, font, jenis kartu &amp; teks footer diatur lewat tombol Ubah.</small></div><div class=sc><table><tr><th>No.</th><th>Nama "+wd+"</th><th>NIK</th><th>Jabatan</th><th>Download</th></tr>"
       +P.peng.map(function(s,k){return "<tr><td>"+(k+1)+"</td><td>"+esc(s.n)+"</td><td>"+esc(s.i)+"</td><td>"+esc(s.j||'Guru')+"</td><td>"+bt("kcOut('p',"+i+","+k+",'pdf')",'PDF')+bt("kcOut('p',"+i+","+k+",'jpg')",'JPG')+prnB("kcOut('p',"+i+","+k+",'prn')",'Print')+"</td></tr>"}).join('')
-      +"</table></div></div>";
+      +"</table></div></div></div>";
   }).join('');
   var wd2=aj?'Guru':'Pengawas';
-  w.innerHTML="<h3>"+(KE.id?'Ubah':'Buat')+" Periode Kartu Guru</h3><p style='color:#7b6a6d'>Pilih jenis kartu di bagian Desain Kartu: <b>Kartu Pengawas Asesmen</b> atau <b>Kartu Pengajar</b>. Nama dipilih dari Data Guru. Setelah periode disimpan, kartu dapat diunduh (PDF atau JPG) atau dicetak per guru maupun sekaligus.</p>"
+  w.innerHTML="<div class='box kpf'><h3>"+(KE.id?'Ubah':'Buat')+" Periode Kartu Guru</h3><p style='color:#7b6a6d'>Pilih jenis kartu di bagian Desain Kartu: <b>Kartu Pengawas Asesmen</b> atau <b>Kartu Pengajar</b>. Nama dipilih dari Data Guru. Setelah periode disimpan, kartu dapat diunduh (PDF atau JPG) atau dicetak per guru maupun sekaligus.</p>"
     +"<div style='display:flex;gap:10px;flex-wrap:wrap'>"+f('qn','Nama periode',KE.nama,aj?'mis. Kartu Guru 2026/2027':'mis. ASTS Ganjil')+f('qj','Jenjang',KE.jenjang,'mis. SD / SMP / SMA','qjl')+"<datalist id=qjl><option value=SD><option value=SMP><option value=SMA><option value='SD, SMP, SMA'></datalist>"+f('qy','Tahun ajaran',KE.tahun,'2026/2027')+f('qs','Semester',KE.smt)+(aj?"<input type=hidden id=qt value=''>":f('qt','Tanggal',KE.tgl,'mis. 12 - 16 Oktober 2026'))+f('ql',aj?'Unit / lokasi (opsional)':'Lokasi (opsional)',KE.lok,'mis. Gedung A')+"</div>"
     +kcUI('p')+"<h4>Tambah "+wd2.toLowerCase()+" dari Data Guru</h4><select id=qp>"+KP.gur.map(function(s,j){return "<option value="+j+">"+esc(s.n)+" ("+esc(s.i)+")</option>"}).join('')+"</select> <button onclick='kpAdd()'>Tambah</button> <button class=o onclick='kpAll()'>Tambah Semua Guru</button>"
     +"<div class=sc><table><tr><th>No.</th><th>Nama "+wd2+"</th><th>NIK</th><th>Jabatan</th><th></th></tr>"
     +(KE.peng.length?KE.peng.map(function(s,j){return "<tr><td>"+(j+1)+"</td><td>"+esc(s.n)+"</td><td>"+esc(s.i)+"</td><td>"+esc(s.j||'Guru')+"</td><td><button class=o onclick='kpRm("+j+")'>Hapus</button></td></tr>"}).join(''):"<tr><td colspan=5>Belum ada guru dalam daftar.</td></tr>")
     +"</table></div><br><button onclick='kpSave()'>Simpan Periode</button>"+(KE.id?" <button class=o onclick='KE=kpNewD();kpView()'>Batal Ubah</button>":'')
-    +(sv?"<br><br><h3>Periode Kartu Guru Tersimpan</h3>"+sv:'');
+    +"</div>"+kcSec('kp','Periode Kartu Guru Tersimpan',KP.list.length+' periode',sv);
 }
 function kpHas(i){return KE.peng.some(function(x){return x.i==i})}
 function kpAdd(){kpSync();var s=KP.gur[+$('#qp').value];if(s&&!kpHas(s.i))KE.peng.push({n:s.n,i:s.i,j:s.j,f:s.f,nip:s.nip||''});kpView()}
@@ -2548,7 +2583,7 @@ function jdWord(i){
 }
 // ---- Tampilan soal terkunci di Daftar Asesmen ----
 function lkBn(a){if(!a.LOCK)return '';var x=a.LOCK;return '<div class=lkb>'+ic('lock',16)+'<span><b>Soal terkunci</b> \u2014 masuk jadwal \u201C'+esc(x.n)+'\u201D: ujian '+jdTgl(x.d)+' pukul '+jdJam(x.j)+'. Siswa baru dapat mengerjakan 10 menit sebelumnya.'+(U.sa?'':' Soal tidak dapat dibuka atau diubah sampai saat itu.')+'</span></div>'}
-function lkCard(a){return '<div class="box ac">'+lkBn(a)+'<div class=ach><div><h3>'+esc(a.NAMA)+'</h3><small>'+a.JENJANG+' '+a.TINGKAT+' \u2022 '+mpb(a.MAPEL)+' \u2022 '+a.TAHUN+' Smt '+a.SEMESTER+' \u2022 '+a.DURASI+' menit \u2022 '+a.soal.length+' soal</small></div><span class=kd>'+ic('key',14)+' '+esc(a.KODE)+'</span></div></div>'}
+function lkCard(a){return '<div class="box ac">'+lkBn(a)+'<div class=ach><div><h3>'+esc(a.NAMA)+'</h3><small>'+a.JENJANG+' '+a.TINGKAT+' \u2022 '+mpb(a.MAPEL)+' \u2022 '+a.TAHUN+' Smt '+a.SEMESTER+' \u2022 '+a.DURASI+' menit \u2022 '+a.soal.length+' soal</small></div><span class=kdk><span class=kdl>Kode soal</span><span class=kdv>'+ic('key',15)+' '+esc(a.KODE)+'</span></span></div></div>'}
 
 /* ===== Daftar Mata Pelajaran per Jenjang ===== */
 var MP={
@@ -2711,13 +2746,14 @@ function srchBar(sel,ph,extra){return '<div class="srb">'+ic('search',16)+'<inpu
 function srchDo(e){var q=e.value.toLowerCase().trim();SRQ[e.dataset.sel]=e.value;document.querySelectorAll(e.dataset.sel).forEach(function(it){it.style.display=!q||it.textContent.toLowerCase().indexOf(q)>=0?'':'none'})}
 function srchInit(t){
   var m={as:['.wrap > .box.ac','Cari asesmen: nama, kode, mata pelajaran...',''],lap:['.wrap > .box.lpc','Cari laporan: nama asesmen, mapel, variasi kelas...','<button class=o onclick="lpAll(1)">Buka semua</button><button class=o onclick="lpAll(0)">Tutup semua</button>'],pt:['.wrap .st','Cari ujian berlangsung: nama siswa, kelas...','']}[t];
-  if(t=='lap')document.querySelectorAll('.lpc').forEach(function(c){var n=c.querySelectorAll('.rr').length,b=c.querySelector('.lpt');if(b)b.textContent=n+' variasi kelas'});
+  if(t=='lap')document.querySelectorAll('.lpc:not(.lgx)').forEach(function(c){var n=c.querySelectorAll('.rr').length,b=c.querySelector('.lpt');if(b)b.textContent=n+' variasi kelas'});
   if(!m)return;var f=document.querySelector(m[0]);if(f)f.insertAdjacentHTML('beforebegin',srchBar(m[0],m[1],m[2]));
+  if(t=='lap'){var qi=document.querySelector('.wrap > .srb .srq');if(qi)qi.setAttribute('oninput','lapSrch(this)')}
 }
 function srchPer(){
   document.querySelectorAll('.srper').forEach(function(x){x.remove()});
   [].slice.call(document.querySelectorAll('#app h3')).filter(function(h){return /Tersimpan/.test(h.textContent)}).forEach(function(h){
-    var its=[],x=h.nextElementSibling;while(x){its.push(x);x=x.nextElementSibling}if(!its.length)return;
+    var its=[],x=h.nextElementSibling;while(x){its.push(x);x=x.nextElementSibling}if(!its.length||!its.some(function(i){return !i.classList.contains('em')}))return;
     its.forEach(function(i){i.classList.add('srp')});h.insertAdjacentHTML('afterend',srchBar('.srp','Cari periode tersimpan...').replace('class="srb"','class="srb srper"'));
     var q=SRQ['.srp'];if(q){var e=h.nextElementSibling.querySelector('input');e.value=q;srchDo(e)}
   });
@@ -2725,7 +2761,33 @@ function srchPer(){
 window.addEventListener('load',function(){['jdView','kpView','ktView'].forEach(function(n){var o=window[n];if(typeof o!='function')return;window[n]=function(){var r=o.apply(this,arguments);srchPer();return r}})});
 /* ===== Laporan: variasi kelas bisa disusutkan / diturunkan ===== */
 function lpT(h){h.parentNode.classList.toggle('cl')}
-function lpAll(o){document.querySelectorAll('.lpc').forEach(function(c){c.classList.toggle('cl',!o)})}
+function lpAll(o){document.querySelectorAll('.lpc').forEach(function(c){c.classList.toggle('cl',!o);if(c.dataset.k)KCT[c.dataset.k]=o?1:0})}
+/* ===== Laporan Hasil Asesmen: dikelompokkan per jenjang > kelas > mata pelajaran (tirai bertingkat) ===== */
+function lapGrp(L,cb){
+  var it=[];L.forEach(function(a,i){var h=cb(a,i);if(h)it.push({a:a,h:h})});
+  if(!it.length)return [];
+  var J={};
+  it.forEach(function(x){
+    var j=String(x.a.JENJANG||'').trim()||'Tanpa jenjang',k=String(x.a.TINGKAT||'').trim()||'Tanpa kelas',m=String(x.a.MAPEL||'').trim()||'Tanpa mata pelajaran';
+    var A=J[j]||(J[j]={n:j,K:{},c:0}),B=A.K[k]||(A.K[k]={n:k,M:{},c:0}),C=B.M[m]||(B.M[m]={n:m,L:[]});
+    A.c++;B.c++;C.L.push(x.h)});
+  var ko=function(j,k){var a=(TK[j]||[]).indexOf(k);return a<0?99:a};
+  var jn=Object.keys(J).sort(function(a,b){return ((KJO[a]||9)-(KJO[b]||9))||knat(a,b)});
+  var box=function(lv,key,ttl,sub,cnt,inner){return "<div class='"+(lv==1?'box ':'')+"lpc lgx l"+lv+kcCl(key,lv<3)+"' data-k=\""+esc(key)+"\"><h3 class=lph onclick=kcTg(this)><div class=lpl>"+ttl+(sub?" <small>"+sub+"</small>":'')+"</div><span class=lpt>"+cnt+"</span></h3><div class=lpb>"+inner+"</div></div>"};
+  var h=jn.map(function(j){
+    var A=J[j],kn=Object.keys(A.K).sort(function(a,b){return (ko(j,a)-ko(j,b))||knat(a,b)});
+    return box(1,'lg|'+j,ic('school',20)+' '+(/^Tanpa/.test(j)?esc(j):'Jenjang '+esc(j)),kn.length+' kelas',A.c+' asesmen',kn.map(function(k){
+      var B=A.K[k],mn=Object.keys(B.M).sort(function(a,b){return String(a).localeCompare(String(b),'id',{numeric:true})});
+      return box(2,'lg|'+j+'|'+k,ic('users',18)+' '+(/^Tanpa/.test(k)?esc(k):'Kelas '+esc(k)),mn.length+' mata pelajaran',B.c+' asesmen',mn.map(function(m){
+        var C=B.M[m];return box(3,'lg|'+j+'|'+k+'|'+m,mpb(m),'',C.L.length+' asesmen',C.L.join(''))}).join(''))}).join(''))}).join('');
+  return [h]}
+function lapSrch(e){
+  var q=e.value.toLowerCase().trim();
+  document.querySelectorAll('.lpa').forEach(function(c){c.style.display=!q||c.textContent.toLowerCase().indexOf(q)>=0?'':'none'});
+  [3,2,1].forEach(function(lv){document.querySelectorAll('.lgx.l'+lv).forEach(function(g){
+    var v=!q||[].some.call(g.querySelectorAll('.lpa'),function(c){return c.style.display!='none'});
+    g.style.display=v?'':'none';
+    if(q&&v)g.classList.remove('cl');else g.classList.toggle('cl',!kcOp(g.dataset.k,lv<3))})})}
 /* ===== Tahun Ajaran + kenaikan kelas otomatis ===== */
 function taBox(){return '<div class=box><h3>'+ic('calendar',18)+' Tahun Ajaran</h3><small>Tahun ajaran aktif menjadi bawaan data siswa baru. Jika dinaikkan (mis. 2026/2027 \u2192 2027/2028), seluruh siswa aktif otomatis naik kelas kecuali yang ditandai tinggal kelas. Siswa kelas akhir (VI, IX, XII) berstatus Lulus.</small><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px"><input id=ta value="'+esc(sc.ta||'2026/2027')+'" style="width:170px;margin:0" placeholder="2026/2027"><button onclick="taApply()">'+ic('calendar',15)+' Terapkan Tahun Ajaran</button></div></div>'}
 function taNext(s){var a=TK[s.j]||[],i=a.indexOf(s.k);return i<0?'(tetap)':i+1>=a.length?'LULUS':a[i+1]}
