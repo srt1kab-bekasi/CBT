@@ -607,6 +607,37 @@ html[data-xt]:not([data-xt=def]) #app[data-s=exam] .t-es textarea{border-color:v
 .wnk{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--k);margin-right:6px}.wnd{font-size:12.5px;color:#4a3a3d;margin-top:3px}.wnm{text-align:center;color:#7b6a6d;font-size:12.5px}
 .wnf{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.wnb{background:linear-gradient(135deg,#ff7043,#d32f2f)!important;color:#fff!important;border:0!important}
 @media(max-width:560px){.wnh{flex-direction:column;text-align:center}.wnf{flex-direction:column-reverse}.wnf button{width:100%}}
+
+/* ===== popup & header mengikuti tema ujian ===== */
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .ov{background:rgba(5,8,25,.66)!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl{background:var(--xc)!important;color:var(--xt)!important;border:2px solid var(--xbd)!important;border-radius:var(--xr2)!important;box-shadow:var(--xg),0 20px 60px #0009!important;font-family:var(--xf)}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl :is(h2,h3){color:var(--xa)!important;font-family:var(--xf)}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl :is(p,small,li,label,b,span,div){color:var(--xt)!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl .mi{background:var(--xa)!important;color:var(--xbt)!important;box-shadow:var(--xg)!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl .mi *{color:var(--xbt)!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl button{background:var(--xa)!important;color:var(--xbt)!important;border:0!important;border-radius:var(--xr)!important;font-weight:700}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl button.o{background:transparent!important;color:var(--xt)!important;border:2px solid var(--xbd)!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl button.d{background:var(--xcr)!important;color:#fff!important}
+html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin]) .mdl :is(input,textarea,select){background:var(--xo)!important;color:var(--xt)!important;border:2px solid var(--xbd)!important}
+html[data-xt]:not([data-xt=def]) :is(#app[data-s=exam],#app[data-s=sintro],#app[data-s=fin]) header>h1,html[data-xt]:not([data-xt=def]) :is(#app[data-s=exam],#app[data-s=sintro],#app[data-s=fin]) header>span{color:var(--xt)!important;text-shadow:none!important;font-weight:800;opacity:1!important}
+/* warna jenis soal yang serasi tema; semua garis kiri tunggal */
+html[data-xt=mil],.xtp[data-t=mil]{--xpg:#f5b301;--xjs:#4aa8ff;--xes:#ff9d4d;--xqt:#14142b}
+html[data-xt=f100],.xtp[data-t=f100]{--xpg:#ffd23f;--xjs:#ff9f43;--xes:#5ee0ff;--xqt:#14142b}
+html[data-xt=adv],.xtp[data-t=adv]{--xpg:#8a5a1f;--xjs:#3f7d3a;--xes:#b3541e;--xqt:#fff}
+html[data-xt=clr],.xtp[data-t=clr]{--xpg:#2563eb;--xjs:#0891b2;--xes:#6366f1;--xqt:#fff}
+html[data-xt=game],.xtp[data-t=game]{--xpg:#00f0ff;--xjs:#ff2bd6;--xes:#b388ff;--xqt:#0a0a1f}
+html[data-xt=spc],.xtp[data-t=spc]{--xpg:#7c9cff;--xjs:#c084fc;--xes:#5eead4;--xqt:#0a0a2a}
+html[data-xt=ocn],.xtp[data-t=ocn]{--xpg:#0096c7;--xjs:#2a9d8f;--xes:#e76f51;--xqt:#fff}
+html[data-xt=cnd],.xtp[data-t=cnd]{--xpg:#ff6fa5;--xjs:#ff8c42;--xes:#9b7bff;--xqt:#fff}
+html[data-xt=kls],.xtp[data-t=kls]{--xpg:#f2e96b;--xjs:#8ee3c8;--xes:#ffb3a7;--xqt:#1b3a2a}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .box.q.t-js{border-style:solid!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .box.q.t-es{border-left-style:solid!important}
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.pg,html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.js,html[data-xt]:not([data-xt=def]) #app[data-s=exam] .qt.es{color:var(--xqt)!important}
+/* rombel manual */
+.rbn{margin:12px 0;padding:12px 14px;border:1.5px dashed rgba(var(--mr),.35);border-radius:16px;background:var(--mt)}.rbn>b{color:var(--m)}
+.rbnf{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end;margin-top:8px}.rbnf label{font-size:12.5px;font-weight:600;color:#6b5a5d;display:flex;flex-direction:column;gap:4px}.rbnf input,.rbnf select{margin:0;width:100%}
+.rbs.hid{display:none}
+.rmsy{margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.rmsy small{color:#7b6a6d}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 "use strict";
@@ -1230,7 +1261,7 @@ function drawE() {
     scr('edit');
     var sel = function (id, arr, v) { return "<select id=".concat(id, ">").concat(arr.map(function (x) { return "<option ".concat(x == v ? 'selected' : '', ">").concat(x, "</option>"); }).join(''), "</select>"); };
     app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt()\">Batal</button></header><div class=wrap><div class=box><h2>").concat(E.kode ? 'Edit' : 'Buat', " Asesmen ").concat(E.kode ? "<small>Kode ".concat(E.kode, "</small> <button class=\"o cpb\" onclick=\"cpk('").concat(E.kode, "',this)\">").concat(ic('copy', 14), " Salin</button>") : '', "</h2>\n Jenjang ").concat(sel('jj', Object.keys(TK), E.jenjang), " Kelas <select id=tk>").concat(TK[E.jenjang].map(function (x) { return "<option ".concat(x == E.tingkat ? 'selected' : '', ">").concat(x, "</option>"); }).join(''), "</select>\n ").concat(mpSel(E.jenjang, E.mapel), "<input id=th type=number min=2026 value=\"").concat(E.tahun, "\"> Semester ").concat(sel('sm', [1, 2], E.semester), "\n <input id=nm placeholder=\"Nama Asesmen\" value=\"").concat(esc(E.nama), "\">").concat(rmBox(), xtSel(), "</div>\n ").concat(tbHTML()).concat(E.soal.map(function (s, n) { return "<div class=box><b>Soal ".concat(n + 1, "</b> <select onchange=\"sv();E.soal[").concat(n, "].t=this.value;drawE()\"><option value=pg ").concat(s.t == 'pg' ? 'selected' : '', ">Pilihan Ganda</option><option value=js ").concat(s.t == 'js' ? 'selected' : '', ">Jawaban Singkat</option><option value=es ").concat(s.t == 'es' ? 'selected' : '', ">Essay Uraian</option></select> ").concat(tbadge(s.t), " <button class=d onclick=\"sv();E.soal.splice(").concat(n, ",1);drawE()\">\u2715</button>\n <div class=\"re rq\" contenteditable=true data-n=").concat(n, " data-ph=\"Tulis soal di sini... gunakan toolbar di atas untuk format, tabel, dan rumus\">").concat(rh(s.q), "</div><input class=sm data-n=").concat(n, " placeholder=\"Lampiran (URL gambar/video/audio, pisahkan dengan spasi)\" value=\"").concat(esc(s.m), "\"><input type=file accept=\"image/*,video/*,audio/*\" onchange=\"upm(").concat(n, ",this)\"><small>Unggah gambar, video, atau audio (maks 10 MB) ke Drive. Boleh lebih dari satu.</small>\n ").concat(s.t == 'pg' ? [0, 1, 2, 3, 4].map(function (j) { return "<div class=orow><input type=radio name=k".concat(n, " ").concat(s.k == 'ABCDE'[j] ? 'checked' : '', " onchange=\"E.soal[").concat(n, "].k='").concat('ABCDE'[j], "'\" style=\"width:auto\"> <div class=\"re ro so\" contenteditable=true data-n=").concat(n, " data-j=").concat(j, " data-ph=\"Pilihan ").concat('ABCDE'[j], "\">").concat(rh((s.o || [])[j] || ''), "</div></div>"); }).join('') : (s.t == 'js' ? '<small>Siswa menjawab <b>maksimal 60 karakter</b>. Guru menilai dengan bobot 0, ½, 1, 1½, atau 2.</small>' : '<small>Siswa menjawab dengan teks panjang <b>tanpa batas karakter</b>. Guru menilai dengan bobot 0, 1, 2, 3, atau 4.</small>'), "</div>"); }).join(''), "\n <div class=box><button class=o onclick=\"sv();E.soal.push({t:'pg',q:'',m:'',o:['','','','',''],k:'A'});drawE()\">\uFF0B Soal Berikutnya</button><hr><b>Selesai Membuat Soal</b> \u00B7 Durasi (menit) <input id=du type=number value=\"").concat(E.durasi, "\"><button onclick=\"saveE()\">Simpan Soal</button></div></div>");
-    tbStick(); $('#jj').onchange = function () { sv(); E.jenjang = $('#jj').value; E.tingkat = TK[E.jenjang][0]; if ((MP[E.jenjang] || []).indexOf(E.mapel) < 0) E.mapel = ''; drawE(); };
+    tbStick(); $('#jj').onchange = function () { sv(); E.jenjang = $('#jj').value; E.tingkat = TK[E.jenjang][0]; if ((MP[E.jenjang] || []).indexOf(E.mapel) < 0) E.mapel = ''; if (!E.kode) rmAutoNew(); drawE(); }; $('#tk').onchange = function () { sv(); if (!E.kode) rmAutoNew(); drawE(); };
 }
 function sv() {
     if (!$('#jj'))
@@ -1380,7 +1411,7 @@ function draw() {
     scr('exam');
     var q = Qs[cur];
     seen[q.i] = 1;
-    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "<div class=lgd><span><i class=g></i>Terjawab</span><span><i class=y></i>Dilewati / belum diisi</span><span><i></i>Belum dibuka</span></div></div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>") : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>"), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
+    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "</div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>") : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>"), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
     if (TM)
         $('#tmslot').appendChild(TM);
     updEnd();
@@ -3501,6 +3532,92 @@ function lpWarn(C){
   modal('<div class=wn><div class=wnh><div class=wnic>'+ic('warn',34)+'</div><div><h3>Laporan Belum Siap Direkap</h3><p>Masih ada data yang belum lengkap. Hasil rekap bisa belum akurat jika tetap ditampilkan.</p></div></div>'
     +'<div class=wnsg>'+chips+'</div><div class=wnl>'+list+(iss.length>14?'<div class=wnm>+ '+(iss.length-14)+' catatan lain \u2014 lihat panel Pemeriksaan Kelengkapan Nilai</div>':'')+'</div>'
     +'<div class=wnf><button class=o onclick="mclose(this)">'+ic('undo',15)+' Periksa Kembali</button><button class=wnb onclick="lpGo(this)">'+ic('chart',15)+' Tetap Tampilkan Laporan</button></div></div>','wide');
+}
+/* ===== Master Rombel (dibuat manual di Data Siswa) ===== */
+var RM=[],RMload=0;
+function getRM(f){if(RMload&&!f)return Promise.resolve(RM);return api('rombelList',U.nik,PW).then(function(r){RM=r||[];RMload=1;return RM})}
+function rmNames(j,k){return RM.filter(function(r){return r.j==j&&r.k==k}).map(function(r){return r.n}).sort(jdNat)}
+/* ---- pembuatan soal: seluruh rombel jenjang & kelas dimuat otomatis sebagai ruang (spreadsheet hasil per rombel) ---- */
+function rmAutoNew(){if(!RMload||E.kode)return;E.rooms=rmNames(E.jenjang,E.tingkat)}
+function rmSyncAll(){
+  sv();getRM(1).then(function(){var n=rmNames(E.jenjang,E.tingkat);if(!n.length)return alert('Belum ada rombel untuk '+E.jenjang+' kelas '+E.tingkat+'. Buat dulu di tab Data Siswa \u203A Rombongan Belajar.');
+    n.forEach(function(x){if(E.rooms.indexOf(x)<0)E.rooms.push(x)});drawE()}).catch(function(e){alert(e)});
+}
+var _rb0=rmBox;rmBox=function(){var s=_rb0();return s.slice(0,-6)+'<div class=rmsy><button type=button class=o onclick="rmSyncAll()">\u21BB Muat semua rombel jenjang &amp; kelas ini</button><small>Variasi kelas otomatis mengikuti Rombel yang dibuat di Data Siswa. Setiap rombel mendapat spreadsheet hasil sendiri saat soal disimpan.</small></div></div>'};
+var _ed0=edit;edit=function(i){var r=_ed0.apply(this,arguments);getRM().then(function(){if(i==null&&E&&!E.kode&&!E.rooms.length&&rmNames(E.jenjang,E.tingkat).length){rmAutoNew();drawE()}}).catch(function(){});return r};
+/* ---- input siswa: Jenjang > Kelas > Variasi Kelas (rombel) ---- */
+sisCtl=function(x,v,attr,jn,kl){
+  var o=function(a,c){return a.map(function(k){return '<option'+(k==c?' selected':'')+'>'+esc(k)+'</option>'}).join('')};
+  if(x=='JENJANG')return '<select '+attr+' onchange="sisJj(this)"><option value="">\u2014</option>'+o(jdKeys(),v)+'</select>';
+  if(x=='KELAS')return '<select '+attr+' onchange="sisKl(this)"><option value="">\u2014</option>'+o(TK[jn]||[],v)+'</select>';
+  if(x=='VARIASI KELAS'){var l=rmNames(jn,kl);if(v&&l.indexOf(v)<0)l.push(v);return '<select '+attr+' data-vs=1><option value="">'+(l.length?'\u2014 pilih rombel \u2014':'\u2014 belum ada rombel \u2014')+'</option>'+o(l,v)+'</select>'}
+  if(x=='STATUS')return '<select '+attr+'>'+o(['Aktif','Lulus'],v||'Aktif')+'</select>';
+  return '<input '+attr+' value="'+esc(v||sc.ta||'2026/2027')+'" placeholder="2026/2027">';
+};
+function sisVar(c){
+  if(!c)return;var H=UD[0],q=function(n){return c.querySelector('[data-c="'+H.indexOf(n)+'"]')},j=q('JENJANG'),k=q('KELAS'),v=q('VARIASI KELAS');if(!v||v.tagName!='SELECT')return;
+  var cur=v.value,l=rmNames(j?j.value:'',k?k.value:'');if(cur&&l.indexOf(cur)<0)l.push(cur);
+  v.innerHTML='<option value="">'+(l.length?'\u2014 pilih rombel \u2014':'\u2014 belum ada rombel \u2014')+'</option>'+l.map(function(x){return '<option'+(x==cur?' selected':'')+'>'+esc(x)+'</option>'}).join('');
+}
+sisJj=function(el){var c=el.closest('.addg')||el.closest('tr'),ki=UD[0].indexOf('KELAS'),k=c&&c.querySelector('[data-c="'+ki+'"]');if(!k)return;k.innerHTML='<option value="">\u2014</option>'+(TK[el.value]||[]).map(function(x){return '<option>'+x+'</option>'}).join('');sisVar(c)};
+function sisKl(el){sisVar(el.closest('.addg')||el.closest('tr'))}
+function sisFill(){document.querySelectorAll('select[data-vs]').forEach(function(s){sisVar(s.closest('.addg')||s.closest('tr'))})}
+usEdit=function(o,no){var h=_ue(o,no);if(UT!='Siswa')return h;
+  var H=UD[0],r=o.r||[],jn=r[H.indexOf('JENJANG')],kl=r[H.indexOf('KELAS')];
+  SISC.forEach(function(x){var c=H.indexOf(x);if(c<0)return;var v=String(r[c]==null?'':r[c]);h=h.replace('<input data-c='+c+' value="'+esc(v)+'">',sisCtl(x,v,'data-c='+c,jn,kl))});return h};
+/* ---- tampilan Rombel (manual) ---- */
+function rbInit(){
+  Promise.all([api('guruList',U.nik,PW),api('gdAll',U.nik,PW),getRM(1)]).then(function(r){RB.gur=r[0]||[];RB.det={};(r[1]||[]).forEach(function(x){RB.det[x.nik]=x.d});if(!RB.ta)RB.ta=sc.ta||'2026/2027';rbView();sisFill()}).catch(function(e){var w=$('#rbw');if(w)w.textContent='Gagal memuat Rombel: '+e});
+}
+function rbGroups(){
+  var S=sisRows().filter(function(s){return s.st!='Lulus'&&s.ta==RB.ta}),out=[];
+  RM.filter(function(r){return !RB.jn||r.j==RB.jn}).forEach(function(r){out.push({id:r.id,j:r.j,k:r.k,v:r.n,list:S.filter(function(s){return s.j==r.j&&s.k==r.k&&s.v==r.n}).sort(function(a,b){return jdNat(a.n,b.n)})})});
+  return out.sort(function(a,b){return jdKeys().indexOf(a.j)-jdKeys().indexOf(b.j)||(TK[a.j]||[]).indexOf(a.k)-(TK[b.j]||[]).indexOf(b.k)||jdNat(a.v,b.v)});
+}
+RB.cj=RB.cj||'SMP';RB.ck=RB.ck||'';
+function rbView(){
+  var w=$('#rbw');if(!w)return;var S=sisRows(),tas={};S.forEach(function(s){if(s.ta)tas[s.ta]=1});tas[sc.ta||'2026/2027']=1;tas[RB.ta]=1;
+  SRB=rbGroups();var no=S.filter(function(s){return s.st!='Lulus'&&(!s.j||!s.k||!s.v)}).length,ks=TK[RB.cj]||[];if(ks.indexOf(RB.ck)<0)RB.ck=ks[0]||'';
+  var cards=SRB.map(function(g,gi){
+    var wn=rbWali(g.j,g.k,g.v),wg=wn?rbGuru(wn):null;
+    return '<div class="box lpc rbc"><h3 class=lph onclick="lpT(this)"><div class=lpl>'+ic('users',18)+' Rombel '+esc(g.v)+' <small>'+esc(g.j)+' \u2022 Kelas '+esc(g.k)+' \u2022 Wali Kelas: <b>'+esc(wg?wg.n:'belum ditentukan')+'</b></small></div><span class=lpt>'+g.list.length+' siswa</span></h3><div class=lpb>'
+      +'<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0"><label style="font-size:12.5px;font-weight:600">Wali Kelas <select onchange="rbSetWali('+gi+',this.value)" style="margin:0;width:auto;min-width:200px"><option value="">\u2014 pilih guru \u2014</option>'+RB.gur.map(function(x){return '<option value="'+esc(x.i)+'"'+(x.i==wn?' selected':'')+'>'+esc(x.n)+'</option>'}).join('')+'</select></label>'
+      +'<button onclick="rbAdd('+gi+')">'+ic('plus',15)+' Masukkan Siswa</button><button class=d onclick="rbDel('+gi+')">'+ic('trash',15)+' Hapus Rombel</button></div>'
+      +'<div data-h=1 style="margin-bottom:8px">'+xdBtns('rbAct('+gi+',@,\'list\')')+' <button class=o onclick="rbAct('+gi+',\'print\',\'abs\')">'+ic('print',15)+' Print Absensi Kelas</button></div>'
+      +'<div class=sc><table><tr><th>No</th><th>NIS</th><th>NISN</th><th>Nama Siswa</th><th></th></tr>'+(g.list.length?g.list.map(function(s,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(s.i)+'</td><td>'+esc(s.nisn)+'</td><td>'+esc(s.n)+'</td><td><button class="o jdx" title="Keluarkan dari rombel" onclick="rbOut('+gi+',\''+esc(s.i)+'\')">\u2715</button></td></tr>'}).join(''):'<tr><td colspan=5 class=em>Belum ada siswa. Klik <b>Masukkan Siswa</b>.</td></tr>')+'</table></div></div></div>';
+  }).join('');
+  w.innerHTML='<h3>'+ic('users',18)+' Rombongan Belajar (Rombel)</h3><small>Buat rombel (variasi kelas) per jenjang dan kelas, lalu masukkan siswa satu per satu atau sekaligus. Nama rombel otomatis muncul sebagai pilihan Variasi Kelas saat input siswa dan sebagai ruang saat membuat soal.</small>'
+   +'<div class=rbn><b>'+ic('plus',15)+' Buat Rombel Baru</b><div class=rbnf><label>Jenjang<select id=rbj onchange="RB.cj=this.value;rbView()">'+jdKeys().map(function(k){return '<option'+(k==RB.cj?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label><label>Kelas<select id=rbk onchange="RB.ck=this.value">'+ks.map(function(k){return '<option'+(k==RB.ck?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label><label>Nama Rombel (Variasi Kelas)<input id=rbn placeholder="mis. VII-A" onkeydown="if(event.key==\'Enter\')rbCreate()"></label><button onclick="rbCreate()">'+ic('plus',15)+' Buat Rombel</button></div></div>'
+   +'<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin:10px 0"><label style="font-size:12.5px;font-weight:600">Tahun Ajaran<br><select onchange="RB.ta=this.value;rbView()" style="margin:0;width:auto">'+Object.keys(tas).sort().map(function(t){return '<option'+(t==RB.ta?' selected':'')+'>'+esc(t)+'</option>'}).join('')+'</select></label>'
+   +'<label style="font-size:12.5px;font-weight:600">Tampilkan Jenjang<br><select onchange="RB.jn=this.value;rbView()" style="margin:0;width:auto"><option value="">Semua</option>'+jdKeys().map(function(k){return '<option'+(k==RB.jn?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label><button class=o onclick="rbInit()">Muat ulang</button></div>'
+   +(no?'<div class=lkb>'+ic('info',16)+'<span>'+no+' siswa aktif belum masuk rombel. Klik <b>Masukkan Siswa</b> pada rombel yang sesuai.</span></div>':'')
+   +(SRB.length?'<div data-h=1 style="margin:6px 0 10px"><b>Semua rombel di bawah:</b> '+xdBtns('rbAct(-1,@,\'list\')')+' <button class=o onclick="rbAct(-1,\'print\',\'abs\')">'+ic('print',15)+' Print Absensi Semua</button></div>'+srchBar('#rbw .rbc','Cari rombel atau nama siswa...','<button class=o onclick="lpAll(1)">Buka semua</button><button class=o onclick="lpAll(0)">Tutup semua</button>')+cards:'<p class=em>Belum ada rombel. Buat rombel pertama di atas.</p>');
+  document.querySelectorAll('#rbw .rbc').forEach(function(c){c.classList.add('cl')});
+}
+function rbCreate(){
+  var j=$('#rbj').value,k=$('#rbk').value,n=$('#rbn').value.trim();if(!n)return alert('Isi nama rombel, mis. VII-A.');RB.cj=j;RB.ck=k;
+  api('rombelSave',U.nik,PW,j,k,n).then(function(){return getRM(1)}).then(function(){toast('Rombel '+n+' dibuat');rbView();sisFill()}).catch(function(e){alert(e)});
+}
+function rbDel(gi){var g=SRB[gi];ask('Hapus rombel "'+g.v+'" ('+g.j+' '+g.k+')? Rombel hanya bisa dihapus jika sudah tidak ada siswanya.','Iya, Hapus',function(){return api('rombelDel',U.nik,PW,g.id).then(function(){return getRM(1)}).then(function(){rbView();sisFill()})},1,'Batal')}
+function sisSet(list,f){var H=UD[0],ni=H.indexOf('NOMOR INDUK SISWA'),w={};list.forEach(function(x){w[x]=1});UD.slice(1).forEach(function(r){if(w[String(r[ni]).trim()])Object.keys(f).forEach(function(k){var c=H.indexOf(k);if(c>=0)r[c]=f[k]})})}
+function rbOut(gi,nis){var g=SRB[gi];api('rombelAssign',U.nik,PW,g.j,g.k,g.v,[nis],'remove').then(function(){sisSet([nis],{'VARIASI KELAS':''});rbView();if($('#utb'))usRows();toast('Siswa dikeluarkan dari rombel')}).catch(function(e){alert(e)})}
+function rbAdd(gi){
+  var g=SRB[gi],S=sisRows().filter(function(s){return s.st!='Lulus'&&!(s.j==g.j&&s.k==g.k&&s.v==g.v&&s.ta==RB.ta)&&(!s.j||s.j==g.j)&&(!s.k||s.k==g.k)});
+  var rows=S.map(function(s){var has=s.v&&s.j&&s.k;return '<tr class="rbs'+(has?' has':'')+'"><td><input type=checkbox class=rbk data-n="'+esc(s.i)+'" onchange="rbCnt()"></td><td>'+esc(s.n)+'</td><td>'+esc(s.i)+'</td><td>'+(has?'<span class="lpch warn">'+esc(s.j+' '+s.k+' / '+s.v)+'</span>':'<span class=lpn>belum punya rombel</span>')+'</td></tr>'}).join('');
+  modal('<h3>Masukkan Siswa ke Rombel '+esc(g.v)+'</h3><p class=mt style="margin:0 0 8px">'+esc(g.j)+' \u2022 Kelas '+esc(g.k)+'. Centang satu atau banyak siswa sekaligus.</p>'
+   +'<div class=srb>'+ic('search',16)+'<input placeholder="Cari nama / NIS..." data-sel=".rbs" oninput="srchDo(this)"></div>'
+   +'<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px"><label style="display:inline-flex;gap:6px;align-items:center"><input type=checkbox id=rbo style="width:auto;margin:0" checked onchange="rbOnly()"> Hanya yang belum punya rombel</label><button class=o onclick="rbAll(1)">Pilih semua yang tampil</button><button class=o onclick="rbAll(0)">Kosongkan</button><b id=rbc></b></div>'
+   +'<div class=sc style="max-height:44vh;overflow:auto"><table><tr><th></th><th>Nama</th><th>NIS</th><th>Rombel sekarang</th></tr>'+(rows||'<tr><td colspan=4 class=em>Tidak ada siswa untuk jenjang/kelas ini. Lengkapi Jenjang dan Kelas siswa di tabel Data Siswa.</td></tr>')+'</table></div>'
+   +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px"><button class=o onclick="mclose(this)">Batal</button><button onclick="rbGo('+gi+',this)">'+ic('plus',15)+' Masukkan ke Rombel</button></div>','wide');
+  rbOnly();rbCnt();
+}
+function rbOnly(){var on=$('#rbo').checked;document.querySelectorAll('.rbs').forEach(function(r){r.classList.toggle('hid',on&&r.classList.contains('has'))})}
+function rbVis(r){return r.style.display!='none'&&!r.classList.contains('hid')}
+function rbAll(o){document.querySelectorAll('.rbs').forEach(function(r){if(rbVis(r))r.querySelector('.rbk').checked=!!o});rbCnt()}
+function rbCnt(){var n=document.querySelectorAll('.rbk:checked').length,e=$('#rbc');if(e)e.textContent=n+' siswa dipilih'}
+function rbGo(gi,b){
+  var g=SRB[gi],l=[].map.call(document.querySelectorAll('.rbk:checked'),function(e){return e.dataset.n});if(!l.length)return alert('Pilih minimal satu siswa.');
+  api('rombelAssign',U.nik,PW,g.j,g.k,g.v,l,'add').then(function(n){sisSet(l,{'JENJANG':g.j,'KELAS':g.k,'VARIASI KELAS':g.v,'TAHUN AJARAN':sc.ta||RB.ta,'STATUS':'Aktif'});RB.ta=sc.ta||RB.ta;mclose(b);rbView();if($('#utb'))usRows();toast(n+' siswa dimasukkan ke rombel '+g.v)}).catch(function(e){alert(e)});
 }
 /* ===== Gambar Kop Sekolah (header dokumen Word / PDF) ===== */
 var KOPD=null,KOPP=null;
