@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id" data-hs="grad" data-bs="grad" data-ls="split"><head><meta charset="utf-8"><script>window.onerror=function(m,s,l){var a=document.getElementById("app");if(a&&a.innerHTML.indexOf("Memuat aplikasi")>-1)a.innerHTML='<div style="padding:24px;font-family:sans-serif;color:#7a1022"><h3>Terjadi kesalahan memuat halaman</h3><p>'+m+' (baris '+l+')</p></div>'}</script><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://drive.google.com"><link rel="preconnect" href="https://lh3.googleusercontent.com"><link rel="preconnect" href="https://drive.usercontent.google.com"><title>CBT Ujian</title>
+<!DOCTYPE html><!-- ATURAN KECEPATAN & KEAMANAN: wajib dipatuhi setiap perubahan. Rinciannya ada di awal <script> utama dan di bagian atas Code_Wizard.gs --><html lang="id" data-hs="grad" data-bs="grad" data-ls="split"><head><meta charset="utf-8"><script>window.onerror=function(m,s,l){var a=document.getElementById("app");if(a&&a.innerHTML.indexOf("Memuat aplikasi")>-1)a.innerHTML='<div style="padding:24px;font-family:sans-serif;color:#7a1022"><h3>Terjadi kesalahan memuat halaman</h3><p>'+m+' (baris '+l+')</p></div>'}</script><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://drive.google.com"><link rel="preconnect" href="https://lh3.googleusercontent.com"><link rel="preconnect" href="https://drive.usercontent.google.com"><title>CBT Ujian</title>
 <style>
 :root{--m:#7a1022;--m2:#a31d33;--bg:#fff;--g:#2e9e5b;--y:#e6b422}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:var(--bg);color:#2b1a1d;-webkit-user-select:none;user-select:none}
@@ -722,6 +722,24 @@ html[data-xt]:not([data-xt=def]):is([data-sc=exam],[data-sc=sintro],[data-sc=fin
 @media(max-width:560px){.ach{flex-wrap:wrap}.lgx.l2,.lgx.l3{padding:6px 8px}}
 </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600;700&family=Montserrat:wght@500;600;700&family=Nunito:wght@600;700;800&family=Fredoka:wght@500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
+/* ╔══════════════════════════════════════════════════════════════════════════════════════════╗
+   ║  ATURAN KECEPATAN & KEAMANAN  —  WAJIB DIPATUHI SETIAP KALI MENAMBAH / MENGUBAH FITUR      ║
+   ╚══════════════════════════════════════════════════════════════════════════════════════════╝
+   (Pasangan dari blok aturan di bagian atas Code_Wizard.gs. Prinsip: CEPAT tanpa data basi dan tanpa melemahkan keamanan.)
+   1. Fungsi server BARU yang hanya MEMBACA  -> tambahkan ke RDONLY. Bila hasilnya berupa DAFTAR data admin (bukan data
+      real-time) tambahkan juga ke ACX agar tampil seketika dari cache browser dan ikut dipanaskan di warmUp().
+   2. Fungsi yang MENULIS  -> JANGAN masuk RDONLY. api() otomatis membersihkan semua cache sebelum dan sesudah penulisan.
+   3. JANGAN memasukkan fungsi real-time / ujian ke ACX: ping, pollExam, monitor, report, liveList, camWatch, camPut,
+      rtcSend, rtcRecv, startExam, submit, loginSiswa, listAsesmen (listAsesmen punya cache sendiri: getL).
+   4. mgmt(): tab BARU yang tidak butuh daftar asesmen tidak boleh menunggu getL(). Hanya tab dalam pola /^(as|lap|pt)$/ menunggu.
+   5. Tampilkan dulu dari cache, perbarui di belakang layar. Tampilkan "Memuat..." hanya bila belum ada cache. Jangan memblokir
+      layar dengan satu panggilan server lambat; gabungkan beberapa panggilan menjadi satu bila bisa (hindari N+1).
+   6. Hasil cache boleh sampai 10 menit; setelah menyimpan/mengubah data selalu segar. Tombol "Segarkan" membersihkan semuanya.
+   7. Sebelum membuat nama class CSS / variabel global / fungsi BARU, cari dulu di file ini apakah sudah dipakai
+      (pernah bentrok: .lpg, .kd, AC). Beri awalan unik untuk fitur baru.
+   8. Keamanan: jangan menyimpan password/token di localStorage/sessionStorage; semua panggilan server tetap membawa NIK+password
+      seperti yang sudah ada; jangan menampilkan data guru lain kepada guru biasa (server yang memfilter, jangan hanya disembunyikan di tampilan).
+   9. Jangan merombak aturan 1-8 tanpa alasan kuat; bila fitur baru bertentangan, sesuaikan fiturnya, bukan aturannya. */
 "use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -781,12 +799,12 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 var app = document.getElementById('app');
 var LC = { d: null, t: 0, p: null, v: 0 }, UC = {};
-function invC() { LC.v++; LC.t = 0; LC.d = null; LC.p = null; UC = {}; }
+function invC() { LC.v++; LC.t = 0; LC.d = null; LC.p = null; UC = {}; invAC(); }
 function refL() { if (LC.p) return LC.p; var v = LC.v, p = api('listAsesmen', U.nik, PW).then(function (d) { if (v === LC.v) { LC.d = d; LC.t = Date.now(); } LC.p = null; return d; }, function (e) { LC.p = null; throw e; }); LC.p = p; return p; }
-function getL() { var age = Date.now() - LC.t; if (LC.d && age < 90000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
+function getL() { var age = Date.now() - LC.t; if (LC.d && age < 300000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
 function refU(tp) { var c = UC[tp] = UC[tp] || { d: null, t: 0, p: null }; if (c.p) return c.p; var v = LC.v, p = api('listUsers', U.nik, PW, tp).then(function (d) { if (v === LC.v) { c.d = d; c.t = Date.now(); } c.p = null; return d; }, function (e) { c.p = null; throw e; }); c.p = p; return p; }
-function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 90000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
-var RDONLY = /^(list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
+function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 300000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
+var RDONLY = /^(monitor|histPesan|distAll|report|docGet|list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
 /* ===== Penghubung ke server =====
    Jika halaman ini dibuka DI DALAM Apps Script (link script.google.com) -> memakai google.script.run bawaan.
    Jika halaman ini DIHOSTING DI LUAR Apps Script (GitHub Pages / Netlify / dll.) -> memanggil Web App Apps Script lewat fetch.
@@ -815,12 +833,47 @@ var api = function (f) {
     for (var _i = 1; _i < arguments.length; _i++) {
         a[_i - 1] = arguments[_i];
     }
-    if (!RDONLY.test(f)) invC();
+    if (!RDONLY.test(f)) { // tulis data: bersihkan cache sekarang dan sekali lagi setelah server selesai (mencegah data lama tersimpan)
+        var inv = f === 'rombelList' ? function () { invAC('rombelAll'); } : invC; // rombelList hanya membaca (kadang mendaftarkan rombel): cukup bersihkan cache rombel
+        inv();
+        return new Promise(function (ok, no) { callGas(f, a, ok, no); }).then(function (r) { inv(); return r; }, function (e) { inv(); throw e; });
+    }
+    if (ACX.test(f)) return acGet(f, a);
     return new Promise(function (ok, no) {
         var _a;
         return callGas(f, a, ok, no);
     });
 };
+/* ===== Cache data daftar: buka tab yang pernah dibuka = langsung tampil; data diperbarui diam-diam di belakang layar ===== */
+var ACX = /^(siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|agendaList|agendaJadwal|rombelAll|gdAll)$/;
+var ZC = { v: 0, m: {}, f: {} };
+function invAC(pre) { if (!pre) { ZC.v++; ZC.m = {}; ZC.f = {}; return; } for (var k in ZC.m) if (k.indexOf(pre + '|') === 0) ZC.m[k].t = Math.min(ZC.m[k].t, Date.now() - 30000); } // tandai basi: tetap ditampilkan seketika, diperbarui di belakang layar
+function acClone(x) { return x == null ? x : JSON.parse(JSON.stringify(x)); }
+function acFetch(k, f, a) {
+    if (ZC.f[k]) return ZC.f[k];
+    var v = ZC.v, p = new Promise(function (ok, no) { callGas(f, a, ok, no); }).then(function (d) { if (v === ZC.v && ZC.f[k] === p) ZC.m[k] = { d: d, t: Date.now() }; if (ZC.f[k] === p) delete ZC.f[k]; return d; }, function (e) { if (ZC.f[k] === p) delete ZC.f[k]; throw e; });
+    ZC.f[k] = p; return p;
+}
+function acGet(f, a) {
+    var k = f + '|' + JSON.stringify(a), e = ZC.m[k], age = e ? Date.now() - e.t : 0;
+    if (e && age < 600000) { if (age > 20000) acFetch(k, f, a).catch(function () { }); return Promise.resolve(acClone(e.d)); }
+    return acFetch(k, f, a).then(acClone);
+}
+/* ===== Pemanasan: setelah halaman utama tampil, data tab lain diambil bertahap di latar belakang ===== */
+var WU = { k: '' };
+function warmUp() {
+    if (!U || !U.nik) return;
+    var key = U.nik + '|' + PW; if (WU.k === key) return; WU.k = key;
+    var A = function (f) { return function () { return api(f, U.nik, PW); }; }, us = function (tp) { return function () { return UC[tp] && UC[tp].d ? 0 : refU(tp); }; };
+    var q = U.sa ? [us('Siswa'), us('Guru'), function () { return LC.d ? 0 : refL(); }, A('jadwalList'), A('guruList'), A('agendaList'), A('rombelAll'), A('agendaJadwal'), A('siswaList'), A('kartuList'), A('kartuPList'), A('kartuDesGet'), A('kartuSrc'), A('kartuPSrc'), A('gdAll')]
+        : [A('agendaList'), A('rombelAll'), A('agendaJadwal')], i = 0;
+    (function nx() {
+        if (WU.k !== key || !U) return;
+        var it = q[i++]; if (!it) return;
+        var p; try { p = it(); } catch (e) { }
+        Promise.resolve(p).catch(function () { }).then(function () { setTimeout(nx, 250); });
+    })();
+}
 var go = function (f) {
     var a = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -885,7 +938,7 @@ var LOGO = 'data:image/png;base64,' +
 var esc = function (s) { return String(s !== null && s !== void 0 ? s : '').replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]); }); };
 var TK = { SD: ['I', 'II', 'III', 'IV', 'V', 'VI'], SMP: ['VII', 'VIII', 'IX'], SMA: ['X', 'XI', 'XII'] };
 var sc = { nama: 'CBT Ujian', logo: '' }, U = null, PW = '';
-var IC = { list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>', chart: '<path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>', radar: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>', users: '<circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.5 3.5-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M22 21c0-3-2-4.8-5-5.3"/>', school: '<path d="M3 10l9-6 9 6"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/>', lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>', key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>', edit: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>', trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>', eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', download: '<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>', plus: '<path d="M12 5v14M5 12h14"/>', send: '<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>', stop: '<rect x="5" y="5" width="14" height="14" rx="2"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', check: '<path d="M5 12l5 5 9-10"/>', alert: '<path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>', logout: '<path d="M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h4M16 8l4 4-4 4M20 12H9"/>', file: '<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', play: '<path d="M7 4l13 8-13 8V4z"/>', undo: '<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5"/>', book: '<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5z"/><path d="M4 19a2 2 0 012-2h13"/>', sheet: '<path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18"/>', table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/>' };
+var IC = { list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>', chart: '<path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>', radar: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>', users: '<circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.5 3.5-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M22 21c0-3-2-4.8-5-5.3"/>', sync: '<path d="M21 12a9 9 0 01-15.5 6.2"/><path d="M3 12a9 9 0 0115.5-6.2"/><path d="M18 2v4h-4M6 22v-4h4"/>', school: '<path d="M3 10l9-6 9 6"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/>', lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>', key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>', edit: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>', trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>', eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', download: '<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>', plus: '<path d="M12 5v14M5 12h14"/>', send: '<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>', stop: '<rect x="5" y="5" width="14" height="14" rx="2"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', check: '<path d="M5 12l5 5 9-10"/>', alert: '<path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>', logout: '<path d="M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h4M16 8l4 4-4 4M20 12H9"/>', file: '<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', play: '<path d="M7 4l13 8-13 8V4z"/>', undo: '<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5"/>', book: '<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5z"/><path d="M4 19a2 2 0 012-2h13"/>', sheet: '<path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18"/>', table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/>' };
 Object.assign(IC, { scan: '<path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M7 12h10M7 9v6M17 9v6M12 9v6"/>', camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/>', search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>', save: '<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/>', upload: '<path d="M12 21V9M7 14l5-5 5 5M4 3h16"/>', image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/>', pie: '<path d="M21 12A9 9 0 1112 3v9z"/><path d="M15 3.5A9 9 0 0120.5 9H15z"/>' });
 var ic = function (n, z) { return "<svg class=ic width=".concat(z || 18, " height=").concat(z || 18, " viewBox=\"0 0 24 24\" fill=none stroke=currentColor stroke-width=1.8 stroke-linecap=round stroke-linejoin=round>").concat(IC[n] || '', "</svg>"); };
 window.alert = function (m) { dlg(String(m), /error|gagal|salah|tidak|harus|lengkapi|pilih|klik|masukkan|maks|terlalu/i.test(m) ? 'warn' : 'info'); };
@@ -990,7 +1043,7 @@ function mgmt() {
                     stopM();
                     if (!U.sa && !/^(as|lap|pt|ag)$/.test(t || 'as')) t = 'as';
                     scr('mgmt');
-                    return [4, getL()];
+                    return [4, /^(as|lap|pt)$/.test(t || 'as') ? getL() : Promise.resolve(LC.d || window.L || [])];
                 case 1:
                     L = _a.sent();
                     window.L = L;
@@ -1050,8 +1103,9 @@ function mgmt() {
                         c += taBox() + sndBox() + themeBox();
                     if (t == 'sk' && U.su)
                         c += pwBox();
-                    app.innerHTML = "<header>".concat(brand().replace('<h1>', (U.sa ? "<button class=\"o\" onclick=\"mgmt('sk')\">" + ic('school', 15) + " Sekolah</button>" : '') + (U.su ? "<button class=\"o\" onclick=\"tabSet()\">" + ic('sliders', 15) + " Atur Tab</button>" : '') + '<h1>')).concat(av(), "<button class=o onclick=\"login()\">").concat(ic('logout', 15), " Keluar</button></header>\n <div class=wrap><div class=nav>").concat(tabs.map(function (x) { return "<button class=\"nt ".concat(x[0] == t ? 'on' : '', "\" data-k=\"").concat(x[0], "\" onclick=\"mgmt('").concat(x[0], "')\"><i class=ni>").concat(ic(x[2], 20), "</i><span>").concat(x[1], "</span></button>"); }).join(''), "</div><br>").concat(c, "</div><footer class=pf>").concat(ftx(), "</footer>").concat(t == 'as' ? "<button class=fab onclick=\"edit()\">".concat(ic('plus', 20), " Buat Asesmen Baru</button>") : '');
+                    app.innerHTML = "<header>".concat(brand().replace('<h1>', (U.sa ? "<button class=\"o\" onclick=\"mgmt('sk')\">" + ic('school', 15) + " Sekolah</button>" : '') + (U.sa ? "<button class=\"o\" onclick=\"segarkan(this)\" title=\"Muat ulang data terbaru dari server (mis. setelah mengubah data langsung di Google Sheets)\">" + ic('sync', 15) + " Segarkan</button>" : '') + (U.su ? "<button class=\"o\" onclick=\"tabSet()\">" + ic('sliders', 15) + " Atur Tab</button>" : '') + '<h1>')).concat(av(), "<button class=o onclick=\"login()\">").concat(ic('logout', 15), " Keluar</button></header>\n <div class=wrap><div class=nav>").concat(tabs.map(function (x) { return "<button class=\"nt ".concat(x[0] == t ? 'on' : '', "\" data-k=\"").concat(x[0], "\" onclick=\"mgmt('").concat(x[0], "')\"><i class=ni>").concat(ic(x[2], 20), "</i><span>").concat(x[1], "</span></button>"); }).join(''), "</div><br>").concat(c, "</div><footer class=pf>").concat(ftx(), "</footer>").concat(t == 'as' ? "<button class=fab onclick=\"edit()\">".concat(ic('plus', 20), " Buat Asesmen Baru</button>") : '');
                     srchInit(t);
+                    setTimeout(warmUp, 1200);
                     return [2];
             }
         });
@@ -2062,6 +2116,12 @@ var KCT={};
 function kcOp(k,d){var v=KCT[k];return v===undefined?!!d:!!v}
 function kcCl(k,d){return kcOp(k,d)?'':' cl'}
 function kcTg(h,k){var b=h.parentNode,c=b.classList.toggle('cl');k=k||b.dataset.k;if(k)KCT[k]=c?0:1}
+/* Segarkan Data: bersihkan cache server (cacheReset) + cache browser, lalu muat ulang tab yang sedang dibuka */
+function segarkan(b){
+  if(b&&b.disabled)return; if(b)b.disabled=true;
+  var d=(document.querySelector('.nt.on')||{}).dataset,t=(d&&d.k)||'as';
+  api('cacheReset',U.nik,PW).then(function(){invC();toast('Data disegarkan');mgmt(t)},function(e){if(b)b.disabled=false;toast('Gagal menyegarkan: '+((e&&e.message)||e))});
+}
 function kcSec(k,t,sub,h){return "<div class='box lpc kps"+kcCl('sec_'+k,1)+"' data-k=\"sec_"+k+"\"><h3 class='lph kph' onclick=kcTg(this)><div class=lpl>"+ic('list',20)+" "+t+" <small>"+sub+"</small></div><span class=lpt></span></h3>"+(h||"<p class=em>Belum ada periode tersimpan. Periode yang Anda simpan akan tampil di sini.</p>")+"</div>"}
 var KJO={SD:1,SMP:2,SMA:3};
 function knat(a,b){return String(a).localeCompare(String(b),'id',{numeric:true})}
