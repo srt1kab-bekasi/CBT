@@ -1,4 +1,4 @@
-<!DOCTYPE html><!-- ATURAN KECEPATAN & KEAMANAN: wajib dipatuhi setiap perubahan. Rinciannya ada di awal <script> utama dan di bagian atas Code_Wizard.gs --><html lang="id" data-hs="grad" data-bs="grad" data-ls="split"><head><meta charset="utf-8"><script>window.onerror=function(m,s,l){var a=document.getElementById("app");if(a&&a.innerHTML.indexOf("Memuat aplikasi")>-1)a.innerHTML='<div style="padding:24px;font-family:sans-serif;color:#7a1022"><h3>Terjadi kesalahan memuat halaman</h3><p>'+m+' (baris '+l+')</p></div>'}</script><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://drive.google.com"><link rel="preconnect" href="https://lh3.googleusercontent.com"><link rel="preconnect" href="https://drive.usercontent.google.com"><title>CBT Ujian</title>
+<!DOCTYPE html><!-- ATURAN KECEPATAN & KEAMANAN: wajib dipatuhi setiap perubahan. Rinciannya ada di awal <script> utama dan di bagian atas Code_Wizard.gs --><html lang="id" data-hs="grad" data-bs="grad" data-ls="split"><head><meta charset="utf-8"><script>window.onerror=function(m,s,l){var a=document.getElementById("app");if(a&&a.innerHTML.indexOf("Memuat aplikasi")>-1)a.innerHTML='<div style="padding:24px;font-family:sans-serif;color:#7a1022"><h3>Terjadi kesalahan memuat halaman</h3><p>'+m+' (baris '+l+')</p></div>'}</script><meta name="viewport" content="width=device-width,initial-scale=.75"><link rel="preconnect" href="https://drive.google.com"><link rel="preconnect" href="https://lh3.googleusercontent.com"><link rel="preconnect" href="https://drive.usercontent.google.com"><title>CBT Ujian</title>
 <style>
 :root{--m:#7a1022;--m2:#a31d33;--bg:#fff;--g:#2e9e5b;--y:#e6b422}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:var(--bg);color:#2b1a1d;-webkit-user-select:none;user-select:none}
@@ -786,6 +786,20 @@ body.sbon .sb{transform:none}body.sbon .sbo{opacity:1;pointer-events:auto}
 </style>
 <style>
 .ssb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#e8f6ee;border:1px solid #9bd3b0;border-radius:14px;padding:10px 14px;margin:0 0 12px;font-weight:600;color:#1b5e20}.ssb button{margin:0}
+</style>
+<style>
+/* ===== tirai ringkas (Tahun Ajaran > Rombel) ===== */
+.lpc.tr{padding:0!important;margin:6px 0;box-shadow:none;border-radius:12px}.lpc.tr::before{display:none!important}
+.lpc.tr>.lph{margin:0;padding:8px 10px;gap:6px;font-size:13.5px}.lpc.tr>.lph .lpt{font-size:11px;padding:1px 9px}
+.tr1>.lph{padding:9px 12px;font-size:14.5px}
+.tr2{background:transparent!important;border:0!important}.tr2>.lph{background:var(--mt);color:var(--m)!important;border-radius:10px;font-size:13px}
+.lpc.tr>.lpb{padding:2px 0 0}.lpc.tr .lpc.tr{margin-left:0}
+.mpl{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--m);margin:8px 2px 2px;padding-bottom:2px;border-bottom:1px dashed rgba(var(--mr),.3)}
+.jmc{padding:8px 11px;margin:6px 2px;border-left-width:4px}.jmh{gap:6px 10px}.jmk{margin:4px 0}.jmn{margin:3px 0;white-space:pre-wrap;color:#555;font-size:12.5px}
+.jmm2{gap:4px 12px;margin:3px 0;font-size:12px}.jmf{gap:5px;margin-top:6px}.jmx{margin:4px 2px}
+.sm{padding:3px 9px!important;font-size:12px!important;margin:0!important;line-height:1.5}
+.ssb{padding:7px 12px;font-size:12.5px}
+@media(max-width:860px){.jmc{padding:7px 9px}.jmh b{font-size:13px}.jmk b{font-size:13px}.lpc.tr>.lph{font-size:12.8px;padding:7px 9px}.tr1>.lph{font-size:13.5px}.jmj{font-size:10.5px}}
 </style>
 </head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
@@ -5653,5 +5667,29 @@ function jmBody(A){var T=TC(),m=T.m,m2=T.m2,mt=T.mt,t=jmTot(A),d=jdD(A.tgl),hr=d
    +xdSign({role:'Guru Mata Pelajaran',name:A.guru||'',img:'',dateTxt:'...........................,  '+jdTgl(A.tgl,1),id:''},T)}
 function jmOut(id,t){var A=jmFind(id);if(!A)return;
   xdOut({title:'JURNAL MENGAJAR GURU',orient:'p',blocks:[{banner:'Kartu Jurnal Mengajar',sub:(A.guru||'')+' \u2022 '+(A.mapel||'')+' \u2022 '+A.j+' '+A.k+(A.v?' '+A.v:''),html:jmBody(A)}]},t,'Jurnal Mengajar '+(A.guru||'')+' '+(A.mapel||'')+' '+A.tgl)}
+</script>
+<script>
+/* ===== Tampilan ringkas Jurnal Mengajar / Pengawas ===== */
+function jmBtns(tpl){return ['jpg','pdf','doc','print'].map(function(x){return '<button class="o sm" onclick="'+tpl.replace('@',"'"+x+"'")+'">'+({jpg:'JPG',pdf:'PDF',doc:'Word',print:'Print'})[x]+'</button>'}).join(' ')}
+function trTree2(L,leaf,top){var J=jdKeys();return jmGroup(L,function(A){return A.ta||taOf(A.tgl)}).sort(function(a,b){return a.k<b.k?1:-1}).map(function(g,n){
+  var rb=jmGroup(g.l,function(A){return (A.j||'-')+'|'+(A.k||'-')+'|'+(A.v||'')}).sort(function(a,b){var x=a.k.split('|'),y=b.k.split('|');return (J.indexOf(x[0])-J.indexOf(y[0]))||jdNat(x[1],y[1])||jdNat(x[2],y[2])});
+  return trai(1,'calendar','Tahun Ajaran '+esc(g.k),'',(top?top(g):'')+rb.map(function(r,i){var p=r.k.split('|');return trai(2,'users',esc(p[0])+' \u203A Kelas '+esc(p[1])+(p[2]?' \u203A '+esc(p[2]):''),'',leaf(r.l),r.l.length,n==0&&i==0)}).join(''),g.l.length+' jurnal',n==0)}).join('')}
+function jmDraw(){var L=jmFiltered(),el=$('#jml');if(!el)return;JM.grp=[];
+  if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal mengajar. Tekan tombol <b>Buat Jurnal Mengajar</b> di pojok kanan bawah.</div>';return}
+  var all=U.sa&&JM.scope=='all';
+  el.innerHTML=trTree2(L,function(a){return all?jmGroup(a,function(A){return A.mapel||'(Tanpa mata pelajaran)'}).sort(NS).map(function(P){return '<div class=mpl>'+ic('book',13)+' '+esc(P.k)+'</div>'+trCards(P.l,jmCard)}).join(''):trCards(a,jmCard)},function(g){return trYr(g,JM.grp,'jmOutM','jurnal')})}
+function agDraw(){var L=agFiltered(),el=$('#agl');if(!el)return;AG.grp=[];
+  if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal pengawas. Tekan tombol <b>Buat Jurnal Pengawas</b> di pojok kanan bawah.</div>';return}
+  el.innerHTML=trTree2(L,function(a){return trCards(a,agCard)},function(g){return trYr(g,AG.grp,'agOutM','jurnal pengawas')})}
+function jmCard(A){var t=jmTot(A),own=A.nik==U.nik||U.sa,ab=(A.absen||[]).map(function(a){return esc(a.n)+' ('+a.k+')'}).join(', ');
+  return '<div class=jmc><div class=jmh>'+(A.mapel?mpb(A.mapel):'')+'<b>'+esc(jdTgl(A.tgl,1))+'</b><span class=jmr>'+ic('clock',12)+' '+jdJam(A.dari)+'\u2013'+jdJam(A.sampai)+'</span>'+(U.sa&&JM.scope=='all'?'<span class=jmr>'+ic('user',12)+' '+esc(A.guru||'-')+'</span>':'')+'</div>'
+   +'<div class=jmk><span class=jmj>'+esc(A.jenis||'-')+'</span> <b>'+esc(A.materi||'-')+'</b></div>'+(A.catatan?'<p class=jmn>'+esc(A.catatan)+'</p>':'')
+   +'<div class=jmm2><span style="color:#2e7d32">Hadir '+t.h+'/'+(A.total||0)+'</span><span style="color:#b3261e">Tidak hadir '+t.t+'</span>'+(ab?'<small style="color:#7b6a6d">'+ab+'</small>':'')+'</div>'
+   +'<div class=jmf data-h=1>'+(A.lkpd?'<a class=lnk href="'+esc(A.lkpd.u)+'" target=_blank rel=noopener>LKPD</a>':'')+(A.bahan?'<a class=lnk href="'+esc(A.bahan.u)+'" target=_blank rel=noopener>Bahan Ajar</a>':'')+(A.ss?'<a class=lnk href="'+esc(A.ss)+'" target=_blank rel=noopener>Spreadsheet</a>':'')+'<small style="color:#7b6a6d">Unduh:</small> '+jmBtns("jmOut('"+A.id+"',@)")+(own?' <button class="o sm" onclick="jmEdit(\''+A.id+'\')">Ubah</button><button class="d sm" onclick="jmDel(\''+A.id+'\')">Hapus</button>':'')+'</div></div>'}
+function agCard(A){var i=AG.list.indexOf(A),t=agTot(A),own=U.sa||A.nik==U.nik;
+  return '<div class=jmc><div class=jmh>'+(A.mapel?mpb(A.mapel):'')+'<b>'+esc(jdTgl(A.tgl,1))+'</b><span class=jmr>'+ic('clock',12)+' '+jdJam(A.dari)+'\u2013'+jdJam(A.sampai)+'</span>'+(A.kode?'<span class=jmj>Kode '+esc(A.kode)+'</span>':'')+(U.sa&&AG.scope=='all'?'<span class=jmr>'+ic('user',12)+' '+esc(A.nama_pengawas||'-')+'</span>':'')+'</div>'
+   +'<div class=jmk><b>'+esc(A.nama||'Pengawasan Asesmen')+'</b></div>'+(A.catatan?'<p class=jmn>'+esc(A.catatan)+'</p>':'')
+   +'<div class=jmm2><span style="color:#2e7d32">Hadir '+t.h+'/'+(A.total||0)+'</span><span style="color:#b3261e">Tidak hadir '+t.t+' (S '+t.s+' \u2022 I '+t.i+' \u2022 A '+t.a+')</span></div>'
+   +'<div class=jmf data-h=1>'+(A.kode?'<a class=lnk onclick="agSoal(\''+esc(A.kode)+'\')">Lihat Soal</a>':'')+(A.ss?'<a class=lnk href="'+esc(A.ss)+'" target=_blank rel=noopener>Spreadsheet</a>':'')+'<small style="color:#7b6a6d">Berita Acara:</small> '+jmBtns("agOut("+i+",'ba',@)")+(own?' <button class="o sm" onclick="agEdit('+i+')">Ubah</button><button class="d sm" onclick="agDel('+i+')">Hapus</button>':'')+'</div></div>'}
 </script>
 </body></html>
