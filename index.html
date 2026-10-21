@@ -1033,7 +1033,7 @@ function lgRefresh(){var t=document.querySelector('.tabs');if(!t)return;var g=t.
   if(l)l.textContent=lgLbl(g);if(b)b.title='Scan barcode / QR '+lgNm(g)+' dengan kamera';
   if(p&&!g)p.textContent='Masuk dengan username siswa ('+lgNm(false)+') dan kode asesmen CBT dari guru Anda.'}
 
-var av = function () { return "<span>".concat(esc(U.nama), "</span>").concat(U.foto ? "<img src=\"".concat(esc(U.foto), "\" class=av style=\"object-fit:cover\" alt=\"\">") : "<div class=av>".concat(esc(U.nama[0]), "</div>")).concat(PW != '869698' ? "<button class=o onclick=\"prof()\">".concat(ic('edit', 15), " Edit Data Diri</button>") : ''); };
+var av = function () { return "<span>".concat(esc(U.nama), "</span>").concat(U.foto ? "<img src=\"".concat(esc(U.foto), "\" class=av style=\"object-fit:cover\" alt=\"\">") : "<div class=av>".concat(esc(U.nama[0]), "</div>")).concat(PW != '869698' ? "<button class=o onclick=\"prof()\">".concat(ic('edit', 15), " Identitas Diri</button>") : ''); };
 var kop = function (t) { if (KOPD) return KOPH(t); return "<div style=\"display:flex;align-items:center;gap:12px;background:linear-gradient(115deg,var(--md),var(--m) 55%,var(--m2));color:#fff;padding:12px 16px;border-radius:var(--rb);margin-bottom:12px\"><img src=\"".concat(LOGO, "\" height=44 style=\"background:#fff;border-radius:50%;padding:3px\" alt=\"\"><div><b style=\"color:#fff;font-family:var(--fh);font-size:16px\">").concat(esc(sc.nama), "</b><div style=\"font-size:11px;opacity:.85;letter-spacing:1px\">", esc(t || 'LAPORAN HASIL ASESMEN'), "</div></div></div>"); };
 var media1 = function (m) { return /#a$/.test(m) ? "<p><iframe src=\"".concat(esc(m), "\" width=\"100%\" height=90 style=\"border:0\"></iframe></p>") : /\/preview$/.test(m) ? "<p><iframe src=\"".concat(esc(m), "\" width=\"100%\" height=360 style=\"border:0\" allowfullscreen></iframe></p>") : /\.(mp3|wav|ogg|m4a)$/i.test(m) ? "<p><audio src=\"".concat(esc(m), "\" controls style=\"width:100%\"></audio></p>") : /\.(mp4|webm)$/i.test(m) ? "<p><video src=\"".concat(esc(m), "\" controls style=\"max-width:100%\"></video></p>") : "<p><img src=\"".concat(esc(m), "\" decoding=async onload=\"this.dataset.ok=1\" onerror=\"imgRetry(this)\"></p>"); };
 var media = function (m) { return !m ? '' : String(m).split(/\s+/).filter(Boolean).map(media1).join(''); };
@@ -1126,7 +1126,7 @@ function mgmt() {
             switch (_a.label) {
                 case 0:
                     stopM();
-                    if (!U.sa && !/^(as|lap|pt|ag)$/.test(t || 'as')) t = 'as';
+                    if (!U.sa && !/^(as|lap|pt|ag|jm)$/.test(t || 'as')) t = 'as'; // jm (Jurnal Mengajar) harus bisa dibuka guru biasa
                     scr('mgmt');
                     return [4, /^(as|lap|pt)$/.test(t || 'as') ? getL() : Promise.resolve(LC.d || window.L || [])];
                 case 1:
@@ -1438,7 +1438,7 @@ function upf(i) {
         }
     }); });
 }
-function prof() { scr('prof'); app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt()\">Batal</button></header><div class=wrap><div class=box><h2>Edit Data Diri</h2>Nama<input id=pn value=\"").concat(esc(U.nama), "\">NIK<input id=pk value=\"").concat(esc(U.nik), "\">Password<input id=pp type=password value=\"").concat(esc(PW), "\">Email<input id=pe value=\"").concat(esc(U.email), "\">Foto Profil<input id=pf type=hidden value=\"").concat(esc(U.foto), "\"><input type=file accept=\"image/*\" onchange=\"upf(this)\"><br><button onclick=\"saveP()\">Simpan</button></div></div>"); }
+function prof() { scr('prof'); app.innerHTML = "<header>".concat(brand(), "<button class=o onclick=\"mgmt()\">Batal</button></header><div class=wrap><div class=box><h2>Identitas Diri</h2>Nama<input id=pn value=\"").concat(esc(U.nama), "\">NIK<input id=pk value=\"").concat(esc(U.nik), "\">Password<input id=pp type=password value=\"").concat(esc(PW), "\">Email<input id=pe value=\"").concat(esc(U.email), "\">Foto Profil<input id=pf type=hidden value=\"").concat(esc(U.foto), "\"><input type=file accept=\"image/*\" onchange=\"upf(this)\"><br><button onclick=\"saveP()\">Simpan</button></div></div>"); }
 function saveP() {
     return __awaiter(this, void 0, void 0, function () { var pw; return __generator(this, function (_a) {
         switch (_a.label) {
@@ -3173,7 +3173,7 @@ function gdOpen(i){
     var d={};a.forEach(function(x){if(x.nik==nik)d=x.d});
     var f=function(c,l,t){var ix=H.indexOf(c);return ix<0?'':'<label>'+l+'<input class=gc data-ix="'+ix+'" type='+(t||'text')+' value="'+esc(r[ix]==null?'':r[ix])+'"></label>'},jb=H.indexOf('JABATAN');
     var core='<div class=gdf style="margin-bottom:6px"><div class=gdg>'+f('NAMA GURU','Nama Guru')+f('NO NIK','NIK')+f('NIP','NIP')+f('EMAIL','Email','email')+f('PASSWORD','Password')
-      +(jb>=0?'<label>Jabatan<select class=gc data-ix="'+jb+'"><option'+(r[jb]!='Staf Kurikulum'?' selected':'')+'>Guru</option>'+(U.su?'<option'+(r[jb]=='Staf Kurikulum'?' selected':'')+'>Staf Kurikulum</option>':'')+'</select></label>':'')+'</div></div>';
+      +(jb>=0?'<label>Jabatan<select class=gc data-ix="'+jb+'">'+jabOpt(r[jb])+'</select></label>':'')+(H.indexOf('STATUS')>=0?'<label>Status<select class=gc data-ix="'+H.indexOf('STATUS')+'">'+stOpt('Guru',r[H.indexOf('STATUS')])+'</select></label>':'')+'</div></div>';
     var m=modal('<h3>Edit Data Guru</h3><p class=mt style="margin:2px 0 10px">Seluruh kolom dapat diubah. Data ini tampil di dokumen BNBA.</p>'+core+'<h4 style="margin:10px 0 8px;color:var(--m)">Data Lengkap</h4>'+gdForm(d,nik,r[0])+'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class=o onclick="mclose(this)">Batal</button><button onclick="gdSaveM(this,'+i+')">Simpan Perubahan</button></div>','wide');
   }).catch(function(e){alert(e)});
 }
@@ -5277,7 +5277,7 @@ function usAdd() {
 function usF(v) { UF = v; UPG = 0; usRows(); }
 function usPw() { UPW = !UPW; $('#pwl').textContent = UPW ? 'Sembunyikan password' : 'Tampilkan password'; usRows(); }
 function tplDl() { if (!window.XLSX)
-    return alert('Pustaka Excel belum termuat. Periksa koneksi internet lalu coba lagi.'); var g = UT == 'Guru', h = UD[0], ex = g ? [['Contoh Guru', '1234567890', 'Guru', '123456', 'guru@sekolah.id', '', '']] : [['Contoh Siswa', '1001', '12341234', '', '']]; var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet([h].concat(ex)); h.forEach(function (x, ci) { if (/NIK|INDUK|NIP|NISN|PASSWORD/.test(x)) for (var ri = 1; ri < 300; ri++) { var ad = XLSX.utils.encode_cell({ r: ri, c: ci }); if (!ws[ad]) ws[ad] = { t: 's', v: '', z: '@' }; } }); ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: 299, c: h.length - 1 } }); XLSX.utils.book_append_sheet(wb, ws, g ? 'Data Guru' : 'Data Siswa'); XLSX.writeFile(wb, 'Template ' + (g ? 'Data Guru' : 'Data Siswa') + '.xlsx'); }
+    return alert('Pustaka Excel belum termuat. Periksa koneksi internet lalu coba lagi.'); var g = UT == 'Guru', h = UD[0], ex = g ? [['Contoh Guru', '1234567890', 'Guru', '123456', 'guru@sekolah.id', '', '', 'Aktif']] : [['Contoh Siswa', '1001', '12341234', '', '']]; var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet([h].concat(ex)); h.forEach(function (x, ci) { if (/NIK|INDUK|NIP|NISN|PASSWORD/.test(x)) for (var ri = 1; ri < 300; ri++) { var ad = XLSX.utils.encode_cell({ r: ri, c: ci }); if (!ws[ad]) ws[ad] = { t: 's', v: '', z: '@' }; } }); ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: 299, c: h.length - 1 } }); XLSX.utils.book_append_sheet(wb, ws, g ? 'Data Guru' : 'Data Siswa'); XLSX.writeFile(wb, 'Template ' + (g ? 'Data Guru' : 'Data Siswa') + '.xlsx'); }
 
 
 /* ===== PERBAIKAN: konfeti mengikuti warna Thema Desain ujian ===== */
@@ -5421,7 +5421,7 @@ function navInit(tabs,t){
   var d=document.createElement('div');
   d.innerHTML='<div class=sbo onclick="sbClose()"></div><aside class=sb><div class=sbh><img src="'+esc(sc.logo||LOGO)+'" alt=""><b>'+esc(sc.nama)+'<small>'+esc(U.nama)+'</small></b><button class=sbcl title="Ciutkan menu" onclick="sbClose()">'+ic('chevl',18)+'</button></div>'
    +navGroups(tabs).map(function(x){var on=x.s.some(function(y){return y[0]==t});return '<div class="sbg'+(on?' open':'')+'"><button onclick="this.parentNode.classList.toggle(\'open\')"><i class=gi data-g="'+x.k+'">'+ic(x.i,16)+'</i><span>'+esc(x.l)+'</span><i class=sbc>'+ic('chev',16)+'</i></button><div class=sbs>'+x.s.map(function(y){return '<button class="nps'+(y[0]==t?' on':'')+'" onclick="sbClose();mgmt(\''+y[0]+'\')"><i class=gi data-k="'+y[0]+'">'+ic(y[2],13)+'</i><span>'+esc(y[1])+'</span></button>'}).join('')+'</div></div>'}).join('')
-   +'<div class=sba>'+(U.sa?'<button class=o onclick="sbClose();mgmt(\'sk\')">'+ic('school',15)+' Sekolah</button><button class=o onclick="segarkan(this)">'+ic('sync',15)+' Segarkan</button>':'')+(U.su?'<button class=o onclick="sbClose();tabSet()">'+ic('sliders',15)+' Atur Tab</button>':'')+(PW!='869698'?'<button class=o onclick="sbClose();prof()">'+ic('edit',15)+' Edit Data Diri</button>':'')+'<button onclick="login()">'+ic('logout',15)+' Keluar</button></div></aside>';
+   +'<div class=sba>'+(U.sa?'<button class=o onclick="sbClose();mgmt(\'sk\')">'+ic('school',15)+' Sekolah</button><button class=o onclick="segarkan(this)">'+ic('sync',15)+' Segarkan</button>':'')+(U.su?'<button class=o onclick="sbClose();tabSet()">'+ic('sliders',15)+' Atur Tab</button>':'')+(PW!='869698'?'<button class=o onclick="sbClose();prof()">'+ic('edit',15)+' Identitas Diri</button>':'')+'<button onclick="login()">'+ic('logout',15)+' Keluar</button></div></aside>';
   while(d.firstChild)app.appendChild(d.firstChild);
 }
 /* ===== Semester di Tab Sekolah ===== */
@@ -5749,7 +5749,7 @@ function intro(){
    +'<div><b>Buka menu</b><br>Klik logo sekolah di pojok kiri atas untuk membuka menu samping, atau pakai tab di bagian atas halaman.</div>'
    +'<div><b>Isi Jurnal Mengajar</b><br>Tekan tombol <b>Buat Jurnal Mengajar</b> di pojok kanan bawah, isi materi dan kehadiran, lalu simpan.</div>'
    +'<div><b>Unduh dokumen</b><br>Dokumen 1 tahun ajaran (JPG, PDF, Word, Print) tersedia pada bagian <b>Dokumen Jenjang</b> di tiap tahun ajaran.</div>'
-   +'<div><b>Lengkapi data diri</b><br>Gunakan <b>Edit Data Diri</b> agar profil, foto, dan data Anda selalu terbarui.</div></div></div>'
+   +'<div><b>Lengkapi data diri</b><br>Gunakan <b>Identitas Diri</b> agar profil, foto, dan data Anda selalu terbarui.</div></div></div>'
    +'<div class=box><h3>'+I('school',18)+' Yang dapat Anda kelola di CERDAS</h3><div class=cdr-g>'
    +F.map(function(x,k){return '<div class=cdr-f style="animation-delay:'+(k*.06)+'s"><i class=cdr-i>'+I(x[0],22)+'</i><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>'}).join('')+'</div></div>'
    +'<div class=cdr-go><button onclick="introGo()">'+I('list',18)+' Mulai Kelola Administrasi Sekolah</button></div></div><footer class=pf>'+ftx()+'</footer>';
@@ -5823,5 +5823,180 @@ function kcUidUI(k,o){var S=k=='s',cur=o.uid||'',tp=o.tamp||'both',
   sel=function(p,arr,c){return '<select onchange="kcSet(\''+k+'\',\''+p+'\',this.value)">'+arr.map(function(x){return '<option value="'+x[0]+'"'+(x[0]==c?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select>'};
   return '<label>Username &amp; isi QR Code'+sel('uid',a,cur)+'</label><label>Yang ditampilkan di kartu'+sel('tamp',b,tp)+'</label>'}
 var _cdKcSet=kcSet;kcSet=function(k,p,v){if(p=='uid'||p=='tamp'){var o=k=='s'?KD:KE;if(!o)return;o[p]=v;kcRef(k);return}_cdKcSet(k,p,v)};
+</script>
+<script>
+/* ===== CERDAS: Identitas Diri, TTD Digital, jabatan Kepala Sekolah, status & arsip, foto dokumentasi jurnal, kunci tanggal/waktu jurnal =====
+   Ditambahkan sebagai lapisan di akhir file (pola yang sama dengan bagian lain). Patuhi ATURAN KECEPATAN & KEAMANAN di bagian atas file ini.
+   Fungsi server baru yang hanya membaca diawali "get" sehingga otomatis termasuk RDONLY. */
+(function(){var st=document.createElement('style');st.id='cdr2css';st.textContent=[
+'.gdt{display:grid;gap:6px;border:1px solid #ecd9dc;border-radius:12px;padding:10px 12px;background:#fffafa}',
+'.gdt-c{width:100%;max-width:520px;aspect-ratio:520/170;border:1.5px dashed #b9a3a7;border-radius:10px;background:#fff;touch-action:none;display:block;cursor:crosshair}',
+'.gdt-b{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.gdt-b .btn,.gdt-b button{margin:0}',
+'.fjw{display:grid;gap:6px;justify-items:start}.fjw .btn{margin:0}',
+'.fjp{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}.fjp img{max-height:140px;max-width:100%;border-radius:10px;border:1px solid #ecd9dc;display:block}',
+'.ttdw{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.5;cursor:pointer}.ttdw input{width:auto;margin:3px 0 0}',
+'.arsg{display:grid;gap:8px}.arsr{display:grid;grid-template-columns:minmax(150px,1fr) minmax(150px,1.2fr) minmax(160px,1.6fr) auto;gap:8px;align-items:center;border:1px solid #ecd9dc;border-radius:10px;padding:8px 10px}',
+'.arsr input{margin:0;width:100%}.arsr button{margin:0}@media(max-width:760px){.arsr{grid-template-columns:1fr}}',
+'.arst{width:100%;border-collapse:collapse;font-size:12.5px}.arst th,.arst td{border-bottom:1px solid #f0e3e5;padding:6px 8px;text-align:left}',
+'.idh{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}.idh img.thb{width:64px;height:64px;border-radius:50%;object-fit:cover}'
+].join('\n');document.head.appendChild(st)})();
+
+/* ---------- Jabatan (Kepala Sekolah) & Status ---------- */
+function jabList(){var a=['Guru'].concat(sc.jab||['Staf Kurikulum','Kepala Sekolah']);return a.filter(function(x,i){return a.indexOf(x)==i})}
+function jabOpt(v){var b=sc.jabb||['Kepala Sekolah'];return jabList().map(function(j){var ok=j=='Guru'||U.su||b.indexOf(j)>=0;return '<option'+(j==v?' selected':'')+(ok||j==v?'':' disabled')+'>'+esc(j)+'</option>'}).join('')}
+var STSX={Siswa:['Aktif','Lulus','Pindah','Mengundurkan diri','Dikeluarkan'],Guru:['Aktif','Tidak Aktif Bekerja']};
+function stOpt(t,v){v=v||'Aktif';return (STSX[t]||STSX.Siswa).map(function(x){return '<option'+(x==v?' selected':'')+'>'+esc(x)+'</option>'}).join('')}
+var _cdAddField=addField;
+addField=function(x,i){
+  if(x=='JABATAN')return '<div class=af2><small>'+x+'</small><select class=af data-c='+i+'>'+jabOpt('Guru')+'</select></div>';
+  if(x=='STATUS')return '<div class=af2><small>'+x+'</small><select class=af data-c='+i+'>'+stOpt(UT,'Aktif')+'</select></div>';
+  return _cdAddField.apply(this,arguments)};
+usEdit=function(o,no){var h=UD[0];
+  return '<tr class=ed><td>'+no+'</td>'+h.map(function(x,c){var v=o.r[c]==null?'':o.r[c];
+    if(x=='JABATAN')return '<td><select data-c='+c+'>'+jabOpt(v)+'</select></td>';
+    if(x=='STATUS')return '<td><select data-c='+c+'>'+stOpt(UT,v)+'</select></td>';
+    if(isFoto(x))return '<td><input type=hidden data-c='+c+' value="'+esc(v)+'"><span class=fup><label class="btn o">'+ic('image',14)+'<input type=file hidden accept="image/*" onchange="usFoto(this)"></label><img class=thb src="'+esc(v)+'" style="'+(v?'':'display:none')+'" alt=""></span></td>';
+    return '<td><input data-c='+c+' value="'+esc(v)+'"></td>'}).join('')
+    +'<td class=ua><button onclick="usSave('+o.i+')">'+ic('save',14)+' Simpan</button><button class=o onclick="UE=-1;usRows()">Batal</button></td></tr>'};
+var _cdUsRows=usRows;
+usRows=function(){if(UD&&UD[0]){var si=UD[0].indexOf('STATUS');if(si>=0)for(var r=1;r<UD.length;r++){if(!String(UD[r][si]==null?'':UD[r][si]).trim())UD[r][si]='Aktif'}}return _cdUsRows.apply(this,arguments)};
+usSave=function(i){
+  var rec=[].map.call(document.querySelectorAll('#utb tr.ed [data-c]'),function(e){return e.value.trim()});
+  return api('saveUser',U.nik,PW,UT,rec,UD[i][1]).then(function(r){
+    if(r&&r.moved){UD.splice(i,1);UE=-1;usRows();toast('Data dipindahkan ke Spreadsheet arsip: '+r.moved);arsRefresh()}
+    else{UD[i]=rec;UE=-1;usRows();toast('Perubahan tersimpan')}
+  }).catch(function(e){alert(e)})};
+gdSaveM=function(b,i){
+  var m=b.closest('.mdl'),r=m.querySelector('.gdf[data-nik]'),old=String(UD[i][1]).trim(),rec=UD[i].slice();
+  m.querySelectorAll('.gc').forEach(function(e){rec[+e.dataset.ix]=e.value.trim()});
+  var nik=String(rec[1]).trim(),d=gdRead(r);if(!nik||!rec[0])return alert('Nama dan NIK wajib diisi.');
+  api('saveUser',U.nik,PW,'Guru',rec,old).then(function(x){return api('gdSave',U.nik,PW,nik,d).then(function(){return x})}).then(function(x){
+    var dd=Object.assign({},d);delete dd.ttd;
+    if(x&&x.moved){UD.splice(i,1);toast('Data dipindahkan ke Spreadsheet arsip: '+x.moved)}else{UD[i]=rec;toast('Data guru tersimpan')}
+    if(old!=nik)delete BN.det[old];BN.det[nik]=dd;mclose(b);usRows();bnView();arsRefresh();
+  }).catch(function(e){alert(e)})};
+
+/* ---------- Arsip (halaman Data Siswa / Data Guru) ---------- */
+var _cdUH=usersHTML;
+usersHTML=function(){return _cdUH()+'<details class="box gdx arsb" ontoggle="arsOpen(this)"><summary>'+ic('file',16)+' Arsip '+(UT=='Guru'?'Guru / SDM Tidak Aktif Bekerja':'Siswa (Lulus, Pindah, Mengundurkan diri, Dikeluarkan)')+' &mdash; aktifkan kembali</summary><div class=arsx style="margin-top:8px">Memuat...</div></details>'};
+function arsRefresh(){var d=document.querySelector('.arsb');if(d&&d.open)arsOpen(d)}
+function arsOpen(d){if(!d.open)return;var b=d.querySelector('.arsx');b.textContent='Memuat arsip...';
+  api('getArsipList',U.nik,PW,UT).then(function(L){
+    if(!L.length){b.innerHTML='<small style="color:#7b6a6d">Arsip masih kosong. Data berstatus selain Aktif otomatis dipindahkan ke sini.</small>';return}
+    b.innerHTML='<input placeholder="Cari di arsip..." oninput="arsFil(this)" style="margin:0 0 8px;max-width:360px"><div class=sc><table class=arst><thead><tr><th>Nama</th><th>'+(UT=='Guru'?'NIK':'NIS')+'</th><th>Status</th><th>Keterangan</th><th></th></tr></thead><tbody>'
+     +L.map(function(x){return '<tr><td>'+esc(x.n)+'</td><td>'+esc(x.k)+'</td><td>'+esc(x.st)+'</td><td>'+esc(x.x)+'</td><td><button class=o onclick="arsAkt(\''+esc(x.k)+'\',\''+esc(x.st)+'\')">Aktifkan kembali</button></td></tr>'}).join('')+'</tbody></table></div>'}).catch(function(e){b.textContent='Gagal memuat arsip: '+e})}
+function arsFil(i){var q=i.value.toLowerCase();[].forEach.call(i.parentNode.querySelectorAll('tbody tr'),function(r){r.style.display=!q||r.textContent.toLowerCase().indexOf(q)>=0?'':'none'})}
+function arsAkt(k,st){ask('Aktifkan kembali data ini (NIK / NIS '+k+', status '+st+')? Data dipindahkan dari arsip ke Data '+(UT=='Guru'?'Guru':'Siswa')+' dengan status Aktif.','Ya, Aktifkan',function(){
+  api('arsipRestore',U.nik,PW,UT,k,st).then(function(){toast('Data diaktifkan kembali');mgmt(UT)}).catch(function(e){alert(e)})})}
+
+/* ---------- Tab Sekolah: foto dokumentasi jurnal & Spreadsheet arsip ---------- */
+function fotoJBox(){
+  var rd=function(nm,on){return '<div class=sndg>'+[['opt','Opsional','Guru boleh mengosongkan foto'],['wajib','Wajib','Jurnal tidak dapat disimpan tanpa foto']].map(function(x){return '<label class="sndo'+(x[0]==on?' on':'')+'"><input type=radio name='+nm+' value='+x[0]+(x[0]==on?' checked':'')+' onchange="lgPick(this)"><span><b>'+x[1]+'</b><small>'+x[2]+'</small></span></label>'}).join('')+'</div>'};
+  return '<div class=box><h3>'+ic('image',18)+' Foto Dokumentasi Jurnal</h3><small>Tentukan apakah foto dokumentasi wajib diisi pada jurnal baru. Foto tersimpan di Google Drive: folder utama &rsaquo; Dokumentasi Jurnal Mengajar / Pengawas &rsaquo; nama guru &rsaquo; kelas &rsaquo; tanggal.</small>'
+   +'<h4 style="margin:14px 0 4px">Jurnal Mengajar</h4>'+rd('fjm',sc.fjm=='wajib'?'wajib':'opt')+'<h4 style="margin:14px 0 4px">Jurnal Pengawas</h4>'+rd('fjp',sc.fjp=='wajib'?'wajib':'opt')
+   +'<div style="margin-top:12px"><button onclick="fjSave()">'+ic('save',15)+' Simpan Pengaturan Foto</button></div></div>'}
+function fjSave(){var a=document.querySelector('input[name=fjm]:checked'),b=document.querySelector('input[name=fjp]:checked');if(!a||!b)return;
+  api('saveFotoJ',U.nik,PW,a.value,b.value).then(function(){sc.fjm=a.value;sc.fjp=b.value;toast('Pengaturan foto dokumentasi tersimpan')}).catch(function(e){alert(e)})}
+function arsBox(){setTimeout(function(){arsWait(0)},0);
+  return '<div class=box><h3>'+ic('file',18)+' Spreadsheet Arsip Data</h3><small>Siswa berstatus Lulus, Pindah, Mengundurkan diri, atau Dikeluarkan, serta Guru / SDM berstatus Tidak Aktif Bekerja, otomatis dipindahkan dari data utama ke Spreadsheet khusus per status (dibuat otomatis di Drive: folder utama &rsaquo; Arsip Data, bersifat privat). Anda bisa menggantinya dengan Spreadsheet sendiri: tempel link-nya lalu tekan Pakai. Kosongkan lalu tekan Pakai untuk kembali ke otomatis.</small><div id=arsx style="margin-top:8px">Memuat...</div></div>'}
+function arsWait(n){if($('#arsx'))return arsLoad();if(n<25)setTimeout(function(){arsWait(n+1)},120)}
+function arsLoad(){api('getArsipInfo',U.nik,PW).then(function(L){var e=$('#arsx');if(!e)return;
+  e.innerHTML='<div class=arsg>'+L.map(function(x,i){return '<div class=arsr><b>'+(x.t=='Guru'?'Guru / SDM':'Siswa')+' &bull; '+esc(x.st)+'</b><span>'+(x.url?'<a class=lnk href="'+esc(x.url)+'" target=_blank rel=noopener>Buka Spreadsheet</a> <small>('+x.n+' data)</small>':'<small>Dibuat otomatis saat pertama dipakai</small>')+'</span><input id=arsl'+i+' placeholder="Link Spreadsheet lain (opsional)"><button class=o onclick="arsPakai(\''+x.t+'\',\''+esc(x.st)+'\','+i+')">Pakai</button></div>'}).join('')+'</div>'}).catch(function(e){var x=$('#arsx');if(x)x.textContent='Gagal memuat: '+e})}
+function arsPakai(t,st,i){api('arsipSet',U.nik,PW,t,st,$('#arsl'+i).value).then(function(u){toast(u?'Spreadsheet arsip diganti':'Kembali ke Spreadsheet otomatis');arsLoad()}).catch(function(e){alert(e)})}
+var _cdTaBox2=taBox;taBox=function(){return _cdTaBox2()+fotoJBox()+arsBox()};
+
+/* ---------- TTD Digital (Data Guru / SDM & Identitas Diri) ---------- */
+var TTDC={};
+function ttdLoad(niks){var need=[];niks.forEach(function(n){n=String(n||'').trim();if(n&&TTDC[n]===undefined&&need.indexOf(n)<0)need.push(n)});
+  if(!need.length)return Promise.resolve();return api('getTtd',U.nik,PW,need).then(function(m){need.forEach(function(n){TTDC[n]=(m&&m[n])||''})})}
+function gdTtdBlock(nik){return '<div class=gdt data-nik="'+esc(nik||'')+'"><b>Tanda Tangan (TTD) Digital</b><small style="color:#7b6a6d">Gambar langsung di kotak ini atau unggah gambar TTD. TTD dipakai otomatis pada dokumen buatan guru / SDM ini bila "Gunakan TTD Digital" dicentang; bila tidak dicentang, kolom TTD dikosongkan.</small>'
+  +'<canvas class=gdt-c width=520 height=170></canvas><div class=gdt-b><button type=button class=o onclick="ttdClr(this)">Hapus TTD</button><label class="btn o">'+ic('upload',14)+' Unggah gambar TTD<input type=file hidden accept="image/*" onchange="ttdUp(this)"></label><small class=gdt-s></small></div>'
+  +'<input type=hidden class=gd-ttd><input type=hidden class=gd-ttdc value=0><img alt="" style="display:none" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="ttdInit(this)"></div>'}
+function ttdSt(w){var v=w.querySelector('.gd-ttd').value;w.querySelector('.gdt-s').textContent=v?'TTD terisi'+(w.querySelector('.gd-ttdc').value=='1'?' (klik Simpan)':''):'Belum ada TTD'+(w.querySelector('.gd-ttdc').value=='1'?' (klik Simpan untuk menghapus)':'')}
+function ttdInit(img){var w=img.closest('.gdt');if(!w||w.dataset.i)return;w.dataset.i=1;img.remove();
+  var c=w.querySelector('canvas'),x=c.getContext('2d'),d=false,l=null;x.lineWidth=2.6;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#0b2a6f';
+  var P=function(e){var r=c.getBoundingClientRect();return [(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]};
+  var sv=function(){w.querySelector('.gd-ttd').value=c.toDataURL('image/png');w.querySelector('.gd-ttdc').value='1';ttdSt(w)};
+  c.onpointerdown=function(e){e.preventDefault();d=true;l=P(e);if(c.setPointerCapture)c.setPointerCapture(e.pointerId);x.beginPath();x.moveTo(l[0],l[1]);x.lineTo(l[0]+.1,l[1]+.1);x.stroke()};
+  c.onpointermove=function(e){if(!d)return;var p=P(e);x.beginPath();x.moveTo(l[0],l[1]);x.lineTo(p[0],p[1]);x.stroke();l=p};
+  c.onpointerup=c.onpointercancel=function(){if(d){d=false;sv()}};
+  ttdSt(w);var nik=w.dataset.nik;
+  if(nik)api('getTtd',U.nik,PW,[nik]).then(function(m){var u=m&&m[nik];if(!u||w.querySelector('.gd-ttdc').value=='1')return;var im=new Image();im.onload=function(){x.drawImage(im,0,0,c.width,c.height);w.querySelector('.gd-ttd').value=u;ttdSt(w)};im.src=u}).catch(function(){})}
+function ttdClr(b){var w=b.closest('.gdt'),c=w.querySelector('canvas');c.getContext('2d').clearRect(0,0,c.width,c.height);w.querySelector('.gd-ttd').value='';w.querySelector('.gd-ttdc').value='1';ttdSt(w)}
+function ttdUp(inp){var f=inp.files&&inp.files[0];if(!f)return;var w=inp.closest('.gdt'),c=w.querySelector('canvas'),x=c.getContext('2d'),im=new Image(),u=URL.createObjectURL(f);
+  im.onload=function(){URL.revokeObjectURL(u);var W=c.width,H=c.height,r=Math.min(W/im.width,H/im.height),dw=im.width*r,dh=im.height*r;x.clearRect(0,0,W,H);x.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh);
+    var id=x.getImageData(0,0,W,H),p=id.data;for(var i=0;i<p.length;i+=4){if(p[i]>225&&p[i+1]>225&&p[i+2]>225)p[i+3]=0}x.putImageData(id,0,0);
+    var dd=c.toDataURL('image/png');if(dd.length>47000){x.clearRect(0,0,W,H);alert('Gambar TTD terlalu detail sehingga ukurannya besar. Gunakan foto TTD di kertas putih dengan pena yang jelas, atau gambar langsung di kotak.');return}
+    w.querySelector('.gd-ttd').value=dd;w.querySelector('.gd-ttdc').value='1';ttdSt(w)};
+  im.onerror=function(){URL.revokeObjectURL(u);alert('Gambar tidak dapat dibaca')};im.src=u;inp.value=''}
+var _cdGdForm=gdForm;gdForm=function(d,nik,nama){var h=_cdGdForm(d,nik,nama);return h.replace(/<\/div>$/,gdTtdBlock(nik)+'</div>')};
+var _cdGdRead=gdRead;gdRead=function(r){var d=_cdGdRead(r),c=r.querySelector('.gd-ttdc');if(c&&c.value=='1')d.ttd=r.querySelector('.gd-ttd').value||'';return d};
+var _cdGdHas=gdHas;gdHas=function(d){return _cdGdHas(d)||d.ttd};
+
+/* ---------- Identitas Diri (guru / SDM mengisi data dirinya sendiri; terhubung ke Data Guru) ---------- */
+function prof(){
+  if(U.su){alert('Akun Super Admin utama tidak memiliki data diri.');return}
+  scr('prof');app.innerHTML='<header>'+brand()+'<button class=o onclick="mgmt()">Batal</button></header><div class=wrap><div class=box id=idw>Memuat Identitas Diri...</div></div>';
+  api('getDetailSaya',U.nik,PW).then(function(r){idRender(r)}).catch(function(e){var w=$('#idw');if(w)w.textContent='Gagal memuat: '+e})}
+function idRender(r){var w=$('#idw');if(!w)return;var D=r.d||{},ip=function(l,id,v,ro,t){return '<label>'+l+'<input id='+id+' type='+(t||'text')+' value="'+esc(v||'')+'"'+(ro?' readonly style="background:#f5eef0"':'')+'></label>'};
+  w.innerHTML='<h2 style="margin-top:0">Identitas Diri</h2><small>Lengkapi data Anda sendiri. Data ini terhubung dengan Data Guru / SDM (dilihat Staf Kurikulum dan Super Admin) serta dipakai pada dokumen seperti BNBA dan tanda tangan digital.</small>'
+   +'<div class=gdf style="margin-top:10px"><div class=idh><img id=pfi class=thb alt="" src="'+esc(U.foto||'')+'" style="'+(U.foto?'':'display:none')+'"><div><b>Foto Profil</b><br><input id=pf type=hidden value="'+esc(U.foto||'')+'"><label class="btn o">'+ic('image',15)+' Unggah foto<input type=file hidden accept="image/*" onchange="idFoto(this)"></label></div></div>'
+   +'<div class=gdg>'+ip('Nama Lengkap','pn',U.nama)+ip('NIK (diubah Staf Kurikulum / Super Admin)','pk',U.nik,1)+ip('NIP (opsional)','pnp',r.nip)+ip('Jabatan','pj',r.jabatan,1)+ip('Status','pst',r.status,1)+ip('Email','pe',U.email,0,'email')+ip('Password','pp',PW,0,'password')+'</div></div>'
+   +'<h3 style="margin:16px 0 8px;color:var(--m)">Data Lengkap</h3>'+gdForm(D,U.nik,U.nama)
+   +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class=o onclick="mgmt()">Batal</button><button onclick="idSave()">'+ic('save',15)+' Simpan Identitas Diri</button></div>'}
+function idFoto(inp){var f=inp.files&&inp.files[0];if(!f)return;toast('Mengunggah foto...');upl(f,'foto').then(function(u){$('#pf').value=u;var im=$('#pfi');im.src=u;im.style.display='inline-block';toast('Foto terunggah. Klik Simpan Identitas Diri.')}).catch(function(e){alert(e)});inp.value=''}
+function idSave(){var f=document.querySelector('#idw .gdf[data-nik]'),nm=$('#pn').value.trim(),pw=$('#pp').value;
+  if(!nm)return alert('Nama wajib diisi.');if(String(pw).length<4)return alert('Password minimal 4 karakter.');var d=gdRead(f);
+  api('updateProfile',U.nik,PW,{nama:nm,pw:pw,email:$('#pe').value.trim(),foto:$('#pf').value,nip:$('#pnp').value.trim()}).then(function(u){U=u;PW=pw;return api('gdSaveSelf',U.nik,PW,d)})
+   .then(function(){delete TTDC[U.nik];toast('Identitas Diri tersimpan');mgmt()}).catch(function(e){alert(e)})}
+
+/* ---------- Jurnal: foto dokumentasi, ceklis TTD Digital, tanggal & waktu terkunci setelah tersimpan ---------- */
+function fjId(u){var m=String(u||'').match(/\/d\/([\w-]+)/);return m?m[1]:''}
+function fjHTML(P,D){var w=(P=='jm'?sc.fjm:sc.fjp)=='wajib',f=D.foto;
+  return '<div class=fjw><b>Foto Dokumentasi '+(w?'<span style="color:#b3261e">(wajib)</span>':'(opsional)')+'</b>'
+   +(f?'<div class=fjp><a href="'+esc(f.u)+'" target=_blank rel=noopener><img alt="Foto dokumentasi" src="https://drive.google.com/thumbnail?id='+esc(fjId(f.u))+'&sz=w400"></a><button type=button class="d sm" onclick="fjDel(\''+P+'\')">Hapus foto</button></div>':'')
+   +'<label class="btn o">'+ic('image',14)+' '+(f?'Ganti foto':'Ambil / unggah foto')+'<input type=file hidden accept="image/*" onchange="fjUp(this,\''+P+'\')"></label>'
+   +'<small style="color:#7b6a6d">Tersimpan di Google Drive: Dokumentasi Jurnal '+(P=='jm'?'Mengajar':'Pengawas')+' &rsaquo; nama guru &rsaquo; kelas &rsaquo; tanggal.</small></div>'}
+function ttdHTML(P,D){var h=TTDC[D.nik||U.nik];
+  return '<label class=ttdw><input type=checkbox id='+(P=='jm'?'jmttd':'agttd')+(D.ttdOn?' checked':'')+'><span><b>Gunakan TTD Digital</b> dari Identitas Diri / Data Guru pada dokumen jurnal ini. Bila tidak dicentang, kolom tanda tangan dikosongkan (ditandatangani manual setelah dicetak).</span></label>'
+   +(h===''?'<small style="color:#b3261e">TTD digital belum diisi. Isi dulu lewat menu Identitas Diri.</small>':'')}
+function fjDel(P){(P=='jm'?jmSync:agSync)();(P=='jm'?JM.D:AG.D).foto=null;(P=='jm'?jmView:agView)()}
+function fjUp(inp,P){var f=inp.files&&inp.files[0];inp.value='';if(!f)return;(P=='jm'?jmSync:agSync)();var D=P=='jm'?JM.D:AG.D;
+  if(!D.k)return alert('Pilih jenjang dan kelas terlebih dahulu.');if(P=='jm'&&!D.mapel)return alert('Pilih mata pelajaran terlebih dahulu.');
+  var mp=D.mapel||D.nama||'',kls=[D.j,'Kelas '+D.k,D.v?'Rombel '+D.v:''].filter(Boolean).join(' ');toast('Mengunggah foto dokumentasi...');
+  resizeImg(f,1600).then(function(g){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){ok(String(r.result).split(',')[1])};r.onerror=function(){no('Foto tidak dapat dibaca')};r.readAsDataURL(g)})})
+   .then(function(b64){return api('uploadFile',U.nik,PW,'foto.jpg','image/jpeg',b64,P=='jm'?'fotojm':'fotojp',D.tgl+'|'+mp+'|'+kls)})
+   .then(function(u){D.foto={n:f.name||'foto.jpg',u:u};toast('Foto terunggah');(P=='jm'?jmView:agView)()}).catch(function(e){alert(e)})}
+var LOCKN='Tanggal dan waktu jurnal yang sudah tersimpan tidak dapat diubah (hanya Super Admin).';
+function lockDT(ids){ids.forEach(function(i){var e=$('#'+i);if(e){e.disabled=true;e.title='Hanya Super Admin yang dapat mengubah tanggal dan waktu'}})}
+function jmX(w){var g=w.querySelector('.jmg'),D=JM.D;if(!g||!D)return;
+  g.insertAdjacentHTML('beforeend','<div class="jmq jmwf">'+fjHTML('jm',D)+'</div><div class="jmq jmwf">'+ttdHTML('jm',D)+'</div>'+(D.id&&!U.su?'<small class=jmwf style="color:#b3261e">'+LOCKN+'</small>':''));
+  if(D.id&&!U.su)lockDT(['jmt','jmd','jms'])}
+function agX(){var w=$('#agw'),g=w&&w.querySelector('.agt'),D=AG.D;if(!g||!D)return;
+  [].forEach.call(g.querySelectorAll('.agl'),function(e){if(/Tanda Tangan Digital/.test(e.textContent)){e.style.display='none';if(e.nextElementSibling)e.nextElementSibling.style.display='none'}});
+  g.insertAdjacentHTML('beforeend','<div class=agl>Foto Dokumentasi</div><div>'+fjHTML('ag',D)+'</div><div class=agl>TTD Digital</div><div>'+ttdHTML('ag',D)+'</div>');
+  if(D.id&&!U.su){lockDT(['agt','agd','ags']);var j=w.querySelector('.agjd');if(j)j.style.display='none';g.insertAdjacentHTML('beforeend','<div class=agl></div><div><small style="color:#b3261e">'+LOCKN+'</small></div>')}}
+var _cdJmFV=jmFormView;jmFormView=function(w){_cdJmFV.apply(this,arguments);jmX(w)};
+var _cdAgFV=agFormView;agFormView=function(){_cdAgFV.apply(this,arguments);agX()};
+var _cdJmNew=jmNew;jmNew=function(){var d=_cdJmNew.apply(this,arguments);d.ttdOn=false;d.foto=null;return d};
+var _cdAgNew=agNew;agNew=function(){var d=_cdAgNew.apply(this,arguments);d.ttdOn=false;d.foto=null;return d};
+var _cdJmSync=jmSync;jmSync=function(){_cdJmSync.apply(this,arguments);var c=$('#jmttd');if(c&&JM.D)JM.D.ttdOn=c.checked};
+var _cdAgSync=agSync;agSync=function(){_cdAgSync.apply(this,arguments);var c=$('#agttd');if(c&&AG.D)AG.D.ttdOn=c.checked};
+var _cdJmSave=jmSave;jmSave=function(){jmSync();var D=JM.D;if(sc.fjm=='wajib'&&!D.foto&&!D.id)return alert('Foto dokumentasi wajib diunggah (sesuai pengaturan sekolah).');return _cdJmSave.apply(this,arguments)};
+var _cdAgSave=agSave;agSave=function(){agSync();var D=AG.D;if(sc.fjp=='wajib'&&!D.foto&&!D.id)return alert('Foto dokumentasi wajib diunggah (sesuai pengaturan sekolah).');return _cdAgSave.apply(this,arguments)};
+var _cdJmInit=jmInit;jmInit=function(){ttdLoad([U.nik]).catch(function(){});return _cdJmInit.apply(this,arguments)};
+var _cdAgInit=agInit;agInit=function(){ttdLoad([U.nik]).catch(function(){});return _cdAgInit.apply(this,arguments)};
+var _cdJmCard=jmCard;jmCard=function(A){var h=_cdJmCard.apply(this,arguments);return A&&A.foto?h.replace('<div class=jmf data-h=1>','<div class=jmf data-h=1><a class=lnk href="'+esc(A.foto.u)+'" target=_blank rel=noopener>Foto Dokumentasi</a>'):h};
+var _cdAgCard=agCard;agCard=function(A){var h=_cdAgCard.apply(this,arguments);return A&&A.foto?h.replace('<div class=jmf data-h=1>','<div class=jmf data-h=1><a class=lnk href="'+esc(A.foto.u)+'" target=_blank rel=noopener>Foto Dokumentasi</a>'):h};
+
+/* ---------- TTD Digital pada dokumen (Jurnal Mengajar, Berita Acara, Daftar Hadir) ---------- */
+var XDI={img:''};
+var _cdXdSign=xdSign;xdSign=function(s,T){if(s&&!s.img&&XDI.img)s=Object.assign({},s,{img:XDI.img});return _cdXdSign.call(this,s,T)};
+var _cdJmBody=jmBody;jmBody=function(A){XDI.img=(A&&A.ttdOn&&TTDC[A.nik])||'';try{return _cdJmBody.apply(this,arguments)}finally{XDI.img=''}};
+var _cdAgBody=agBody;agBody=function(A){XDI.img=(A&&A.ttdOn&&!A.ttd&&TTDC[A.nik])||'';try{return _cdAgBody.apply(this,arguments)}finally{XDI.img=''}};
+var _cdAgDoc=agDoc;agDoc=function(A){var d=_cdAgDoc.apply(this,arguments);if(A&&A.ttdOn&&!A.ttd&&TTDC[A.nik]&&d&&d.blocks)d.blocks.forEach(function(b){if(b.sign&&!b.sign.img)b.sign.img=TTDC[A.nik]});return d};
+var _cdJmOut=jmOut;jmOut=function(id){var A=jmFind(id),a=arguments,s=this;if(!A||!A.ttdOn||TTDC[A.nik]!==undefined)return _cdJmOut.apply(s,a);return ttdLoad([A.nik]).catch(function(){}).then(function(){return _cdJmOut.apply(s,a)})};
+var _cdAgOut=agOut;agOut=function(i){var A=AG.list[i],a=arguments,s=this;if(!A||!A.ttdOn||TTDC[A.nik]!==undefined)return _cdAgOut.apply(s,a);return ttdLoad([A.nik]).catch(function(){}).then(function(){return _cdAgOut.apply(s,a)})};
+
 </script>
 </body></html>
