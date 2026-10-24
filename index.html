@@ -1889,7 +1889,7 @@ function buildDocx(a, key) {
         b += WP(WR('Bobot skor: Pilihan Ganda 1 • Jawaban Singkat 0, ½, 1, 1½, 2 • Essay Uraian 0, 1, 2, 3, 4. Nilai akhir = total skor ÷ skor maksimum × 100.', { i: 1, z: 9, c: GR }), { sb: 120 });
     b += WP(WR('— Selesai —', { i: 1, c: '888888' }), { a: 'center', sb: 240 });
     var doc = XH + "<w:document ".concat(NS, "><w:body>").concat(b, "<w:sectPr><w:footerReference w:type=\"default\" r:id=\"rId11\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:top=\"1134\" w:right=\"1134\" w:bottom=\"1134\" w:left=\"1134\" w:header=\"567\" w:footer=\"567\" w:gutter=\"0\"/></w:sectPr></w:body></w:document>");
-    var fr = function (t) { return "<w:r><w:rPr><w:sz w:val=\"16\"/><w:color w:val=\"777777\"/></w:rPr>".concat(t, "</w:r>"); };
+    var fr = function (t) { return "<w:r><w:rPr><w:color w:val=\"777777\"/><w:sz w:val=\"16\"/></w:rPr>".concat(t, "</w:r>"); };
     var ftr = XH + "<w:ftr ".concat(NS, "><w:p><w:pPr><w:pBdr><w:top w:val=\"single\" w:sz=\"6\" w:space=\"6\" w:color=\"").concat(MA, "\"/></w:pBdr><w:jc w:val=\"center\"/></w:pPr>").concat(WR(sc.nama + ' • ' + a.MAPEL + ' • Kode ' + a.KODE + ' • Halaman ', { z: 8, c: GR })).concat(fr('<w:fldChar w:fldCharType="begin"/>')).concat(fr('<w:instrText xml:space="preserve"> PAGE </w:instrText>')).concat(fr('<w:fldChar w:fldCharType="separate"/>')).concat(fr('<w:t>1</w:t>')).concat(fr('<w:fldChar w:fldCharType="end"/>'), "</w:p></w:ftr>");
     var styles = XH + '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:lang w:val="id-ID"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
     var R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
@@ -2341,7 +2341,7 @@ function wKop(T,judul,sub,mh){
 function wPack(b,foot){
   var GR='777777',MA=TC().m.slice(1).toUpperCase(),R='http://schemas.openxmlformats.org/officeDocument/2006/relationships';
   var doc=XH+'<w:document '+NS+'><w:body>'+b+'<w:sectPr><w:footerReference w:type="default" r:id="rId11"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>';
-  var fr=function(t){return '<w:r><w:rPr><w:sz w:val="16"/><w:color w:val="777777"/></w:rPr>'+t+'</w:r>'};
+  var fr=function(t){return '<w:r><w:rPr><w:color w:val="777777"/><w:sz w:val="16"/></w:rPr>'+t+'</w:r>'};
   var ftr=XH+'<w:ftr '+NS+'><w:p><w:pPr><w:pBdr><w:top w:val="single" w:sz="6" w:space="6" w:color="'+MA+'"/></w:pBdr><w:jc w:val="center"/></w:pPr>'+WR(foot+' • Halaman ',{z:8,c:GR})+fr('<w:fldChar w:fldCharType="begin"/>')+fr('<w:instrText xml:space="preserve"> PAGE </w:instrText>')+fr('<w:fldChar w:fldCharType="separate"/>')+fr('<w:t>1</w:t>')+fr('<w:fldChar w:fldCharType="end"/>')+'</w:p></w:ftr>';
   var styles=XH+'<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:lang w:val="id-ID"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
   return zipDocx(wKopZip([
@@ -4167,7 +4167,7 @@ function saveDlg(k){
   getL().then(function(d){
     var a=(d||[]).filter(function(x){return x.KODE==k})[0],rs=a?a.rooms:[];
     modal('<div class="mi ok">'+ic('check',26)+'</div><h3>Soal Tersimpan</h3><p class="mt" style="margin-bottom:8px">Bagikan kode asesmen ini kepada siswa:</p><div class="kbig">'+esc(k)+'</div>'
-      +(rs.length?'<p class="mt" style="margin:14px 0 4px;font-weight:700;text-align:left">Rombel &amp; Spreadsheet Hasil ('+rs.length+')</p><div class="rmls">'+rs.map(function(r){return '<div class="rmr2"><span>'+ic('users',15)+' <b>'+esc(r.n)+'</b></span><a href="'+esc(r.url)+'" target="_blank" rel="noopener"><button class="o">'+ic('sheet',14)+' Buka Spreadsheet</button></a></div>'}).join('')+'</div><small style="display:block;color:#7b6a6d;margin-top:6px;text-align:left">Hasil jawaban dan laporan setiap rombel terpisah (menu Laporan Hasil Asesmen).</small>':'')
+      +(rs.length&&srcOK()?'<p class="mt" style="margin:14px 0 4px;font-weight:700;text-align:left">Rombel &amp; Spreadsheet Hasil ('+rs.length+')</p><div class="rmls">'+rs.map(function(r){return '<div class="rmr2"><span>'+ic('users',15)+' <b>'+esc(r.n)+'</b></span><a href="'+esc(r.url)+'" target="_blank" rel="noopener"><button class="o">'+ic('sheet',14)+' Buka Spreadsheet</button></a></div>'}).join('')+'</div><small style="display:block;color:#7b6a6d;margin-top:6px;text-align:left">Hasil jawaban dan laporan setiap rombel terpisah (menu Laporan Hasil Asesmen).</small>':'')
       +'<div class="mb" style="margin-top:14px"><button class="o" onclick="cpk(\''+esc(k)+'\',this)">'+ic('copy',15)+' Salin Kode</button><button onclick="mclose(this)">'+ic('check',15)+' Selesai</button></div>','dlg');
   }).catch(function(){kodeDlg(k)});
 }
@@ -5549,18 +5549,18 @@ function jmDel(id){var A=jmFind(id);if(!A)return;ask('Hapus jurnal mengajar tang
 /* ===== Tirai bersarang: Tahun Ajaran > Jenjang > Kelas > Rombel > Bulan ===== */
 function taOf(t){var m=String(t||'').match(/^(\d{4})-(\d{2})/);if(!m)return (sc&&sc.ta)||'-';var y=+m[1],mo=+m[2];return mo>=7?y+'/'+(y+1):(y-1)+'/'+y}
 function trai(lv,i,t,m,b,c,o){return '<div class="box lpc tr tr'+lv+(o?'':' cl')+'"><h3 class=lph onclick="lpT(this)">'+ic(i,lv==1?20:17)+' '+t+(m?' <small>'+m+'</small>':'')+'<span class=lpt>'+c+'</span></h3><div class=lpb>'+b+'</div></div>'}
-var NS=function(a,b){return String(a.k).localeCompare(String(b.k),undefined,{numeric:true})};
+var NSORT=function(a,b){return String(a.k).localeCompare(String(b.k),undefined,{numeric:true})};
 function trLv(){return [{f:function(A){return A.ta||taOf(A.tgl)},ic:'calendar',t:function(k){return 'Tahun Ajaran '+esc(k)},s:function(a,b){return a.k<b.k?1:-1}},
  {f:function(A){return A.j||'-'},ic:'school',t:function(k){return 'Jenjang '+esc(k)},s:function(a,b){var J=jdKeys();return J.indexOf(a.k)-J.indexOf(b.k)}},
- {f:function(A){return A.k||'-'},ic:'users',t:function(k){return 'Kelas '+esc(k)},s:NS},
- {f:function(A){return A.v||'(tanpa rombel)'},ic:'user',t:function(k){return 'Rombel '+esc(k)},s:NS}]}
+ {f:function(A){return A.k||'-'},ic:'users',t:function(k){return 'Kelas '+esc(k)},s:NSORT},
+ {f:function(A){return A.v||'(tanpa rombel)'},ic:'user',t:function(k){return 'Rombel '+esc(k)},s:NSORT}]}
 function trTree(L,lv,i,leaf){if(i>=lv.length)return leaf(L);return jmGroup(L,lv[i].f).sort(lv[i].s).map(function(g,n){return trai(i+1,lv[i].ic,lv[i].t(g.k),'',trTree(g.l,lv,i+1,leaf),g.l.length+' jurnal',n==0)}).join('')}
 function trMon(L,fn){return jmGroup(L,function(A){return String(A.tgl).slice(0,7)}).sort(function(x,y){return x.k<y.k?1:-1}).map(function(M,n){return fn(M,n==0)}).join('')}
 function trMg(M){return {l:JMB[+M.k.slice(5,7)-1]+' '+M.k.slice(0,4),a:M.l.slice().sort(function(x,y){return (x.tgl+x.dari)<(y.tgl+y.dari)?-1:1})}}
 /* ---- Jurnal Mengajar ---- */
 function jmDraw(){var L=jmFiltered(),el=$('#jml');if(!el)return;JM.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal mengajar. Tekan tombol <b>Buat Jurnal Mengajar</b> di pojok kanan bawah.</div>';return}
-  var lv=trLv();if(U.sa&&JM.scope=='all')lv.push({f:function(A){return A.mapel||'(Tanpa mata pelajaran)'},ic:'book',t:function(k){return esc(k)},s:NS});JM.lvm=lv.length+1;
+  var lv=trLv();if(U.sa&&JM.scope=='all')lv.push({f:function(A){return A.mapel||'(Tanpa mata pelajaran)'},ic:'book',t:function(k){return esc(k)},s:NSORT});JM.lvm=lv.length+1;
   el.innerHTML=trTree(L,lv,0,function(a){return trMon(a,jmMonth)})}
 function jmMonth(M,o){var G=trMg(M),gi=JM.grp.push(G)-1;return trai(JM.lvm||5,'clock',esc(G.l),'','<div class=jmx data-h=1><b>Unduh jurnal bulan ini:</b> '+jmBtns('jmOutM('+gi+',@)')+'</div>'+M.l.map(jmCard).join(''),M.l.length+' jurnal',o)}
 /* ---- Jurnal Pengawas (dahulu Agenda Pengawas) ---- */
@@ -5616,7 +5616,8 @@ function sndSave(){var on=$('#sndon').checked,r=document.querySelector('input[na
 </script>
 <script>
 /* ===== Tautan Spreadsheet sumber per guru ===== */
-function ssBar(url,fn,label){return '<div class=ssb>'+ic('sheet',18)+' <b>'+label+'</b> '+(url?'<a class=lnk href="'+esc(url)+'" target=_blank rel=noopener>'+ic('sheet',14)+' Buka Spreadsheet</a>':'<small style="font-weight:500">Belum dibuat</small>')+' <button class=o onclick="'+fn+'()">'+ic('sync',14)+' '+(url?'Perbarui':'Buat')+' Spreadsheet</button></div>'}
+function srcOK(){return !!(U&&(U.su||(U.jabatan&&U.jabatan!='Guru')))}
+function ssBar(url,fn,label){if(!srcOK())return '';return '<div class=ssb>'+ic('sheet',18)+' <b>'+label+'</b> '+(url?'<a class=lnk href="'+esc(url)+'" target=_blank rel=noopener>'+ic('sheet',14)+' Buka Spreadsheet</a>':'<small style="font-weight:500">Belum dibuat</small>')+' <button class=o onclick="'+fn+'()">'+ic('sync',14)+' '+(url?'Perbarui':'Buat')+' Spreadsheet</button></div>'}
 function jmSsBar(){var m=JM.list.filter(function(x){return x.nik==U.nik&&x.ss})[0];return ssBar(JM.ssu||(m&&m.ss)||'','jmSS','Spreadsheet Sumber Jurnal Mengajar Saya')}
 function agSsBar(){var m=AG.list.filter(function(x){return x.nik==U.nik&&x.ss})[0];return ssBar(AG.ssu||(m&&m.ss)||'','agSS','Spreadsheet Sumber Jurnal Pengawas Saya')}
 function jmSS(){toast('Menyiapkan Spreadsheet...');api('jurnalSheet',U.nik,PW).then(function(u){JM.ssu=u;toast('Spreadsheet siap');jmView()}).catch(function(e){alert('Spreadsheet belum dapat dibuat: '+e)})}
@@ -5630,7 +5631,7 @@ function trYr(g,R,fn,lb){var G={l:'Tahun Ajaran '+g.k,fn:'Tahun Ajaran '+String(
 function trCards(a,card){return a.slice().sort(function(x,y){return (y.tgl+y.dari)<(x.tgl+x.dari)?-1:1}).map(card).join('')}
 function jmDraw(){var L=jmFiltered(),el=$('#jml');if(!el)return;JM.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal mengajar. Tekan tombol <b>Buat Jurnal Mengajar</b> di pojok kanan bawah.</div>';return}
-  var lv=trLv();if(U.sa&&JM.scope=='all')lv.push({f:function(A){return A.mapel||'(Tanpa mata pelajaran)'},ic:'book',t:function(k){return esc(k)},s:NS});
+  var lv=trLv();if(U.sa&&JM.scope=='all')lv.push({f:function(A){return A.mapel||'(Tanpa mata pelajaran)'},ic:'book',t:function(k){return esc(k)},s:NSORT});
   el.innerHTML=trTree(L,lv,0,function(a){return trCards(a,jmCard)},function(g){return trYr(g,JM.grp,'jmOutM','jurnal')})}
 function agDraw(){var L=agFiltered(),el=$('#agl');if(!el)return;AG.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal pengawas. Tekan tombol <b>Buat Jurnal Pengawas</b> di pojok kanan bawah.</div>';return}
@@ -5697,7 +5698,7 @@ function trTree2(L,leaf,top){var J=jdKeys();return jmGroup(L,function(A){return 
 function jmDraw(){var L=jmFiltered(),el=$('#jml');if(!el)return;JM.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal mengajar. Tekan tombol <b>Buat Jurnal Mengajar</b> di pojok kanan bawah.</div>';return}
   var all=U.sa&&JM.scope=='all';
-  el.innerHTML=trTree2(L,function(a){return all?jmGroup(a,function(A){return A.mapel||'(Tanpa mata pelajaran)'}).sort(NS).map(function(P){return '<div class=mpl>'+ic('book',13)+' '+esc(P.k)+'</div>'+trCards(P.l,jmCard)}).join(''):trCards(a,jmCard)},function(g){return trYr(g,JM.grp,'jmOutM','jurnal')})}
+  el.innerHTML=trTree2(L,function(a){return all?jmGroup(a,function(A){return A.mapel||'(Tanpa mata pelajaran)'}).sort(NSORT).map(function(P){return '<div class=mpl>'+ic('book',13)+' '+esc(P.k)+'</div>'+trCards(P.l,jmCard)}).join(''):trCards(a,jmCard)},function(g){return trYr(g,JM.grp,'jmOutM','jurnal')})}
 function agDraw(){var L=agFiltered(),el=$('#agl');if(!el)return;AG.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">Belum ada jurnal pengawas. Tekan tombol <b>Buat Jurnal Pengawas</b> di pojok kanan bawah.</div>';return}
   el.innerHTML=trTree2(L,function(a){return trCards(a,agCard)},function(g){return trYr(g,AG.grp,'agOutM','jurnal pengawas')})}
@@ -6443,7 +6444,7 @@ function srcLoad(){var t=UT;api('getSumberData',U.nik,PW,t).then(function(r){var
   e.innerHTML=ic('sheet',18)+' <b>Spreadsheet sumber '+nm+':</b> <a class=lnk href="'+esc(r.url)+'" target=_blank rel=noopener>'+ic('sheet',14)+' Buka '+nm+'</a>'
    +'<span style="color:#7b6a6d;font-size:12px"> &nbsp;\u2022&nbsp; Arsip (non-aktif): </span>'+r.arsip.map(function(a){return a.url?'<a class=lnk href="'+esc(a.url)+'" target=_blank rel=noopener>'+esc(a.st)+'</a>':'<small style="color:#9a8a8d" title="Dibuat otomatis saat ada data berstatus ini">'+esc(a.st)+'</small>'}).join(' ')}).catch(function(){var e=$('#srcb');if(e)e.style.display='none'})}
 /* ---------- Jurnal Mengajar: Spreadsheet sumber per guru per jenjang ---------- */
-function jmSsBar(){var M=Object.assign({},JM.ssm||{});JM.list.forEach(function(x){if(x.nik==U.nik&&x.ss&&!M[x.j])M[x.j]=x.ss});var js=Object.keys(M);
+function jmSsBar(){if(!srcOK())return '';var M=Object.assign({},JM.ssm||{});JM.list.forEach(function(x){if(x.nik==U.nik&&x.ss&&!M[x.j])M[x.j]=x.ss});var js=Object.keys(M);
   return '<div class=ssb>'+ic('sheet',18)+' <b>Spreadsheet Sumber Jurnal Mengajar Saya</b> '+(js.length?js.map(function(j){return '<a class=lnk href="'+esc(M[j])+'" target=_blank rel=noopener>'+ic('sheet',14)+' '+esc(U.nama)+' - '+esc(j)+'</a>'}).join(' '):'<small style="font-weight:500">Belum dibuat (otomatis dibuat per jenjang saat Anda menyimpan jurnal)</small>')
    +' <button class=o onclick="jmSS()">'+ic('sync',14)+' '+(js.length?'Perbarui':'Buat')+' Spreadsheet</button></div>'}
 function jmSS(){toast('Menyiapkan Spreadsheet...');api('jurnalSheet',U.nik,PW).then(function(m){JM.ssm=m||{};toast('Spreadsheet siap');jmView()}).catch(function(e){alert('Spreadsheet belum dapat dibuat: '+e)})}
