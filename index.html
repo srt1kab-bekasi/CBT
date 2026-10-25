@@ -1642,7 +1642,7 @@ function draw() {
     scr('exam');
     var q = Qs[cur];
     seen[q.i] = 1;
-    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "</div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>") : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>"), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
+    app.innerHTML = "<header>".concat(brand()).concat(PV ? '<span class=pvb>Pratinjau</span>' : '', "<span id=tmslot></span><span id=endslot></span></header><div class=ex><div class=\"box map\"><div class=cnt id=cnt></div>").concat(Qs.map(function (s, n) { return "<b class=\"".concat(ans[s.i] ? 'g' : seen[s.i] ? 'y' : '', " ").concat(n == cur ? 'cur' : '', "\" onclick=\"cur=").concat(n, ";draw()\">").concat(n + 1, "</b>"); }).join(''), "</div>\n <div class=\"box q t-").concat(q.t, "\"><h3>Soal ").concat(cur + 1, " dari ").concat(Qs.length, " ").concat(tbadge(q.t), "</h3><div class=rt>").concat(rh(q.q), "</div>").concat(media(q.m)).concat(q.t == 'pg' ? (q.o || []).map(function (o, j) { return o ? "<label class=\"opt ".concat(ans[q.i] == 'ABCDE'[j] ? 's' : '', "\"><input type=radio style=\"width:auto\" ").concat(ans[q.i] == 'ABCDE'[j] ? 'checked' : '', " onchange=\"ans[").concat(q.i, "]='").concat('ABCDE'[j], "';pick()\"> ").concat('ABCDE'[j], ". <span class=rt>").concat(rh(o), "</span></label>") : ''; }).join('') : q.t == 'js' ? "<input class=jsin maxlength=60 value=\"".concat(esc(ans[q.i] || ''), "\" oninput=\"ans[").concat(q.i, "]=this.value;updEnd();$('#jc').textContent=this.value.length+' / 60'\" placeholder=\"Tulis jawaban singkat (maks. 60 karakter)\"><small id=jc class=jc>").concat((ans[q.i] || '').length, " / 60</small>" + stBar('js')) : "<textarea rows=8 oninput=\"ans[".concat(q.i, "]=this.value;updEnd()\" placeholder=\"Tulis jawaban uraian Anda\">").concat(esc(ans[q.i] || ''), "</textarea>" + stBar('es')), "\n <button ").concat(cur ? '' : 'disabled', " onclick=\"cur--;draw()\">Sebelumnya</button><button ").concat(cur < Qs.length - 1 ? '' : 'disabled', " onclick=\"cur++;draw()\">Berikutnya</button></div></div>");
     if (TM)
         $('#tmslot').appendChild(TM);
     updEnd();
@@ -2696,7 +2696,7 @@ function jdDoc(P,W){
   P=jdOrd(jdCp(P));var T=TC(),m=T.m,m2=T.m2,mt=T.mt,F=T.f+',Georgia,serif',G='#f3dd8a',s=jdSum(P);
   var kp=(!W&&KOPD)?'<img src="'+KOPD.u+'" style="width:100%;display:block">'
     :'<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')
-    +'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:'+G+'">JADWAL PELAKSANAAN ASESMEN</div></td></tr></table>';
+    +'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:'+G+'">JADWAL PELAKSANAAN ASESMEN</div></td>'+(W?'':LXTD())+'</tr></table>';
   var body=P.jj.map(function(J,ji){
     var h='';
     J.kls.forEach(function(K,ki){K.vk.forEach(function(V,vi){
@@ -2992,7 +2992,7 @@ var _uH=usersHTML;usersHTML=function(){var h=_uH();if(UT=='Siswa'){var H=UD[0],c
 /* ===== Dokumen (Rombel, Absensi, BNBA): PDF, JPG, Word, Excel, Print ===== */
 function xdKop(W,t){var T=TC(),m=T.m,F=T.f+',Georgia,serif';
   if(!W&&KOPD)return '<img src="'+KOPD.u+'" style="width:100%;display:block">';
-  return '<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')+'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:#f3dd8a">'+esc(t)+'</div></td></tr></table>'}
+  return '<table width=100% cellpadding=0 cellspacing=0 style="background:'+m+';color:#fff;border-collapse:collapse"><tr>'+(W?'':'<td width=74 style="padding:10px 0 10px 16px"><img src="'+esc(sc.logo||LOGO)+'" height=52 style="background:#fff;border-radius:50%;padding:3px;display:block"></td>')+'<td style="padding:10px 16px;font-family:'+F+'"><div style="font-size:19px;font-weight:700;color:#fff">'+esc(sc.nama)+'</div><div style="font-size:11px;letter-spacing:2.5px;color:#f3dd8a">'+esc(t)+'</div></td>'+(W?'':LXTD())+'</tr></table>'}
 function xdTbl(cols,rows,T,sm){
   var m=T.m,mt=T.mt,fs=sm?10:12,pd=sm?'5px 1px':'6px 8px';
   return '<table width=100% cellspacing=0 cellpadding=0 style="border-collapse:collapse;table-layout:fixed;margin-top:8px"><tr>'+cols.map(function(c){return '<td width='+c.w+'% align=center style="background:'+m+';color:#fff;border:1px solid #fff;padding:'+(sm?'4px 1px':'7px 6px')+';font-size:'+fs+'px;font-weight:700">'+c.h+'</td>'}).join('')+'</tr>'
@@ -4789,7 +4789,7 @@ function kcDraw(k,P,s,fo,no){
  rw=rs.map(rh).join(''),
  ph=fo?"<img class=kp src='"+esc(fo)+"'>":"<div class=kp>"+esc((s.n||'?')[0])+"</div>",
  lg="<img class=kl src='"+esc(sc.logo||LOGO)+"'>",
- sn=String(sc.nama||'').toUpperCase(),av=({top:276,ctr:236,side:228})[L]-(D.xw||0),fs=Math.min(9.5,av/(Math.max(sn.length,1)*.8)),wr=fs<7.2,
+ sn=String(sc.nama||'').toUpperCase(),av=({top:276,ctr:236,side:228})[L]-(D.xw||0)-LXW('kp'),fs=Math.min(9.5,av/(Math.max(sn.length,1)*.8)),wr=fs<7.2,
  hd="<div class=kn><div class='ks"+(wr?' w':'')+"' style='font-size:"+(wr?7.2:fs).toFixed(1)+"px'>"+esc(sn)+"</div><div class=kk>"+(S?(jp?'KARTU PELAJAR':'KARTU PESERTA ASESMEN'):(ja?'KARTU PENGAJAR':'KARTU PENGAWAS ASESMEN'))+"</div></div>",
  qr=sq?"<div class=kq><img src='"+kcQ(ud.v)+"'><div>Scan "+ud.l+"</div></div>":"",
  cz=function(a,b,w){b=String(b==null?'':b);return "<div class=kz><small>"+esc(a)+"</small><b style='font-size:"+(w?(b.length>12?7.2:8.2):(b.length>7?8.6:b.length>4?10.5:12.5))+"px'>"+esc(b)+"</b></div>"},
@@ -6449,6 +6449,250 @@ function jmSsBar(){if(!srcOK())return '';var M=Object.assign({},JM.ssm||{});JM.l
    +' <button class=o onclick="jmSS()">'+ic('sync',14)+' '+(js.length?'Perbarui':'Buat')+' Spreadsheet</button></div>'}
 function jmSS(){toast('Menyiapkan Spreadsheet...');api('jurnalSheet',U.nik,PW).then(function(m){JM.ssm=m||{};toast('Spreadsheet siap');jmView()}).catch(function(e){alert('Spreadsheet belum dapat dibuat: '+e)})}
 var _sdJmCard=jmCard;jmCard=function(A){var h=_sdJmCard.apply(this,arguments);if(A&&A.ss){var nm=(A.guru||U.nama||'')+' - '+A.j;h=h.replace('</div><div class=jmk>','<a class="jmr lnk" href="'+esc(A.ss)+'" target=_blank rel=noopener title="Spreadsheet sumber: '+esc(nm)+'">'+ic('sheet',12)+' '+esc(nm)+'</a></div><div class=jmk>')}return h};
+
+</script>
+<script>
+/* ===== Tempel (paste) pintar di kolom soal =====
+   Membaca rumus dari hasil salin (AI / web / Word): KaTeX, MathJax, MathML, data-math, serta teks LaTeX ($..$, \(..\), \[..\], $$..$$, \frac{}{}, \ce{}).
+   Rumus diubah ke struktur rumus aplikasi (pecahan, akar, pangkat, matriks, dst.) sehingga tidak berantakan. */
+var TEXI={displaystyle:1,textstyle:1,scriptstyle:1,limits:1,nolimits:1,big:1,Big:1,bigg:1,Bigg:1,bigl:1,bigr:1,Bigl:1,Bigr:1,biggl:1,biggr:1,left:1,right:1,mathstrut:1,strut:1,hfill:1,nonumber:1,notag:1,vphantom:1,hphantom:1};
+var TEXA={mathrm:1,text:1,textrm:1,textit:2,mathit:2,mathbf:3,boldsymbol:3,bm:3,textbf:3,mathsf:1,mathtt:1,mathcal:1,mathscr:1,mathfrak:1,operatorname:1,mbox:1,textsf:1,texttt:1};
+Object.assign(TEXM,{rightarrow:'\u2192',leftarrow:'\u2190',leftrightarrow:'\u2194',Rightarrow:'\u21D2',Leftarrow:'\u21D0',Leftrightarrow:'\u21D4',implies:'\u21D2',iff:'\u21D4',gets:'\u2190',longrightarrow:'\u27F6',longleftarrow:'\u27F5',rightleftharpoons:'\u21CC',leftrightharpoons:'\u21CB',nearrow:'\u2197',searrow:'\u2198',
+ le:'\u2264',ge:'\u2265',ne:'\u2260',neq:'\u2260',leq:'\u2264',geq:'\u2265',approx:'\u2248',sim:'\u223C',simeq:'\u2243',propto:'\u221D',equiv:'\u2261',pm:'\u00B1',mp:'\u2213',times:'\u00D7',div:'\u00F7',cdot:'\u00B7',circ:'\u2218',bullet:'\u2022',ast:'\u2217',star:'\u22C6',oplus:'\u2295',otimes:'\u2297',
+ infty:'\u221E',partial:'\u2202',nabla:'\u2207',degree:'\u00B0',prime:'\u2032',angle:'\u2220',measuredangle:'\u2221',perp:'\u22A5',parallel:'\u2225',triangle:'\u25B3',therefore:'\u2234',because:'\u2235',
+ in:'\u2208',notin:'\u2209',ni:'\u220B',subset:'\u2282',subseteq:'\u2286',supset:'\u2283',supseteq:'\u2287',cup:'\u222A',cap:'\u2229',emptyset:'\u2205',varnothing:'\u2205',setminus:'\u2216',forall:'\u2200',exists:'\u2203',nexists:'\u2204',neg:'\u00AC',lnot:'\u00AC',land:'\u2227',lor:'\u2228',wedge:'\u2227',vee:'\u2228',
+ sum:'\u2211',prod:'\u220F',int:'\u222B',iint:'\u222C',iiint:'\u222D',oint:'\u222E',sqrt:'\u221A',
+ alpha:'\u03B1',beta:'\u03B2',gamma:'\u03B3',delta:'\u03B4',epsilon:'\u03B5',varepsilon:'\u03B5',zeta:'\u03B6',eta:'\u03B7',theta:'\u03B8',vartheta:'\u03D1',iota:'\u03B9',kappa:'\u03BA',lambda:'\u03BB',mu:'\u03BC',nu:'\u03BD',xi:'\u03BE',pi:'\u03C0',rho:'\u03C1',sigma:'\u03C3',tau:'\u03C4',upsilon:'\u03C5',phi:'\u03C6',varphi:'\u03C6',chi:'\u03C7',psi:'\u03C8',omega:'\u03C9',
+ Gamma:'\u0393',Delta:'\u0394',Theta:'\u0398',Lambda:'\u039B',Xi:'\u039E',Pi:'\u03A0',Sigma:'\u03A3',Phi:'\u03A6',Psi:'\u03A8',Omega:'\u03A9',
+ ldots:'\u2026',cdots:'\u22EF',dots:'\u2026',vdots:'\u22EE',hbar:'\u210F',ell:'\u2113',Re:'\u211C',Im:'\u2111',aleph:'\u2135',
+ sin:'sin\u2009',cos:'cos\u2009',tan:'tan\u2009',cot:'cot\u2009',sec:'sec\u2009',csc:'csc\u2009',arcsin:'arcsin\u2009',arccos:'arccos\u2009',arctan:'arctan\u2009',sinh:'sinh\u2009',cosh:'cosh\u2009',tanh:'tanh\u2009',log:'log\u2009',ln:'ln\u2009',lg:'lg\u2009',lim:'lim\u2009',exp:'exp\u2009',max:'max\u2009',min:'min\u2009',det:'det\u2009',gcd:'gcd\u2009',mod:' mod ',bmod:' mod ',pmod:' (mod ',
+ lbrace:'{',rbrace:'}',langle:'\u27E8',rangle:'\u27E9',lceil:'\u2308',rceil:'\u2309',lfloor:'\u230A',rfloor:'\u230B',mid:'|',vert:'|',Vert:'\u2016',quad:'\u2003',qquad:'\u2003\u2003',space:' ',colon:':',checkmark:'\u2713',
+ mathbb:'',ll:'\u226A',gg:'\u226B',leqslant:'\u2264',geqslant:'\u2265',cong:'\u2245',mapsto:'\u21A6',uparrow:'\u2191',downarrow:'\u2193'});
+function ceH(s){s=String(s||'').trim().replace(/<=>/g,'\u21CC').replace(/<->/g,'\u21C4').replace(/->/g,'\u2192').replace(/<-/g,'\u2190').replace(/=>/g,'\u21D2');
+  s=esc(s).replace(/\$/g,'');s=s.replace(/([A-Za-z\)\]])(\d+)/g,'$1<sub>$2</sub>').replace(/\^\{([^}]*)\}/g,'<sup>$1</sup>').replace(/\^([0-9]*[+\-]|[0-9]+)/g,'<sup>$1</sup>').replace(/_\{([^}]*)\}/g,'<sub>$1</sub>').replace(/_([0-9A-Za-z]+)/g,'<sub>$1</sub>').replace(/\{|\}/g,'');return s}
+function texEnv(env,body){var BL=/^(aligned|align\*?|alignat\*?|gathered|gather\*?|equation\*?|split|eqnarray\*?|multline\*?)$/;
+  if(env=='array'){var m=/^\s*\{([^}]*)\}/.exec(body);if(m)body=body.slice(m[0].length)}
+  var rows=body.split('\\\\').map(function(r){return r.trim()}).filter(function(r,i,a){return r||i<a.length-1});
+  if(BL.test(env))return rows.map(function(r){return texH(r.replace(/&/g,' '))}).join('<br>');
+  var cells=rows.map(function(r){return r.split('&').map(function(c){return texH(c.trim())})}),nc=Math.min(4,Math.max.apply(null,cells.map(function(r){return r.length}).concat([1])))||1;
+  if(env=='cases'||env=='dcases'||env=='rcases')return Sy(cells.map(function(r){return r.join('&emsp;')}));
+  var flat=[];cells.forEach(function(r){for(var i=0;i<nc;i++)flat.push(r[i]||'')});
+  var c={pmatrix:'mxp',bmatrix:'mxk',Bmatrix:'mxk',vmatrix:'mxd',Vmatrix:'mxd',matrix:'mxn',smallmatrix:'mxn',array:'mxn'}[env]||'mxp';return Mx(c,nc,flat)}
+function texH(s){
+  s=String(s==null?'':s);var o='',i=0,n=s.length;
+  var arg=function(){while(s[i]==' ')i++;
+    if(s[i]=='{'){var d=1,j=++i;while(i<n&&d){if(s[i]=='{')d++;else if(s[i]=='}')d--;i++}return texH(s.slice(j,i-1))}
+    if(s[i]=='\\'){var m=/^\\([a-zA-Z]+)/.exec(s.slice(i));if(m){i+=m[0].length;return TEXM[m[1]]!==undefined?TEXM[m[1]]:esc(m[1])}}
+    return esc(s.charAt(i++))};
+  var raw=function(){while(s[i]==' ')i++;if(s[i]!='{')return esc(s.charAt(i++));var d=1,j=++i;while(i<n&&d){if(s[i]=='{')d++;else if(s[i]=='}')d--;i++}return s.slice(j,i-1)};
+  var ESC={',':'\u2009',';':'\u2005',':':'\u2005','!':'',' ':' ','>':' ','<':' ','|':'\u2016','\\':'<br>','{':'{','}':'}','%':'%','&':'&','#':'#','$':'$','_':'_'};
+  while(i<n){var c=s[i];
+    if(c=='\\'){var m=/^\\([a-zA-Z]+)/.exec(s.slice(i));
+      if(m){i+=m[0].length;var k=m[1];
+        if(k=='frac'||k=='dfrac'||k=='tfrac'||k=='cfrac'){var a=arg(),b=arg();o+=Fr(a,b)}
+        else if(k=='sqrt'){var nn='';while(s[i]==' ')i++;if(s[i]=='['){var j=s.indexOf(']',i);if(j>0){nn=texH(s.slice(i+1,j));i=j+1}}o+=Rt(arg(),nn)}
+        else if(k=='binom'||k=='dbinom'||k=='tbinom'){var a1=arg(),b1=arg();o+=Bn(a1,b1)}
+        else if(k=='vec'||k=='overrightarrow'){o+=Vc(arg())}
+        else if(k=='overline'||k=='bar'||k=='widebar'||k=='overleftrightarrow'){o+=Ov(arg())}
+        else if(k=='underline'){o+='<u>'+arg()+'</u>'}
+        else if(k=='hat'||k=='widehat'){o+=arg()+'\u0302'}else if(k=='tilde'||k=='widetilde'){o+=arg()+'\u0303'}else if(k=='dot'){o+=arg()+'\u0307'}else if(k=='ddot'){o+=arg()+'\u0308'}
+        else if(k=='mathbb'||k=='Bbb'){var t=raw();o+=TEXB[t]||esc(t)}
+        else if(k=='ce'||k=='pu'){o+=ceH(raw())}
+        else if(TEXI[k]){if((k=='left'||k=='right')&&s[i]=='.')i++}
+        else if(TEXA[k]){var ar=arg();o+=TEXA[k]==3?'<b>'+ar+'</b>':TEXA[k]==2?'<i>'+ar+'</i>':ar}
+        else if(k=='boxed'){o+='<b>'+arg()+'</b>'}
+        else if(k=='tag'||k=='label'){raw()}
+        else if(k=='begin'){var env=raw(),end='\\end{'+env+'}',e=s.indexOf(end,i),bd=e<0?s.slice(i):s.slice(i,e);i=e<0?n:e+end.length;o+=texEnv(env,bd)}
+        else o+=TEXM[k]!==undefined?TEXM[k]:esc(k);
+      }else{var ch=s.charAt(i+1);o+=ESC[ch]!==undefined?ESC[ch]:esc(ch);i+=2}
+    }else if(c=='^'){i++;o+='<sup>'+arg()+'</sup>'}
+    else if(c=='_'){i++;o+='<sub>'+arg()+'</sub>'}
+    else if(c=='{'||c=='}')i++;
+    else if(c=='~'){o+='\u00A0';i++}
+    else{o+=esc(c);i++}
+  }
+  return o;
+}
+/* ---------- MathML -> struktur rumus aplikasi ---------- */
+function mmK(n){return [].filter.call(n.children,function(c){return c.localName!='annotation'&&c.localName!='annotation-xml'})}
+function mmS(n){return mmK(n).map(mml2h).join('')}
+function mmT(n){return esc(String(n.textContent||'').replace(/[\u200b-\u200d\u2060\ufeff\u2061-\u2064]/g,'').replace(/\s+/g,' '))}
+function mmTab(tb,op,cl){var rows=mmK(tb).filter(function(r){return r.localName=='mtr'||r.localName=='mlabeledtr'}).map(function(r){return mmK(r).filter(function(c){return c.localName=='mtd'}).map(mmS)}),nc=Math.max.apply(null,rows.map(function(r){return r.length}).concat([1]));
+  if(op=='{'&&!cl&&nc<=2)return Sy(rows.map(function(r){return r.join('&emsp;')}));
+  if(nc>4)return rows.map(function(r){return r.join('&emsp;')}).join('<br>');
+  var flat=[];rows.forEach(function(r){for(var i=0;i<nc;i++)flat.push(r[i]||'')});
+  var c=op=='['?'mxk':(op=='|'||op=='\u2016')?'mxd':(op=='('||op=='\u239B')?'mxp':'mxn';return Mx(c,nc,flat)}
+function mml2h(n){
+  if(n.nodeType==3)return esc(n.textContent.replace(/\s+/g,' '));
+  if(n.nodeType!=1)return '';
+  var t=n.localName,k=mmK(n),c=function(i){return k[i]?mml2h(k[i]):''},tx=function(x){return String(x&&x.textContent||'').trim()};
+  switch(t){
+    case 'math':case 'mstyle':case 'mpadded':case 'mphantom':case 'menclose':case 'merror':return mmS(n);
+    case 'semantics':return k[0]?mml2h(k[0]):'';
+    case 'mrow':{
+      if(k.length==3&&k[0].localName=='mo'&&k[1].localName=='mtable'&&k[2].localName=='mo')return mmTab(k[1],tx(k[0]),tx(k[2]));
+      if(k.length==2&&k[0].localName=='mo'&&tx(k[0])=='{'&&k[1].localName=='mtable')return mmTab(k[1],'{','');
+      return mmS(n)}
+    case 'mfenced':{var op=n.getAttribute('open')||'(',cl=n.getAttribute('close')||')';if(k.length==1&&k[0].localName=='mtable')return mmTab(k[0],op,cl);return esc(op)+k.map(mml2h).join(', ')+esc(cl)}
+    case 'mtable':return mmTab(n,'','');
+    case 'mi':case 'mn':case 'mtext':case 'ms':case 'mo':return mmT(n);
+    case 'mspace':return ' ';
+    case 'msup':return c(0)+'<sup>'+c(1)+'</sup>';
+    case 'msub':return c(0)+'<sub>'+c(1)+'</sub>';
+    case 'msubsup':return c(0)+'<sub>'+c(1)+'</sub><sup>'+c(2)+'</sup>';
+    case 'munder':return c(0)+'<sub>'+c(1)+'</sub>';
+    case 'munderover':return c(0)+'<sub>'+c(1)+'</sub><sup>'+c(2)+'</sup>';
+    case 'mover':{var ov=tx(k[1]);if(/^[\u00AF\u203E\u2015\u005F\u0305]$/.test(ov))return Ov(c(0));if(/^[\u2192\u20D7\u27F6]$/.test(ov))return Vc(c(0));if(ov=='^'||ov=='\u02C6')return c(0)+'\u0302';if(ov=='~'||ov=='\u02DC')return c(0)+'\u0303';if(ov=='.'||ov=='\u02D9')return c(0)+'\u0307';return c(0)+'<sup>'+c(1)+'</sup>'}
+    case 'mfrac':return n.getAttribute('linethickness')=='0'?Bn(c(0),c(1)):Fr(c(0),c(1));
+    case 'msqrt':return Rt(mmS(n));
+    case 'mroot':return Rt(c(0),c(1));
+    default:return mmS(n)||mmT(n)}
+}
+/* ---------- teks LaTeX -> token rumus ---------- */
+function pmTok(M,h,d){M.push({h:h,d:d});return '\u2063M'+(M.length-1)+'\u2063'}
+function pmBare(str,M){var o='',i=0,n=str.length;
+  while(i<n){var m=/\\[a-zA-Z]+/.exec(str.slice(i));if(!m){o+=str.slice(i);break}
+    var st=i+m.index;o+=str.slice(i,st);var j=st+m[0].length,nm0=m[0].slice(1);
+    if(!(TEXM[nm0]!==undefined||/^(frac|dfrac|tfrac|cfrac|sqrt|binom|dbinom|vec|overline|bar|hat|text|mathrm|mathbf|mathbb|ce|pu|begin|left|right|overrightarrow|underline|tilde|dot|ddot|widehat|operatorname|boldsymbol|textbf|textit|mathit)$/.test(nm0))){o+=m[0];i=j;continue}
+    for(;;){var ch=str[j];
+      if(ch=='{'){var d=1,q=j+1;while(q<n&&d){if(str[q]=='{')d++;else if(str[q]=='}')d--;q++}if(d){break}j=q}
+      else if(ch=='['&&/^\\(sqrt|binom)/.test(str.slice(st,st+8))&&j==st+m[0].length){var e=str.indexOf(']',j);if(e<0)break;j=e+1}
+      else if(ch=='^'||ch=='_'){j++;if(str[j]=='{'){var d2=1,q2=j+1;while(q2<n&&d2){if(str[q2]=='{')d2++;else if(str[q2]=='}')d2--;q2++}j=q2}else if(j<n)j++}
+      else if(ch=='\\'&&/^\\[a-zA-Z]+/.test(str.slice(j))&&/^\\(frac|dfrac|sqrt|vec|overline|bar|binom|hat|text|mathrm|mathbf)/.test(str.slice(st,st+9))===false&&false){break}
+      else break}
+    o+=pmTok(M,texH(str.slice(st,j)),false);i=j}
+  return o}
+function pmTokenize(str,M){str=String(str).replace(/\\\$/g,'\u2064');
+  str=str.replace(/\$\$([\s\S]+?)\$\$/g,function(a,b){return pmTok(M,texH(b),true)});
+  str=str.replace(/\\\[([\s\S]+?)\\\]/g,function(a,b){return pmTok(M,texH(b),true)});
+  str=str.replace(/\\\(([\s\S]+?)\\\)/g,function(a,b){return pmTok(M,texH(b),false)});
+  str=str.replace(/\$([^$\n]+?)\$/g,function(a,b){if(/^\s|\s$/.test(b)||/^[\d.,]+$/.test(b))return a;return pmTok(M,texH(b),false)});
+  str=pmBare(str,M);return str.replace(/\u2064/g,'$')}
+function pmFill(h,M){return h.replace(/\u2063M(\d+)\u2063/g,function(a,i){var x=M[+i];return x?(x.d?'<div>'+x.h+'</div>':x.h):''})}
+function pmMath(el){var d=!!(el.matches&&el.matches('.katex-display,.math-display,.MathJax_Display,[display=block],mjx-container[display=true]'))||!!(el.closest&&el.closest('.katex-display'));
+  var an=el.querySelector&&el.querySelector('annotation[encoding="application/x-tex"],annotation[encoding="application/x-latex"],annotation[encoding="TeX"]');if(an)return {h:texH(an.textContent),d:d};
+  var at=el.getAttribute&&(el.getAttribute('data-math')||el.getAttribute('data-latex')||el.getAttribute('data-tex'));if(at)return {h:texH(at),d:d};
+  if(el.localName=='script')return {h:texH(el.textContent),d:/display/.test(el.type||'')};
+  var m=el.localName=='math'?el:(el.querySelector&&el.querySelector('math'));if(m)return {h:mml2h(m),d:d||m.getAttribute('display')=='block'};
+  return null}
+function pmBuild(html,txt){var M=[];
+  if(html&&/<[a-z]/i.test(html)){
+    var doc=new DOMParser().parseFromString(html,'text/html'),body=doc.body;
+    [].forEach.call(body.querySelectorAll('.MathJax_Preview,style,meta,link,title,head'),function(e){e.remove()});
+    var cand=[].slice.call(body.querySelectorAll('.katex-display,.katex,mjx-container,.MathJax,.MathJax_Display,.MathJax_SVG,.MathJax_CHTML,.math-inline,.math-display,[data-math],[data-latex],script[type^="math/tex"],math')),top=[];
+    cand.forEach(function(e){if(!top.some(function(o){return o!==e&&o.contains(e)}))top.push(e)});
+    var had=false;top.forEach(function(e){var r=pmMath(e);if(r){had=true;var sp=doc.createElement('span');sp.textContent=pmTok(M,r.h,r.d);e.replaceWith(sp)}else if(/MathJax|katex|mjx/.test(e.className||e.localName))e.remove()});
+    var tw=doc.createTreeWalker(body,NodeFilter.SHOW_TEXT,null),nodes=[],nd;while(nd=tw.nextNode())nodes.push(nd);
+    nodes.forEach(function(t){if(/\$|\\\(|\\\[|\\[a-zA-Z]/.test(t.nodeValue)){var v=pmTokenize(t.nodeValue,M);if(v!==t.nodeValue){had=true;t.nodeValue=v}}});
+    var structured=/<(table|ul|ol|li|sup|sub|b|strong|em|i|h[1-6]|blockquote|u)[\s>]/i.test(body.innerHTML);
+    if(had||structured){var h=typeof san=='function'?san(body.innerHTML):body.innerHTML;return pmFill(h,M)}
+  }
+  if(txt){var s2=pmTokenize(String(txt).replace(/\r\n?/g,'\n'),M),hasM=M.length>0,bold=/\*\*[^*\n]+\*\*/.test(s2);
+    if(!hasM&&!bold)return null;
+    var h2=esc(s2).replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>').replace(/^#{1,6}\s+/gm,'').replace(/\n/g,'<br>');return pmFill(h2,M)}
+  return null}
+document.addEventListener('paste',function(e){var t=e.target,re=t&&t.closest&&t.closest('.re');if(!re||!e.clipboardData)return;
+  var out;try{out=pmBuild(e.clipboardData.getData('text/html'),e.clipboardData.getData('text/plain'))}catch(x){out=null}
+  if(out==null)return;e.preventDefault();e.stopPropagation();document.execCommand('insertHTML',false,out)},true);
+
+</script>
+<script>
+/* ===== Toolbar bantu siswa untuk Jawaban Singkat & Essay Uraian =====
+   Hanya simbol dan kerangka penulisan (tanpa rumus utuh / daftar rumus bernama) agar tidak dipakai menyontek.
+   Jawaban tetap disimpan sebagai TEKS BIASA (Unicode) sehingga laporan, penilaian guru, dan ekspor tidak berubah. */
+(function(){var st=document.createElement('style');st.id='stcss';st.textContent=[
+'.stbar{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px;align-items:center}.stbar .stl{font-size:11.5px;font-weight:700;opacity:.8;margin-right:2px}',
+'.stbar button{margin:0;padding:6px 11px;font-size:15px;min-width:38px;border-radius:10px;line-height:1.2}',
+'.stpn{display:none;margin:6px 0 8px;padding:8px;border:2px solid var(--xbd,#e5d0d3);border-radius:14px;background:var(--xo,#fff)}.stpn.on{display:block}',
+'.stt{display:flex;gap:5px;overflow-x:auto;margin-bottom:7px;padding-bottom:2px;scrollbar-width:none}.stt::-webkit-scrollbar{display:none}.stt button{flex:0 0 auto;margin:0;padding:5px 11px;font-size:12.5px;border-radius:18px}',
+'.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:5px;max-height:190px;overflow-y:auto}.stg button{margin:0;min-height:38px;font-size:18px;padding:2px;border-radius:9px}',
+'.stn{font-size:11px;opacity:.7;margin-top:6px}'].join('\n');document.head.appendChild(st)})();
+var STS={
+ 'Yunani':'\u03B1 \u03B2 \u03B3 \u03B4 \u03B5 \u03B6 \u03B7 \u03B8 \u03B9 \u03BA \u03BB \u03BC \u03BD \u03BE \u03BF \u03C0 \u03C1 \u03C3 \u03C4 \u03C5 \u03C6 \u03C7 \u03C8 \u03C9 \u0393 \u0394 \u0398 \u039B \u039E \u03A0 \u03A3 \u03A6 \u03A8 \u03A9',
+ 'Operator':'\u00B1 \u2213 \u00D7 \u00F7 \u00B7 \u2218 \u221A \u221B \u221C \u221E \u221D \u2260 \u2248 \u2261 \u2245 \u223C \u2264 \u2265 \u226A \u226B \u2211 \u220F \u222B \u222C \u222E \u2202 \u2207 \u2206 \u00B0 \u2032 \u2033 \u2030 \u2223 \u2016 \u230A \u230B \u2308 \u2309 \u27E8 \u27E9',
+ 'Himpunan':'\u2208 \u2209 \u220B \u2282 \u2286 \u2283 \u2287 \u222A \u2229 \u2205 \u2216 \u2115 \u2124 \u211A \u211D \u2102 \u2200 \u2203 \u00AC \u2227 \u2228 \u21D2 \u21D4 \u21D0 \u2234 \u2235 \u22A5 \u22A4',
+ 'Geometri':'\u2220 \u2221 \u25B3 \u25B1 \u25A1 \u25EF \u2225 \u22A5 \u2312 \u2245 \u223C \u00B0 \u2032 \u2033 \u2192 \u20D7 \u0305 \u0302',
+ 'Panah':'\u2190 \u2192 \u2191 \u2193 \u2194 \u21D0 \u21D2 \u21D4 \u21CC \u21C4 \u21A6 \u2197 \u2198 \u27F6 \u27F7',
+ 'Pangkat':'\u2070 \u00B9 \u00B2 \u00B3 \u2074 \u2075 \u2076 \u2077 \u2078 \u2079 \u207A \u207B \u207C \u207D \u207E \u207F \u2071 \u1D43 \u1D47 \u1D9C \u1D48 \u1D49 \u1DA0 \u1D4D \u02B0 \u02B2 \u1D4F \u02E1 \u1D50 \u1D52 \u1D56 \u02B3 \u02E2 \u1D57 \u1D58 \u1D5B \u02B7 \u02E3 \u02B8 \u1DBB',
+ 'Indeks':'\u2080 \u2081 \u2082 \u2083 \u2084 \u2085 \u2086 \u2087 \u2088 \u2089 \u208A \u208B \u208C \u208D \u208E \u2090 \u2091 \u2095 \u1D62 \u2C7C \u2096 \u2097 \u2098 \u2099 \u2092 \u209A \u1D63 \u209B \u209C \u1D64 \u1D65 \u2093',
+ 'Pecahan':'\u00BD \u2153 \u2154 \u00BC \u00BE \u2155 \u2156 \u2157 \u2158 \u2159 \u215A \u215B \u215C \u215D \u215E \u2044 \u0025 \u2030'
+};
+var STQ=['\u00B2','\u2082','\u221A','\u00B1','\u00D7','\u00F7','\u03C0','\u00B0'],STR=[];
+function stBar(k){var q=k=='es';
+  return '<div class=stbar data-k='+k+'><span class=stl>Alat bantu:</span><button type=button class=o onmousedown="event.preventDefault();stOpen(\'Yunani\')" title="Huruf Yunani &amp; simbol matematika">\u03A3 Simbol</button>'
+   +'<button type=button class=o onmousedown="event.preventDefault();stIns(\'\u00B2\')" title="Pangkat dua">x\u00B2</button><button type=button class=o onmousedown="event.preventDefault();stIns(\'\u2082\')" title="Indeks bawah">x\u2082</button>'
+   +'<button type=button class=o onmousedown="event.preventDefault();stIns(\'\u221A()\',1)" title="Akar">\u221A</button><button type=button class=o onmousedown="event.preventDefault();stIns(\'()/()\',4)" title="Pecahan: isi pembilang dan penyebut">a/b</button>'
+   +(q?'<button type=button class=o onmousedown="event.preventDefault();stTable()" title="Sisipkan tabel">\u25A6 Tabel</button>':'')+'</div><div class=stpn id=stpn></div>'}
+function stField(){return document.querySelector('#app .box.q .jsin, #app .box.q textarea')}
+function stIns(t,back){var f=stField();if(!f)return;var a=f.selectionStart,z=f.selectionEnd;if(a==null){a=z=f.value.length}var v=f.value,nv=v.slice(0,a)+t+v.slice(z);
+  if(f.maxLength>0&&nv.length>f.maxLength){toast('Batas '+f.maxLength+' karakter tercapai');return}
+  f.value=nv;var p=a+t.length-(back||0);f.focus();try{f.setSelectionRange(p,p)}catch(e){}f.dispatchEvent(new Event('input',{bubbles:true}))}
+function stOpen(tab){var p=$('#stpn');if(!p)return;var bar=document.querySelector('.stbar');
+  if(p.classList.contains('on')&&p.dataset.t==tab&&arguments[1]!=1){p.classList.remove('on');return}
+  p.dataset.t=tab;p.classList.add('on');STR=[];
+  p.innerHTML='<div class=stt>'+Object.keys(STS).map(function(t){return '<button type=button class="'+(t==tab?'':'o')+'" onmousedown="event.preventDefault();stOpen(\''+t+'\',1)">'+t+'</button>'}).join('')+'</div>'
+   +'<div class=stg>'+STS[tab].split(' ').map(function(c){STR.push(c);return '<button type=button class=o onmousedown="event.preventDefault();stIns(STR['+(STR.length-1)+'])">'+(c=='\u20D7'||c=='\u0305'||c=='\u0302'?'a'+c:c)+'</button>'}).join('')+'</div>'
+   +'<div class=stn>Simbol disisipkan di kolom jawaban pada posisi kursor. Gunakan tab Pangkat / Indeks untuk x\u00B2, H\u2082O, dll.</div>'}
+function stTable(){var m=modal('<div class="mi info">'+ic('list',26)+'</div><h3>Sisipkan Tabel</h3><p style="font-size:13px">Tabel ditulis dengan garis tegak (|) di kolom jawaban. Isi sel setelah tabel muncul.</p>'
+   +'<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><label style="font-size:13px">Baris<br><input id=stR type=number min=1 max=10 value=3 style="width:90px"></label><label style="font-size:13px">Kolom<br><input id=stC type=number min=1 max=6 value=3 style="width:90px"></label></div>'
+   +'<label style="display:flex;gap:6px;align-items:center;justify-content:center;font-size:13px;margin-top:8px"><input id=stH type=checkbox checked style="width:auto"> Baris judul</label><div class=mb><button class=o onclick="mclose(this)">Batal</button><button id=stOk>'+ic('check',15)+' Sisipkan</button></div>');
+  m.querySelector('#stOk').onclick=function(){var r=Math.max(1,Math.min(10,+m.querySelector('#stR').value||3)),c=Math.max(1,Math.min(6,+m.querySelector('#stC').value||3)),h=m.querySelector('#stH').checked,L=[],i,j,a;
+    var row=function(cells){return '| '+cells.join(' | ')+' |'};
+    if(h){a=[];for(j=1;j<=c;j++)a.push('Kolom '+j);L.push(row(a));a=[];for(j=0;j<c;j++)a.push('---');L.push(row(a))}
+    for(i=0;i<r;i++){a=[];for(j=0;j<c;j++)a.push(' ');L.push(row(a))}
+    var f=stField(),pre=(f&&f.value&&f.selectionStart>0&&f.value.charAt(f.selectionStart-1)!='\n')?'\n':'';mclose(m.querySelector('#stOk'));stIns(pre+L.join('\n')+'\n')}}
+
+</script>
+<script>
+/* ===== Logo tambahan (opsional): kartu siswa & SDM, kop dokumen, header aplikasi ===== */
+(function(){var st=document.createElement('style');st.id='lgxcss';st.textContent=[
+'.kxl{position:absolute;right:6px;top:5px;display:flex;gap:3px;z-index:5}.kxl img{height:22px;width:auto;max-width:36px;object-fit:contain;background:#fff;border-radius:50%;padding:1.5px;box-shadow:0 0 0 1px rgba(0,0,0,.15)}',
+'.lgxg{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:10px 0}',
+'.lgxs{border:1px solid rgba(var(--mr),.18);border-radius:14px;padding:10px 12px;background:#fff;display:grid;gap:8px}',
+'.lgxp{display:flex;gap:10px;align-items:center}.lgxp .pv{width:64px;height:64px;border-radius:12px;border:1.5px dashed rgba(var(--mr),.3);display:grid;place-items:center;background:var(--mt);overflow:hidden;color:#9a8a8d;font-size:11px;text-align:center;flex:none}.lgxp .pv img{max-width:100%;max-height:100%;object-fit:contain}',
+'.lgxs label.ck{display:flex;gap:7px;align-items:center;font-size:12.5px;cursor:pointer}.lgxs label.ck input{width:auto;margin:0}.lgxs input[type=text]{margin:0;width:100%}'].join('\n');document.head.appendChild(st)})();
+function LXL(pl){return (sc.lgx||[]).filter(function(x){return x&&x.u&&x[pl]})}
+function LXH(pl,css){return LXL(pl).map(function(x){return '<img src="'+esc(x.u)+'" alt="'+esc(x.n||'')+'" style="'+css+'">'}).join('')}
+function LXW(pl){return LXL(pl).length*25}
+function LXTD(){var h=LXH('kk','height:46px;background:#fff;border-radius:50%;padding:3px;margin-left:8px;vertical-align:middle');return h?'<td align=right style="padding:10px 16px 10px 0;white-space:nowrap">'+h+'</td>':''}
+var _lxKc=kcDraw;kcDraw=function(){var h=_lxKc.apply(this,arguments),x=LXH('kp','');return x?h.replace(/<\/div>$/,'<div class=kxl>'+x+'</div></div>'):h};
+var _lxBrand=brand;brand=function(){var h=_lxBrand.apply(this,arguments),x=LXH('ap','height:34px;margin-left:6px;vertical-align:middle;background:#fff;border-radius:50%;padding:2px');return x?h.replace('alt=""><h1>','alt="">'+x+'<h1>'):h};
+/* ---------- pengaturan (Tab Sekolah) ---------- */
+var LGX=[];
+function lgxBox(){LGX=(sc.lgx||[]).map(function(x){return Object.assign({},x)});while(LGX.length<3)LGX.push({u:'',n:'',kp:1,kk:1,ap:0});return '<div class=box id=lgxbox>'+lgxHTML()+'</div>'}
+function lgxHTML(){return '<h3>'+ic('image',18)+' Logo Tambahan (opsional)</h3><small>Tambahkan hingga 3 logo lain, mis. logo yayasan (sekolah swasta), logo kementerian, atau mitra. Logo utama sekolah tidak berubah. Pilih di bagian mana logo tampil.</small>'
+  +'<div class=lgxg>'+LGX.map(function(x,i){return '<div class=lgxs><div class=lgxp><div class=pv>'+(x.u?'<img src="'+esc(x.u)+'" alt="">':'Logo '+(i+1))+'</div><div style="flex:1;min-width:0"><input type=text maxlength=40 placeholder="Nama logo (mis. Yayasan)" value="'+esc(x.n||'')+'" oninput="LGX['+i+'].n=this.value"></div></div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn o" style="margin:0">'+ic('upload',14)+' '+(x.u?'Ganti gambar':'Unggah gambar')+'<input type=file hidden accept="image/*" onchange="lgxUp(this,'+i+')"></label>'+(x.u?'<button class="d sm" style="margin:0" onclick="lgxDel('+i+')">Hapus</button>':'')+'</div>'
+    +'<label class=ck><input type=checkbox'+(x.kp?' checked':'')+' onchange="LGX['+i+'].kp=this.checked?1:0"> Kartu Siswa &amp; Kartu SDM / Pengawas</label><label class=ck><input type=checkbox'+(x.kk?' checked':'')+' onchange="LGX['+i+'].kk=this.checked?1:0"> Kop dokumen &amp; laporan</label><label class=ck><input type=checkbox'+(x.ap?' checked':'')+' onchange="LGX['+i+'].ap=this.checked?1:0"> Header aplikasi</label></div>'}).join('')+'</div>'
+  +'<div><button onclick="lgxSave()">'+ic('save',15)+' Simpan Logo Tambahan</button></div>'}
+function lgxUp(inp,i){var f=inp.files&&inp.files[0];inp.value='';if(!f)return;toast('Mengunggah logo...');upl(f,'logo').then(function(u){LGX[i].u=u;var b=$('#lgxbox');if(b)b.innerHTML=lgxHTML();toast('Logo terunggah. Klik Simpan Logo Tambahan.')}).catch(function(e){alert(e)})}
+function lgxDel(i){LGX[i]={u:'',n:'',kp:1,kk:1,ap:0};var b=$('#lgxbox');if(b)b.innerHTML=lgxHTML()}
+function lgxSave(){api('saveLogoX',U.nik,PW,LGX.filter(function(x){return x.u})).then(function(L){sc.lgx=L;toast('Logo tambahan tersimpan');var b=$('#lgxbox');if(b){LGX=L.map(function(x){return Object.assign({},x)});while(LGX.length<3)LGX.push({u:'',n:'',kp:1,kk:1,ap:0});b.innerHTML=lgxHTML()}}).catch(function(e){alert(e)})}
+var _lxTaBox=taBox;taBox=function(){return _lxTaBox()+lgxBox()};
+/* ---------- Jurnal Mengajar: hapus tautan Spreadsheet ganda di kiri bawah kartu ---------- */
+var _lxJmCard=jmCard;jmCard=function(A){return _lxJmCard.apply(this,arguments).replace(/(<div class=jmf data-h=1>)<a class=lnk href="[^"]*"[^>]*>Spreadsheet<\/a>/,'$1')};
+
+</script>
+<script>
+/* ===== 5 tema tampilan ujian baru: Batik Nusantara, Sakura Jepang, Aurora Kutub, Senja Pantai, Blueprint Sains ===== */
+(function(){var st=document.createElement('style');st.id='xtnew';st.textContent=[
+/* Batik Nusantara: sogan cokelat tua, kertas krem, motif kawung emas */
+"html[data-xt=btk],.xtp[data-t=btk]{--xb:linear-gradient(135deg,#3b1f0e,#5c3317 55%,#2e1809);--xc:rgba(252,243,222,.97);--xa:#a8661b;--xo:#fff8e6;--xs:#8c4a12;--xst:#fff4d6;--xt:#3b1f0e;--xbd:#c8923a;--xbt:#fff4d6;--xr:12px;--xr2:16px;--xf:Georgia,'Times New Roman',serif;--xg:0 3px 0 #6e3b0c;--xy:#c9561b;--xpg:#8c4a12;--xjs:#2f7d6b;--xes:#9b3d5a;--xw:#d99a1e;--xcr:#b3261e;--xqt:#fff4d6;",
+"  --xd:radial-gradient(circle at 25% 25%,transparent 0 8px,rgba(222,172,84,.3) 8px 10px,transparent 10px),radial-gradient(circle at 75% 75%,transparent 0 8px,rgba(222,172,84,.3) 8px 10px,transparent 10px),radial-gradient(circle at 75% 25%,rgba(222,172,84,.2) 0 3.5px,transparent 4.5px),radial-gradient(circle at 25% 75%,rgba(222,172,84,.2) 0 3.5px,transparent 4.5px);--xds:56px 56px,56px 56px,56px 56px,56px 56px}",
+/* Sakura Jepang: merah muda lembut dengan kelopak */
+"html[data-xt=sak],.xtp[data-t=sak]{--xb:linear-gradient(160deg,#fff1f6,#ffd6e6 60%,#ffeef7);--xc:rgba(255,255,255,.95);--xa:#e0558a;--xo:#fff2f7;--xs:#e0558a;--xst:#fff;--xt:#4a1f33;--xbd:#f7a8c4;--xbt:#fff;--xr:20px;--xr2:26px;--xf:'Trebuchet MS','Segoe UI',sans-serif;--xg:0 3px 0 #b73a68;--xy:#e0558a;--xpg:#e0558a;--xjs:#7a5bd6;--xes:#2aa198;--xw:#f2a33a;--xcr:#d62f4f;--xqt:#fff;",
+"  --xd:radial-gradient(ellipse 7px 4px at 20px 30px,rgba(255,150,190,.55),transparent),radial-gradient(ellipse 6px 3.5px at 80px 90px,rgba(255,170,205,.5),transparent),radial-gradient(ellipse 8px 4.5px at 130px 40px,rgba(255,140,180,.45),transparent),radial-gradient(ellipse 5px 3px at 50px 130px,rgba(255,160,200,.5),transparent);--xds:160px 160px,160px 160px,160px 160px,160px 160px}",
+/* Aurora Kutub: malam kutub dengan pita cahaya hijau-ungu */
+"html[data-xt=aur],.xtp[data-t=aur]{--xb:linear-gradient(180deg,#041425,#08283f 60%,#06202e);--xc:rgba(6,36,58,.9);--xa:#5eead4;--xo:rgba(94,234,212,.08);--xs:#5eead4;--xst:#06202e;--xt:#e6fbff;--xbd:#3fb8c4;--xbt:#06202e;--xr:18px;--xr2:22px;--xf:'Segoe UI','Trebuchet MS',sans-serif;--xg:0 0 16px rgba(94,234,212,.55);--xy:#a78bfa;--xpg:#5eead4;--xjs:#c4b5fd;--xes:#86efac;--xw:#fde68a;--xcr:#fb7185;--xqt:#06202e;",
+"  --xd:radial-gradient(ellipse 80% 30% at 20% 8%,rgba(94,234,212,.35),transparent 70%),radial-gradient(ellipse 70% 28% at 75% 14%,rgba(167,139,250,.3),transparent 70%),radial-gradient(1.4px 1.4px at 30px 40px,#fff,transparent),radial-gradient(1px 1px at 110px 90px,#d7f3ff,transparent),radial-gradient(1.2px 1.2px at 70px 150px,#fff,transparent);--xds:100% 100%,100% 100%,180px 180px,180px 180px,180px 180px}",
+/* Senja Pantai: langit ungu ke oranye, matahari terbenam */
+"html[data-xt=snt],.xtp[data-t=snt]{--xb:linear-gradient(180deg,#2b1055 0%,#7a2f7a 38%,#e8647c 68%,#ffb26b 100%);--xc:rgba(40,14,50,.82);--xa:#ffd166;--xo:rgba(255,255,255,.1);--xs:#ffd166;--xst:#3a1030;--xt:#fff4ea;--xbd:#ffb88c;--xbt:#3a1030;--xr:16px;--xr2:20px;--xf:'Trebuchet MS',sans-serif;--xg:0 0 18px rgba(255,209,102,.55);--xy:#ffd166;--xpg:#ffb88c;--xjs:#9be7ff;--xes:#ffa8d1;--xw:#ffd166;--xcr:#ff6b81;--xqt:#3a1030;",
+"  --xd:radial-gradient(circle at 50% 100%,rgba(255,225,140,.55) 0,rgba(255,225,140,0) 38%),repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 22px,rgba(255,255,255,.05) 22px 24px);--xds:100% 100%,100% 100%}",
+/* Blueprint Sains: kertas cetak biru dengan kisi */
+"html[data-xt=lab],.xtp[data-t=lab]{--xb:linear-gradient(180deg,#0a3a86,#0d2f6b);--xc:rgba(8,32,84,.9);--xa:#ffe082;--xo:rgba(255,255,255,.07);--xs:#ffe082;--xst:#0a2a5e;--xt:#e8f1ff;--xbd:#8fb8ff;--xbt:#0a2a5e;--xr:4px;--xr2:6px;--xf:Consolas,'Courier New',monospace;--xg:0 0 0 2px rgba(143,184,255,.35);--xy:#ffe082;--xpg:#ffe082;--xjs:#80deea;--xes:#ffab91;--xw:#ffe082;--xcr:#ff8a80;--xqt:#0a2a5e;",
+"  --xd:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);--xds:80px 80px,80px 80px,16px 16px,16px 16px}"
+].join('\n');document.head.appendChild(st)})();
+XT.push(['btk','Batik Nusantara','Cokelat sogan, kertas krem, dan motif kawung emas khas Indonesia.'],['sak','Sakura Jepang','Merah muda lembut dengan kelopak sakura yang tenang.'],['aur','Aurora Kutub','Malam kutub dengan pita cahaya aurora hijau-ungu.'],['snt','Senja Pantai','Langit senja ungu ke oranye dengan matahari terbenam.'],['lab','Blueprint Sains','Kertas cetak biru laboratorium dengan kisi dan huruf teknis.']);
 
 </script>
 </body></html>
