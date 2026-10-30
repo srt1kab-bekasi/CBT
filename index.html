@@ -885,7 +885,7 @@ function refL() { if (LC.p) return LC.p; var v = LC.v, p = api('listAsesmen', U.
 function getL() { var age = Date.now() - LC.t; if (LC.d && age < 300000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
 function refU(tp) { var c = UC[tp] = UC[tp] || { d: null, t: 0, p: null }; if (c.p) return c.p; var v = LC.v, p = api('listUsers', U.nik, PW, tp, tp == 'Siswa' ? (window.UDB || '') : '').then(function (d) { if (v === LC.v) { c.d = d; c.t = Date.now(); } c.p = null; return d; }, function (e) { c.p = null; throw e; }); c.p = p; return p; }
 function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 300000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
-var RDONLY = /^(monitor|histPesan|distAll|report|docGet|list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|jurnalList|piketList|piketRef|dbSiswaList|jurnalProfil|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
+var RDONLY = /^(monitor|histPesan|distAll|report|docGet|list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|jurnalList|piketList|piketRef|jwList|waliInfo|dbSiswaList|jurnalProfil|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
 /* ===== Penghubung ke server =====
    Jika halaman ini dibuka DI DALAM Apps Script (link script.google.com) -> memakai google.script.run bawaan.
    Jika halaman ini DIHOSTING DI LUAR Apps Script (GitHub Pages / Netlify / dll.) -> memanggil Web App Apps Script lewat fetch.
@@ -1126,7 +1126,7 @@ function mgmt() {
             switch (_a.label) {
                 case 0:
                     stopM();
-                    if (!U.sa && !/^(as|lap|pt|ag|jm|jp)$/.test(t || 'as')) t = 'as'; // jm (Jurnal Mengajar) harus bisa dibuka guru biasa
+                    if (!U.sa && !/^(as|lap|pt|ag|jm|jp|jw)$/.test(t || 'as')) t = 'as'; // jm (Jurnal Mengajar) harus bisa dibuka guru biasa
                     scr('mgmt');
                     return [4, /^(as|lap|pt)$/.test(t || 'as') ? getL() : Promise.resolve(LC.d || window.L || [])];
                 case 1:
@@ -1138,7 +1138,7 @@ function mgmt() {
                     LVL = _a.sent();
                     _a.label = 3;
                 case 3:
-                    tabs = [['jm', 'Jurnal Mengajar', 'book'], ['jp', 'Jurnal Piket', 'shield'], ['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Jurnal Pengawas', 'clock']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'award']] : []).concat(U.sa ? [['Guru', 'Data SDM', 'teacher'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Siswa', 'idcard'], ['kp', 'Cetak Kartu Guru', 'shield']] : []);
+                    tabs = [['jm', 'Jurnal Mengajar', 'book'], ['jp', 'Jurnal Piket', 'shield'], ['jw', 'Jurnal Wali Kelas', 'users'], ['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Jurnal Pengawas', 'clock']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'award']] : []).concat(U.sa ? [['Guru', 'Data SDM', 'teacher'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Siswa', 'idcard'], ['kp', 'Cetak Kartu Guru', 'shield']] : []);
                     tabs = tabOrd(tabs);
                     c = '';
                     if (t == 'as')
@@ -1177,6 +1177,10 @@ function mgmt() {
                     if (t == 'jp') {
                         c = "<div id=jpw class=box>Memuat...</div>";
                         setTimeout(jpInit, 0);
+                    }
+                    if (t == 'jw') {
+                        c = "<div id=jww class=box>Memuat...</div>";
+                        setTimeout(jwInit, 0);
                     }
                     if (t == 'ag') {
                         AG.mode = 'list';
@@ -5406,7 +5410,7 @@ srchDo=function(e){_sd1.apply(this,arguments);if(e&&e.dataset&&e.dataset.sel==='
 </script><script>
 /* ===== Navigasi grup tab + sub tab (popup hamburger / sidebar mobile) & Atur Tab ===== */
 (function(){var X={menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/>',chev:'<path d="M6 9l6 6 6-6"/>',chevl:'<path d="M15 6l-6 6 6 6"/>'};Object.keys(X).forEach(function(k){if(!IC[k])IC[k]=X[k]})})();
-var CT='as',TS=null,NGD=[{k:'adm',l:'Administrasi Guru',i:'book',s:['jm','jp']},{k:'cbt',l:'Asesmen CBT',i:'list',s:['as','lap','pt','ag','jd','lpp']},{k:'dbs',l:'Database Siswa',i:'user',s:['Siswa','kt']},{k:'sdm',l:'Database SDM',i:'teacher',s:['Guru','kp']}];
+var CT='as',TS=null,NGD=[{k:'adm',l:'Administrasi Guru',i:'book',s:['jm','jp','jw']},{k:'cbt',l:'Asesmen CBT',i:'list',s:['as','lap','pt','ag','jd','lpp']},{k:'dbs',l:'Database Siswa',i:'user',s:['Siswa','kt']},{k:'sdm',l:'Database SDM',i:'teacher',s:['Guru','kp']}];
 function navCfg(){var o=null;try{o=JSON.parse((sc&&sc.tab)||'null')}catch(e){}return o&&!Array.isArray(o)&&o.g&&o.o?o:{o:[],g:{}}}
 function navGroups(tabs){
   var c=navCfg(),m={},seen={},ord=c.o.filter(function(k){return NGD.some(function(d){return d.k==k})}),sub={};
@@ -5782,6 +5786,7 @@ function appBack(){
     if(window.JM&&JM.mode=='form'){jmBack();return}
     if(window.AG&&AG.mode=='form'){agBack();return}
     if(window.JP&&JP.mode!='list'&&CT=='jp'){jpBack();return}
+    if(window.JW&&JW.mode!='list'&&CT=='jw'){jwBack();return}
     if(CT&&CT!='jm'){mgmt('jm');return}
     try{toast('Ini halaman awal. Gunakan tombol Keluar untuk keluar dari aplikasi.')}catch(e){}return}
   if(s=='exam'||s=='fin'){if(window.PV){PV=0;mgmt(CT||'as')}else if(s=='fin')login('s');return}
@@ -6844,6 +6849,121 @@ function stKey(e){if(e.key!='Tab')return;var c=stCell();if(!c)return;e.preventDe
   if(nx){var r=document.createRange();r.selectNodeContents(nx);r.collapse(true);var g=getSelection();g.removeAllRanges();g.addRange(r)}}
 /* tombol alat tabel pada toolbar essay */
 var _stBar2=stBar;stBar=function(k){var h=_stBar2(k);if(k!='es')return h;return h.replace('</div><div class=stpn','<button type=button class="o stto" onmousedown="event.preventDefault();stTO(\'row\')" title="Tambah baris">+ Baris</button><button type=button class="o stto" onmousedown="event.preventDefault();stTO(\'col\')" title="Tambah kolom">+ Kolom</button><button type=button class="o stto" onmousedown="event.preventDefault();stTO(\'delrow\')" title="Hapus baris">\u2212 Baris</button><button type=button class="o stto" onmousedown="event.preventDefault();stTO(\'delcol\')" title="Hapus kolom">\u2212 Kolom</button><button type=button class="o stto" onmousedown="event.preventDefault();stTO(\'deltable\')" title="Hapus tabel">\u2715 Tabel</button></div><div class=stpn')};
+
+</script>
+<script>
+/* ===== Perbaikan ekspor Word laporan: SVG tanpa atribut berkutip (mis. ikon) membuat ekspor gagal diam-diam ===== */
+function svg2png(svg){return new Promise(function(res){var m=/width="(\d+)" height="(\d+)"/.exec(svg);if(!m)return res('');
+  var w=+m[1],h=+m[2],im=new Image();im.onload=function(){try{var c=document.createElement('canvas');c.width=w*2;c.height=h*2;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/png'))}catch(e){res('')}};im.onerror=function(){res('')};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)})}
+function inl2png(html,cw){var ps=(html||'').match(/<svg[\s\S]*?<\/svg>/g)||[];cw=cw||360;
+  return Promise.all(ps.map(function(s){return svg2png(s).catch(function(){return ''})})).then(function(u){ps.forEach(function(p,i){var m=/width="(\d+)" height="(\d+)"/.exec(p);html=html.split(p).join(u[i]&&m?'<img src="'+u[i]+'" width='+cw+' height='+Math.round(cw*m[2]/m[1])+'>':'')});return html})}
+function lpOut(P,t,fn){
+  if(t!='doc')return xdOut(P,t,fn);
+  toast('Menyiapkan grafik untuk Word...');
+  return Promise.all(P.blocks.map(function(b){return b.html!=null?inl2png(b.html,b.cw||360).then(function(h){b.html=h}).catch(function(){}):0})).then(function(){xdOut(P,t,fn)}).catch(function(e){alert('Gagal membuat dokumen Word: '+e)})}
+
+</script>
+<script>
+/* ===== Administrasi Guru > Jurnal Wali Kelas =====
+   1 jurnal = 1 rombel pada 1 bulan; catatan tiap siswa (Pencapaian Baru, Catatan Baik Berkala, Catatan Evaluasi, Tindak Lanjut) ditambah satu per satu.
+   Tirai: Tahun Ajaran > Kelas > Rombel (wali kelas). Ekspor: Word, PDF, JPG, Excel, Print. Spreadsheet sumber: 1 file per rombel per tahun ajaran. */
+(function(){var st=document.createElement('style');st.id='jwcss';st.textContent=[
+'.jwp{height:8px;border-radius:6px;background:#eadfe1;overflow:hidden;margin:6px 0 3px}.jwp i{display:block;height:100%;background:linear-gradient(90deg,#2e7d32,#66bb6a)}',
+'.jwch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.jwch span{border-radius:20px;padding:2px 10px;font-size:11.5px;font-weight:700;border:1px solid transparent}',
+'.jwch .a{background:#e6f4ea;color:#1e7a34}.jwch .b{background:#e3f0ff;color:#1a56b0}.jwch .c{background:#fff3cd;color:#8a6200}.jwch .d{background:#efe6ff;color:#5b3bb0}',
+'.jwr{border:1px solid rgba(var(--mr),.2);border-left:5px solid var(--m2);border-radius:14px;margin:10px 0;background:#fff;overflow:hidden}',
+'.jwr>summary{list-style:none;cursor:pointer;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 12px;font-weight:700;color:var(--m)}.jwr>summary::-webkit-details-marker{display:none}.jwr>summary:before{content:"\\25B8";font-size:12px;transition:transform .15s}.jwr[open]>summary:before{transform:rotate(90deg)}',
+'.jwr .jwb{padding:0 12px 12px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.jwr .jwb label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700}.jwr .jwb textarea{margin:0;width:100%;min-height:78px;font-weight:400;font-size:13.5px}',
+'.jwr .jwb label.a{color:#1e7a34}.jwr .jwb label.b{color:#1a56b0}.jwr .jwb label.c{color:#8a6200}.jwr .jwb label.d{color:#5b3bb0}',
+'.jwr .sp{flex:1}.jwr select{margin:0;min-width:180px;max-width:100%}',
+'.jwt td,.jwt th{vertical-align:top;white-space:pre-wrap;min-width:110px}.jwt td:first-child{min-width:150px;font-weight:700}',
+'@media(max-width:700px){.jwr .jwb{grid-template-columns:1fr}}'].join('\n');document.head.appendChild(st)})();
+var JW={list:[],ta:'',tas:[],info:null,rb:[],D:null,mode:'list',q:'',grp:[]};
+PTT.jw='JURNAL WALI KELAS';
+function jwMon(b){var m=String(b||'').split('-');return m.length==2?BLN[+m[1]-1]+' '+m[0]:b}
+function jwNow(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)}
+function jwFind(id){return JW.list.filter(function(x){return x.id==id})[0]}
+function jwRomb(D){return JW.rb.filter(function(r){return r.j==D.j&&r.k==D.k&&r.v==D.v})[0]}
+function jwWaliOf(D){var r=(JW.info&&JW.info.rb||[]).filter(function(x){return x.j==D.j&&x.k==D.k&&x.v==D.v})[0];return r&&r.wali||''}
+function jwCnt(A){var c={p:0,b:0,e:0,t:0};(A.rows||[]).forEach(function(r){if(r.p)c.p++;if(r.b)c.b++;if(r.e)c.e++;if(r.t)c.t++});return c}
+function jwInit(){JW.mode='list';JW.D=null;
+  Promise.all([api('jwList',U.nik,PW,JW.ta||''),api('waliInfo',U.nik,PW),api('rombelAll',U.nik,PW),ttdLoad([U.nik]).catch(function(){})]).then(function(r){var x=r[0]||{};JW.list=x.list||[];JW.ta=x.ta||sc.ta||'';JW.tas=x.tas||[];JW.info=r[1]||{};JW.rb=(r[2]||{}).list||[];jwView()})
+   .catch(function(e){var w=$('#jww');if(w)w.textContent='Gagal memuat: '+e})}
+function jwView(){var w=$('#jww');if(!w)return;var f=document.querySelector('.jmfab');if(f)f.remove();if(JW.mode=='form')return jwFormView(w);jwListView(w)}
+function jwBack(){JW.mode='list';JW.D=null;jwView();window.scrollTo(0,0)}
+function jwBtns(tpl){return [['jpg','JPG'],['pdf','PDF'],['doc','Word'],['xls','Excel'],['print','Print']].map(function(x){return '<button class="o sm" onclick="'+tpl.replace('@',"'"+x[0]+"'")+'">'+x[1]+'</button>'}).join(' ')}
+function jwListView(w){var tas=JW.tas.length?JW.tas:[JW.ta],can=JW.info&&JW.info.can;
+  w.innerHTML=(can?'':'<div class=jpdup style="background:var(--mt);border-color:rgba(var(--mr),.2)">'+ic('users',14)+' Jurnal wali kelas diisi oleh <b>guru yang ditetapkan sebagai wali kelas</b> (Data SDM &rsaquo; Wali Kelas), Staf Kurikulum, Kepala Sekolah, dan Super Admin. Anda belum menjadi wali kelas rombel mana pun.</div>')
+   +'<div class=jmt><div class=srb style="flex:1;min-width:200px">'+ic('search',16)+'<input class=srq placeholder="Cari rombel, wali kelas, nama siswa, atau catatan..." value="'+esc(JW.q)+'" oninput="JW.q=this.value;jwDraw()"></div><select title="Tahun ajaran" onchange="jwTA(this.value)">'+tas.map(function(t){return jpOpt(t,'Tahun Ajaran '+t,JW.ta)}).join('')+'</select></div><div id=jwl></div>';
+  jwDraw();if(can){var b=document.createElement('button');b.className='fab jmfab';b.innerHTML=ic('plus',20)+' Buat Jurnal Baru';b.onclick=jwNew;app.appendChild(b)}}
+function jwTA(t){JW.ta=t;var w=$('#jwl');if(w)w.innerHTML='<div class=box>Memuat...</div>';api('jwList',U.nik,PW,t).then(function(x){JW.list=x.list||[];JW.ta=x.ta||t;JW.tas=x.tas||JW.tas;jwView()}).catch(function(e){alert(e)})}
+function jwFiltered(){var q=JW.q.toLowerCase().trim();return JW.list.filter(function(A){return !q||[A.j,A.k,A.v,A.wali,jwMon(A.bln),(A.rows||[]).map(function(r){return [r.n,r.p,r.b,r.e,r.t].join(' ')}).join(' ')].join(' ').toLowerCase().indexOf(q)>=0})}
+function jwDraw(){var L=jwFiltered(),el=$('#jwl');if(!el)return;JW.grp=[];
+  if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">'+(JW.q?'Tidak ada jurnal yang cocok dengan pencarian.':'Belum ada jurnal wali kelas pada tahun ajaran '+esc(JW.ta)+'.'+(JW.info&&JW.info.can?' Tekan tombol <b>Buat Jurnal Baru</b> di pojok kanan bawah.':''))+'</div>';return}
+  var J=jdKeys(),kl=jmGroup(L,function(A){return A.j+'|'+A.k}).sort(function(a,b){var x=a.k.split('|'),y=b.k.split('|');return (J.indexOf(x[0])-J.indexOf(y[0]))||jdNat(x[1],y[1])});
+  var inner=kl.map(function(g,n){var p=g.k.split('|'),rb=jmGroup(g.l,function(A){return A.v}).sort(function(a,b){return jdNat(a.k,b.k)});
+    return trai(2,'users',esc(p[0])+' \u203A Kelas '+esc(p[1]),'',rb.map(function(r,i){var a=r.l.slice().sort(function(x,y){return x.bln<y.bln?-1:1}),A0=a[0],gi=JW.grp.push({l:p[0]+' '+(r.k||'Kelas '+p[1])+' \u2022 TA '+JW.ta,fn:'Jurnal Wali Kelas '+p[0]+' '+(r.k||p[1])+' '+String(JW.ta).replace(/\//g,'-'),a:a})-1;
+      var body='<div class=jmx data-h=1><b>Unduh rekap rombel ini (semua bulan):</b> '+jwBtns('jwOutM('+gi+',@)')+(A0.ss?' <a class=lnk href="'+esc(A0.ss)+'" target=_blank rel=noopener>'+ic('sheet',14)+' Spreadsheet sumber rombel</a>':'')+'</div>'+r.l.map(jwCard).join('');
+      return trai(3,'user',esc(r.k||'Tanpa rombel')+(A0.wali?' <small style="font-weight:500;opacity:.85">\u2022 Wali: '+esc(A0.wali)+'</small>':''),'',body,r.l.length+' bulan',n==0&&i==0)}).join(''),g.l.length,n==0)}).join('');
+  el.innerHTML=trai(1,'calendar','Tahun Ajaran '+esc(JW.ta),'',inner,L.length+' jurnal',true)}
+function jwCard(A){var c=jwCnt(A),n=(A.rows||[]).length,pc=A.total?Math.min(100,Math.round(n*100/A.total)):100,own=true;
+  return '<div class="jmc jwc"><div class=jmh><span class=jpb>'+esc(jwMon(A.bln))+'</span><b>'+esc(A.v||('Kelas '+A.k))+'</b><span class=jmr>'+ic('user',12)+' Wali: '+esc(A.wali||'-')+'</span></div>'
+   +'<div style="font-size:12.5px;font-weight:700;color:var(--m)">'+n+' dari '+(A.total||n)+' siswa tercatat</div><div class=jwp><i style="width:'+pc+'%"></i></div>'
+   +'<div class=jwch><span class=a>Pencapaian '+c.p+'</span><span class=b>Baik berkala '+c.b+'</span><span class=c>Evaluasi '+c.e+'</span><span class=d>Tindak lanjut '+c.t+'</span></div>'
+   +'<details><summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--m)">Lihat catatan per siswa</summary><div class=sc style="margin-top:6px"><table class="arst jwt"><thead><tr><th>Nama Siswa</th><th>Pencapaian Baru</th><th>Catatan Baik Berkala</th><th>Catatan Evaluasi</th><th>Tindak Lanjut</th></tr></thead><tbody>'
+   +(A.rows||[]).map(function(r){return '<tr><td>'+esc(r.n)+'</td><td>'+esc(r.p||'-')+'</td><td>'+esc(r.b||'-')+'</td><td>'+esc(r.e||'-')+'</td><td>'+esc(r.t||'-')+'</td></tr>'}).join('')+'</tbody></table></div></details>'
+   +'<div class=jmf data-h=1><button class=sm onclick="jwEdit(\''+A.id+'\',1)">'+ic('plus',13)+' Tambah Siswa</button><button class="o sm" onclick="jwEdit(\''+A.id+'\')">Ubah</button><button class="d sm" onclick="jwDel(\''+A.id+'\')">Hapus</button><small style="color:#7b6a6d">Unduh:</small> '+jwBtns("jwOut('"+A.id+"',@)")+'</div></div>'}
+/* ---------- form ---------- */
+function jwNew(){var rb=JW.info.rb||[],r=rb[0]||{};JW.D={id:'',ver:0,bln:jwNow(),j:r.j||'',k:r.k||'',v:r.v||'',ta:sc.ta||'',smt:String(sc.smt||'1'),total:r.n||0,rows:[],ttdOn:false};jwAddRow(true);JW.mode='form';jwView();window.scrollTo(0,0)}
+function jwEdit(id,add){var A=jwFind(id);if(!A)return;JW.D=JSON.parse(JSON.stringify(A));JW.D.rows.forEach(function(r){r._s=1});if(add)jwAddRow(true);JW.mode='form';jwView();window.scrollTo(0,add?document.body.scrollHeight:0)}
+function jwDel(id){var A=jwFind(id);if(!A)return;ask('Hapus jurnal wali kelas '+(A.v||A.k)+' bulan '+jwMon(A.bln)+'?','Ya, Hapus',function(){api('jwDel',U.nik,PW,id).then(function(){JW.list=JW.list.filter(function(x){return x.id!=id});jwView();toast('Jurnal dihapus')}).catch(function(e){alert(e)})},true)}
+function jwAddRow(noView){JW.D.rows.push({i:'',n:'',p:'',b:'',e:'',t:'',_o:1,_n:1});if(!noView){jwView();var c=document.querySelectorAll('.jwr');if(c.length)c[c.length-1].scrollIntoView({block:'center',behavior:'smooth'})}}
+function jwSet(f,v){if(JW.D)JW.D[f]=v}
+function jwSel(f,v){var D=JW.D;if(D[f]==v)return;D[f]=v;if(f=='rb'){}jwView()}
+function jwRb(v){var p=v.split('|'),D=JW.D;D.j=p[0];D.k=p[1];D.v=p[2];var r=jwRomb(D);D.total=r?r.s.length:0;D.rows=[];jwAddRow(true);jwView()}
+function jwR(i,f,v){if(JW.D&&JW.D.rows[i])JW.D.rows[i][f]=v}
+function jwStu(i,id){var D=JW.D,R=jwRomb(D),s=R&&R.s.filter(function(z){return z.i==id})[0],r=D.rows[i];r.i=s?s.i:'';r.n=s?s.n:'';jwView()}
+function jwRm(i){JW.D.rows.splice(i,1);jwView()}
+function jwTog(i,el){if(JW.D&&JW.D.rows[i])JW.D.rows[i]._o=el.open?1:0}
+function jwDup(){var D=JW.D;if(D.id)return '';var A=JW.list.filter(function(x){return x.bln==D.bln&&x.j==D.j&&x.k==D.k&&x.v==D.v})[0];return A?'<div class=jpdup><b>Jurnal rombel ini untuk bulan '+esc(jwMon(D.bln))+' sudah ada.</b> Buka jurnal tersebut untuk menambah atau mengubah catatan siswa. <button class=sm onclick="jwEdit(\''+A.id+'\',1)">Buka &amp; Tambah Siswa</button></div>':''}
+function jwFormView(w){var D=JW.D,y=window.scrollY,rb=JW.info.rb||[],lock=D.id&&!U.su,R=jwRomb(D),used={};D.rows.forEach(function(r){if(r.i)used[r.i]=1});
+  if(!rb.some(function(r){return r.j==D.j&&r.k==D.k&&r.v==D.v})&&rb[0]){D.j=rb[0].j;D.k=rb[0].k;D.v=rb[0].v}
+  var wl=jwWaliOf(D)||D.wali||(D.id?'':U.nama),F=function(l,x,k){return '<label class="jmq '+(k||'')+'"><span>'+l+'</span>'+x+'</label>'},n=D.rows.filter(function(r){return r.n||r.i}).length;
+  w.innerHTML='<div class=jmf style="justify-content:space-between"><h3 style="margin:0">'+ic('users',18)+' '+(D.id?'Ubah':'Buat')+' Jurnal Wali Kelas</h3><button class=o onclick="jwBack()">'+ic('list',15)+' Kembali ke Daftar</button></div>'
+   +'<small>Pilih bulan dan rombel, lalu tambahkan siswa satu per satu beserta catatannya. Jurnal bisa disimpan sekarang dan dilengkapi atau ditambah siswa baru kapan saja.</small>'+jwDup()
+   +'<div class=jmg>'+F('Bulan','<input type=month value="'+esc(D.bln)+'"'+(lock?' disabled title="Hanya Super Admin yang dapat mengubah bulan"':'')+' onchange="jwSet(\'bln\',this.value);jwView()">')
+   +F('Rombel','<select'+(lock?' disabled':'')+' onchange="jwRb(this.value)">'+rb.map(function(r){var key=[r.j,r.k,r.v].join('|');return jpOpt(key,r.j+' \u203A Kelas '+r.k+(r.v?' \u203A '+r.v:''),[D.j,D.k,D.v].join('|'))}).join('')+'</select>')
+   +F('Wali Kelas','<input value="'+esc(wl)+'" readonly>')+F('Tahun Ajaran / Semester','<input value="'+esc((D.ta||sc.ta||'')+' \u2022 Semester '+(String(D.smt)=='2'?'2 (Genap)':'1 (Ganjil)'))+'" readonly>')
+   +(lock?'<small class=jmwf style="color:#b3261e">Bulan dan rombel yang sudah tersimpan tidak dapat diubah (hanya Super Admin).</small>':'')+'</div>'
+   +'<div class=jpsec>Catatan Siswa <span style="font-weight:400;font-size:12px;color:#7b6a6d">\u2022 '+n+' dari '+(R?R.s.length:D.total||'?')+' siswa tercatat</span></div>'
+   +D.rows.map(function(r,i){var inR=R&&R.s.filter(function(s){return !used[s.i]||s.i==r.i});
+     return '<details class=jwr'+(r._o?' open':'')+' ontoggle="jwTog('+i+',this)"><summary><span>'+(r.n?esc(r.n):'Siswa baru')+'</span><span class=sp></span>'
+      +(r.p?'<span class="jph">Pencapaian</span>':'')+(r.b?'<span class="jph" style="background:#e3f0ff;color:#1a56b0">Baik berkala</span>':'')+(r.e?'<span class="jph t">Evaluasi</span>':'')+(r.t?'<span class="jph" style="background:#efe6ff;color:#5b3bb0">Tindak lanjut</span>':'')+'</summary>'
+      +'<div style="padding:0 12px 8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:12px">Nama Siswa</b>'+(R?'<select onchange="jwStu('+i+',this.value)"><option value="">\u2014 pilih siswa \u2014</option>'+inR.map(function(s){return jpOpt(s.i,s.n+' ('+s.i+')',r.i)}).join('')+'</select>':'<input placeholder="Nama siswa" value="'+esc(r.n)+'" onchange="jwR('+i+',\'n\',this.value.trim());jwView()" style="margin:0;flex:1;min-width:180px">')+'<button type=button class="d sm" style="margin:0" onclick="jwRm('+i+')">Hapus</button></div>'
+      +'<div class=jwb><label class=a>Pencapaian Baru<textarea oninput="jwR('+i+',\'p\',this.value)" placeholder="Prestasi / kemajuan baru bulan ini">'+esc(r.p)+'</textarea></label><label class=b>Catatan Baik Berkala<textarea oninput="jwR('+i+',\'b\',this.value)" placeholder="Hal baik yang konsisten ditunjukkan">'+esc(r.b)+'</textarea></label>'
+      +'<label class=c>Catatan Evaluasi<textarea oninput="jwR('+i+',\'e\',this.value)" placeholder="Hal yang perlu diperbaiki">'+esc(r.e)+'</textarea></label><label class=d>Tindak Lanjut<textarea oninput="jwR('+i+',\'t\',this.value)" placeholder="Rencana pembinaan / tindak lanjut">'+esc(r.t)+'</textarea></label></div></details>'}).join('')
+   +'<div style="margin:8px 0"><button class=o onclick="jwAddRow()">'+ic('plus',14)+' Tambah Siswa</button></div>'
+   +'<label class=ttdw style="margin-top:8px"><input type=checkbox'+(D.ttdOn?' checked':'')+' onchange="jwSet(\'ttdOn\',this.checked)"><span><b>Gunakan TTD Digital</b> wali kelas pada dokumen jurnal ini. Bila tidak dicentang, kolom tanda tangan dikosongkan.</span></label>'
+   +'<div style="margin:12px 0"><button onclick="jwSave()">'+ic('save',15)+' Simpan Jurnal</button> <button class=o onclick="jwBack()">Batal</button></div>';window.scrollTo(0,y)}
+function jwSave(){var D=JW.D;if(!D.bln)return alert('Pilih bulan.');if(!D.j||!D.k)return alert('Pilih rombel.');
+  var rows=D.rows.filter(function(r){return r.n||r.i||r.p||r.b||r.e||r.t});if(!rows.length)return alert('Tambahkan minimal satu siswa.');
+  for(var i=0;i<rows.length;i++){var r=rows[i];if(!r.n&&!r.i)return alert('Pilih nama siswa pada setiap kartu catatan, atau hapus kartu yang kosong.');if(!(r.p||r.b||r.e||r.t))return alert('Isi minimal satu catatan untuk '+(r.n||'siswa')+', atau hapus kartunya.')}
+  toast('Menyimpan jurnal wali kelas...');api('jwSave',U.nik,PW,{id:D.id,ver:D.ver,bln:D.bln,j:D.j,k:D.k,v:D.v,total:D.total,rows:rows.map(function(r){return {i:r.i,n:r.n,p:r.p,b:r.b,e:r.e,t:r.t}}),ttdOn:!!D.ttdOn})
+   .then(function(r){if(r&&r.err)alert('Jurnal tersimpan, tetapi Spreadsheet sumber belum berhasil diperbarui:\n'+r.err);return api('jwList',U.nik,PW,JW.ta)}).then(function(x){JW.list=x.list||[];JW.tas=x.tas||JW.tas;JW.mode='list';JW.D=null;toast('Jurnal wali kelas tersimpan');jwView();window.scrollTo(0,0)}).catch(function(e){alert(e)})}
+/* ---------- dokumen ---------- */
+function jwBlock(A,last){var n=(A.rows||[]).length,T1=function(x){return String(x||'').replace(/\n+/g,' / ')};
+  return {banner:'Jurnal Wali Kelas \u2022 '+A.j+' '+(A.v||'Kelas '+A.k)+' \u2022 '+jwMon(A.bln),sub:'Wali Kelas: '+(A.wali||'-')+' \u2022 Tahun Ajaran '+(A.ta||'')+' \u2022 Semester '+(String(A.smt)=='2'?'2 (Genap)':'1 (Ganjil)')+' \u2022 '+n+' dari '+(A.total||n)+' siswa tercatat',
+   xr:[['Rombel',A.j+' / '+A.k+(A.v?' / '+A.v:'')],['Wali Kelas',A.wali||'-'],['Bulan',jwMon(A.bln)],['Siswa Tercatat',n+' dari '+(A.total||n)]],sm:1,
+   cols:[{h:'No',w:4,a:'center'},{h:'Nama Siswa',w:15},{h:'Pencapaian Baru',w:20},{h:'Catatan Baik Berkala',w:20},{h:'Catatan Evaluasi',w:21},{h:'Tindak Lanjut',w:20}],
+   rows:(A.rows||[]).map(function(r,i){return [i+1,r.n,T1(r.p)||'-',T1(r.b)||'-',T1(r.e)||'-',T1(r.t)||'-']}),
+   sign:last?{role:'Wali Kelas',name:A.wali||'',img:A.ttdOn?(TTDC[A.nik]||''):'',dateTxt:'...........................,  '+jwMon(A.bln),id:''}:null}}
+function jwOutX(P,t,fn,niks){(niks.length?ttdLoad(niks).catch(function(){}):Promise.resolve()).then(function(){
+  P.blocks.forEach(function(b){if(b.sign&&b.__t){b.sign.img=TTDC[b.__t]||''}});xdOut(P,t,fn)})}
+function jwOut(id,t){var A=jwFind(id);if(!A)return;var b=jwBlock(A,1);if(!b.sign)return;
+  (A.ttdOn?ttdLoad([A.nik]).catch(function(){}):Promise.resolve()).then(function(){b.sign.img=A.ttdOn?(TTDC[A.nik]||''):'';xdOut({title:'JURNAL WALI KELAS',orient:'l',cap:[6,9],blocks:[b]},t,'Jurnal Wali Kelas '+(A.v||A.k)+' '+jwMon(A.bln))})}
+function jwOutM(gi,t){var G=JW.grp[gi];if(!G)return;var a=G.a,last=a[a.length-1];
+  (last.ttdOn?ttdLoad([last.nik]).catch(function(){}):Promise.resolve()).then(function(){var bl=a.map(function(A,i){var b=jwBlock(A,i==a.length-1);if(b.sign)b.sign.img=A.ttdOn?(TTDC[A.nik]||''):'';return b});
+    xdOut({title:'REKAP JURNAL WALI KELAS',orient:'l',cap:[6,9],blocks:bl},t,G.fn)})}
 
 </script>
 </body></html>
