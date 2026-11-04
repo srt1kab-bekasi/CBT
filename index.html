@@ -801,7 +801,18 @@ body.sbon .sb{transform:none}body.sbon .sbo{opacity:1;pointer-events:auto}
 .ssb{padding:7px 12px;font-size:12.5px}
 @media(max-width:860px){.jmc{padding:7px 9px}.jmh b{font-size:13px}.jmk b{font-size:13px}.lpc.tr>.lph{font-size:12.8px;padding:7px 9px}.tr1>.lph{font-size:13.5px}.jmj{font-size:10.5px}}
 </style>
-</head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
+<style id="ansfix">
+/* Kotak Jawaban Singkat & Essay Uraian: berbentuk kotak dengan sudut sedikit membulat.
+   Radius dikunci dalam piksel (bukan persen / pill) sehingga TIDAK ikut membulat saat kotak ditarik melebar atau memanjang. */
+html #app[data-s=exam] .jsin,html #app[data-s=exam] .sre,html #app[data-s=exam] textarea,
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .jsin,html[data-xt]:not([data-xt=def]) #app[data-s=exam] .sre,html[data-xt]:not([data-xt=def]) #app[data-s=exam] textarea{
+  border-radius:6px!important;border-width:2px!important;box-sizing:border-box;width:100%;max-width:100%;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.08)!important;transition:border-color .15s,box-shadow .15s}
+html #app[data-s=exam] .sre,html #app[data-s=exam] textarea{display:block;resize:vertical;overflow:auto;min-height:190px;line-height:1.6}
+html #app[data-s=exam] .jsin:focus,html #app[data-s=exam] .sre:focus,html #app[data-s=exam] textarea:focus,
+html[data-xt]:not([data-xt=def]) #app[data-s=exam] .jsin:focus,html[data-xt]:not([data-xt=def]) #app[data-s=exam] .sre:focus,html[data-xt]:not([data-xt=def]) #app[data-s=exam] textarea:focus{
+  outline:0;box-shadow:0 0 0 3px rgba(var(--mr),.18),inset 0 1px 3px rgba(0,0,0,.06)!important}
+</style></head><body><div id="app"><p style="text-align:center;padding:40px;color:#7a1022;font-family:sans-serif">Memuat aplikasi…</p></div>
 <script>
 /* ╔══════════════════════════════════════════════════════════════════════════════════════════╗
    ║  ATURAN KECEPATAN & KEAMANAN  —  WAJIB DIPATUHI SETIAP KALI MENAMBAH / MENGUBAH FITUR      ║
@@ -885,7 +896,7 @@ function refL() { if (LC.p) return LC.p; var v = LC.v, p = api('listAsesmen', U.
 function getL() { var age = Date.now() - LC.t; if (LC.d && age < 300000) { if (age > 20000) refL().catch(function () { }); return Promise.resolve(LC.d); } return refL().catch(function (e) { alert('Error: ' + e); throw e; }); }
 function refU(tp) { var c = UC[tp] = UC[tp] || { d: null, t: 0, p: null }; if (c.p) return c.p; var v = LC.v, p = api('listUsers', U.nik, PW, tp, tp == 'Siswa' ? (window.UDB || '') : '').then(function (d) { if (v === LC.v) { c.d = d; c.t = Date.now(); } c.p = null; return d; }, function (e) { c.p = null; throw e; }); c.p = p; return p; }
 function getU(tp) { var c = UC[tp], age = c ? Date.now() - c.t : 1e9; if (c && c.d && age < 300000) { if (age > 20000) refU(tp).catch(function () { }); return Promise.resolve(c.d); } return refU(tp).catch(function (e) { alert('Error: ' + e); throw e; }); }
-var RDONLY = /^(monitor|histPesan|distAll|report|docGet|list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|jurnalList|piketList|piketRef|jwList|waliInfo|dbSiswaList|jurnalProfil|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
+var RDONLY = /^(monitor|histPesan|distAll|report|docGet|list|live|get|cfg|foto|kop|login|siswaList|guruList|kartuList|kartuPList|kartuSrc|kartuPSrc|kartuDesGet|jadwalList|periodeLap|periodeBase|periodeRoom|rombelAll|agendaList|jurnalList|piketList|piketRef|jwList|waliInfo|dbSiswaList|jurnalProfil|agendaJadwal|soalInfo|soalView|gdAll|prepExport|ping|pengawasKunci|poll|cam|rtc|startExam|submit|verify|reset|clear)/;
 /* ===== Penghubung ke server =====
    Jika halaman ini dibuka DI DALAM Apps Script (link script.google.com) -> memakai google.script.run bawaan.
    Jika halaman ini DIHOSTING DI LUAR Apps Script (GitHub Pages / Netlify / dll.) -> memanggil Web App Apps Script lewat fetch.
@@ -1564,7 +1575,7 @@ function start() {
                     _a = X;
                     return [4, apiR('startExam', X.nis, X.pw, X.kode, room)];
                 case 2:
-                    _a.tk = _c.sent();
+                    var rr_ = _c.sent(); if (rr_ && typeof rr_ == 'object') { _a.tk = rr_.tk; RSM = rr_.rs || null; } else { _a.tk = rr_; RSM = null; }
                     return [3, 4];
                 case 3:
                     e_2 = _c.sent();
@@ -1592,10 +1603,12 @@ function start() {
                     }
                     ans = [];
                     seen = {};
+                    LASTRAW = '';
+                    if (RSM && RSM.a) { ans = RSM.a.map(function (v) { return v == null ? '' : String(v); }); X.soal.forEach(function (q, i) { if (ans[i]) seen[i] = 1; }); try { toast('Jawaban yang sudah Anda isi dilanjutkan'); } catch (x) { } }
                     cur = 0;
                     preloadMedia([Qs[0]], 1);
                     done = false;
-                    endT = Date.now() + X.durasi * 60000;
+                    endT = Date.now() + ((RSM && RSM.rem > 0) ? RSM.rem : X.durasi * 60000);
                     TOT = X.durasi * 60000;
                     mkTimer();
                     addEventListener('visibilitychange', vc);
@@ -1605,6 +1618,7 @@ function start() {
                     addEventListener('resize', rz);
                     document.addEventListener('fullscreenchange', fs);
                     lockX();
+                    NOLK = 0; SUPO = 0; idleStart();
                     document.addEventListener('contextmenu', nc);
                     document.addEventListener('copy', nc);
                     tm = setInterval(tick, 500);
@@ -1620,16 +1634,25 @@ function start() {
     });
 }
 var BLT=0,LMK=0,LMT=0,EXS=0,MW=0;
-var kb=function(e){var k=e.key;if(k=='Meta'||k=='OS'){LMK=Date.now();if(e.type=='keydown'&&Date.now()-LMT>4000){LMT=Date.now();try{toast('Tombol Windows dinonaktifkan selama ujian')}catch(x){}}}if(k=='F11'||k=='Escape'||k=='Meta'||k=='OS'||k=='ContextMenu'||(k.length==1&&(e.ctrlKey||e.metaKey||e.altKey))||/^F\d+$/.test(k)||e.altKey||e.key=='Tab'&&e.altKey){e.preventDefault();e.stopPropagation();return false}},bu=function(e){e.preventDefault();e.returnValue='Ujian sedang berlangsung';return e.returnValue};
+var BLK_F=/^F([1-9]|1\d|2[0-4])$/,BLK_K={Meta:1,OS:1,ContextMenu:1,Apps:1,PrintScreen:1,Help:1,Pause:1,ScrollLock:1,Escape:1,BrowserBack:1,BrowserForward:1,BrowserRefresh:1,BrowserStop:1,BrowserSearch:1,BrowserFavorites:1,BrowserHome:1,LaunchMail:1,LaunchApp1:1,LaunchApp2:1,LaunchMediaPlayer:1,SelectMedia:1},CAD=0,SUPO=0,NOLK=0;
+/* Tombol yang dinonaktifkan selama ujian: Windows/Meta, F1-F24, Esc, Menu, PrintScreen, tombol browser/media, Ctrl/Alt + huruf, Ctrl+Tab, Alt+apa pun.
+   Ctrl+Alt+Delete tidak pernah dikirim sistem operasi ke halaman web; yang dikenali adalah Ctrl+Alt lalu layar kehilangan fokus (khas Ctrl+Alt+Delete), atau Ctrl+Alt+Delete / Ctrl+Alt+Shift+P bila perangkat meneruskannya -> Mode Pengawas. */
+var kb=function(e){var k=e.key||'',up=e.type=='keyup';if(NOLK)return;
+  if(e.ctrlKey&&e.altKey)CAD=Date.now();
+  if(!up&&e.ctrlKey&&e.altKey&&(k=='Delete'||(e.shiftKey&&(k=='p'||k=='P')))){e.preventDefault();e.stopPropagation();supOpen();return false}
+  if(k=='Meta'||k=='OS'){LMK=Date.now();if(!up&&Date.now()-LMT>4000){LMT=Date.now();try{toast('Tombol Windows dinonaktifkan selama ujian')}catch(x){}}}
+  if(k=='PrintScreen'&&up){try{navigator.clipboard.writeText(' ')}catch(x){}}
+  if(BLK_F.test(k)||BLK_K[k]||e.metaKey||e.altKey||(k.length==1&&e.ctrlKey)||(e.ctrlKey&&(k=='Tab'||k=='PageUp'||k=='PageDown'))){e.preventDefault();e.stopPropagation();return false}},bu=function(e){e.preventDefault();e.returnValue='Ujian sedang berlangsung';return e.returnValue};
 function lockX(){document.addEventListener('keydown',kb,true);document.addEventListener('keyup',kb,true);addEventListener('beforeunload',bu);history.pushState(null,'',location.href);addEventListener('popstate',pb);try{navigator.keyboard&&navigator.keyboard.lock&&navigator.keyboard.lock().catch(function(){})}catch(x){}}
 function pb(){history.pushState(null,'',location.href)}
 function unlockX(){document.removeEventListener('keydown',kb,true);document.removeEventListener('keyup',kb,true);removeEventListener('beforeunload',bu);removeEventListener('popstate',pb);try{navigator.keyboard&&navigator.keyboard.unlock&&navigator.keyboard.unlock()}catch(x){}}
-var nc = function (e) { return e.preventDefault(); }, vc = function () { return document.hidden && finish('Pindah tab/minimize'); }, bl = function () {
-    if (done) return;
+var nc = function (e) { return e.preventDefault(); }, vc = function () { if (!document.hidden || SUPO) return; if (Date.now() - CAD < 2500) return supOpen(); return finish('Pindah tab/minimize'); }, bl = function () {
+    if (done || SUPO) return;
+    if (Date.now() - CAD < 2500) { clearTimeout(BLT); supOpen(); return; }
     clearTimeout(BLT);
     var now = Date.now(), meta = now - LMK < 3000, d = (meta && MW < 2) ? 4000 : (now - EXS < 8000 ? 2500 : 400);
-    BLT = setTimeout(function () { if (done || document.hasFocus()) return; if (meta) MW++; finish('Meninggalkan layar ujian'); }, d);
-}, bf = function () { clearTimeout(BLT); }, rz = function () { return bad() && finish('Split screen'); }, fs = function () { if (document.fullscreenElement) { try { navigator.keyboard && navigator.keyboard.lock && navigator.keyboard.lock().catch(function () { }); } catch (x) { } return; } return !mob && finish('Keluar layar penuh'); };
+    BLT = setTimeout(function () { if (done || SUPO || document.hasFocus()) return; if (Date.now() - CAD < 6000) { supOpen(); return; } if (meta) MW++; finish('Meninggalkan layar ujian'); }, d);
+}, bf = function () { clearTimeout(BLT); }, rz = function () { return !SUPO && bad() && finish('Split screen'); }, fs = function () { if (document.fullscreenElement) { try { navigator.keyboard && navigator.keyboard.lock && navigator.keyboard.lock().catch(function () { }); } catch (x) { } return; } return !mob && !SUPO && finish('Keluar layar penuh'); };
 function tick() {
     var ms = Math.max(0, endT - Date.now()), sc2 = Math.ceil(ms / 1000);
     if (TM) {
@@ -1664,6 +1687,7 @@ function finish(reason) {
                         return [2];
                     done = true;
                     LR = reason;
+                    try { supClose(); idleStop(); } catch (x) { }
                     clearInterval(tm);
                     clearInterval(pn);
                     clearTimeout(pq);
@@ -1923,16 +1947,18 @@ function dlSoal0(b, i, key) {
     }
     setTimeout(function () { b.disabled = false; b.innerHTML = t; }, 600);
 }
+var RSM = null, LASTRAW = '';
 function pingNow() { if (done || !X.tk)
-    return; api('ping', X.kode, X.nis, X.tk, X.soal.map(function (q, i) { return q.t == 'pg' ? (ans[i] || '') : ((ans[i] || '').trim() ? '1' : ''); })).then(function (r) { if (!r || done)
-    return; (r.msgs || []).forEach(showMsgOnce); if (r.stop)
+    return; var rj = JSON.stringify(Array.from({ length: X.soal.length }, function (_, i) { return ans[i] || ''; })), rw = (rj !== LASTRAW && rj.length <= 120000) ? rj : null; /* jawaban lengkap hanya dikirim bila berubah: dipakai bila ujian terputus dan diizinkan dilanjutkan */
+    api('ping', X.kode, X.nis, X.tk, X.soal.map(function (q, i) { return q.t == 'pg' ? (ans[i] || '') : ((ans[i] || '').trim() ? '1' : ''); }), rw).then(function (r) { if (!r || done)
+    return; if (rw && r.ok) LASTRAW = rw; (r.msgs || []).forEach(showMsgOnce); if (r.stop)
     finish('Dihentikan pengawas: ' + r.stop); }).catch(function () { }); }
 var MT = null, MK = null;
 function stopM() { if (MT) {
     clearInterval(MT);
     MT = null;
 } }
-var stt = function (x) { return x.fin ? (/^Dihentikan/.test(x.cheat) ? ['Dihentikan pengawas', 'bd'] : x.cheat && x.cheat != 'Aman' ? ['Curang: ' + x.cheat, 'bd'] : ['Selesai', 'bg']) : (x.ago != null && x.ago > 75 ? ['Terputus?', 'by'] : ['Mengerjakan', 'bb']); };
+var stt = function (x) { return x.fin ? (/^Dihentikan/.test(x.cheat) ? ['Dihentikan pengawas', 'bd'] : x.cheat && x.cheat != 'Aman' ? ['Curang: ' + x.cheat, 'bd'] : ['Selesai', 'bg']) : (x.ago != null && x.ago > 150 ? ['Terputus?', 'by'] : ['Mengerjakan', 'bb']); };
 function pantau(i) { openMon(L[i].KODE, L[i].NAMA); }
 function openMon(kode, judul) {
     if (!kode)
@@ -2007,10 +2033,10 @@ function mref() {
                             tr.querySelector('.cb').textContent = x.b;
                             tr.querySelector('.cs').textContent = x.s;
                             tr.querySelector('.cn').textContent = x.fin ? x.nilai : '-';
-                            var ca = tr.querySelector('.ca'), w = x.fin ? '' : '1';
+                            var ca = tr.querySelector('.ca'), w = x.fin ? '' : (x.ago != null && x.ago > 150 ? '2' : '1');
                             if (ca.dataset.w !== w) {
                                 ca.dataset.w = w;
-                                ca.innerHTML = w ? "<button data-a=m class=o>".concat(ic('send', 13), " Pesan</button><button data-a=c class=o>").concat(ic('camera', 13), " Camera</button><button data-a=s class=d>").concat(ic('stop', 13), " Hentikan</button>") : "<button data-a=r class=o>".concat(ic('undo', 13), " Izinkan ulang</button>");
+                                ca.innerHTML = w ? "<button data-a=m class=o>".concat(ic('send', 13), " Pesan</button><button data-a=c class=o>").concat(ic('camera', 13), " Camera</button><button data-a=s class=d>").concat(ic('stop', 13), " Hentikan</button>").concat(w == '2' ? "<button data-a=r class=o>".concat(ic('undo', 13), " Izinkan ulang</button>") : '') : "<button data-a=r class=o>".concat(ic('undo', 13), " Izinkan ulang</button>");
                             }
                             tr.querySelector('.ct').innerHTML = "<span class=\"bdg ".concat(s[1], "\">").concat(esc(s[0]), "</span>");
                         });
@@ -3042,7 +3068,7 @@ function xdShot(html,fn,t){
 function xdOut(P,t,fn){
   fn=String(fn).replace(/[\\\/:*?"<>|]/g,'-');
   if(!P.blocks.length)return alert('Belum ada data untuk dibuat dokumen.');
-  if(t=='print')return kopReady().then(function(){prnHTML('<div style="width:100%">'+xdDoc(P,0)+'</div>','size:A4 landscape;margin:10mm')});
+  if(t=='print')return kopReady().then(function(){prnIso('<div style="width:100%">'+xdDoc(P,0)+'</div>','size:A4 landscape;margin:10mm')});
   if(t=='jpg'||t=='pdf')return xdShot(xdDoc(P,0),fn,t);
   var h,mime,ext;
   if(t=='doc'){h="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><style>@page Section1{size:841.9pt 595.3pt;mso-page-orientation:landscape;margin:36pt}div.Section1{page:Section1}body{font-family:Calibri}</style></head><body><div class=Section1>"+xdDoc(P,1)+"</div></body></html>";mime='application/msword';ext='.doc'}
@@ -3276,7 +3302,7 @@ function docMht(html){
 function xdOut(P,t,fn){
   fn=String(fn).replace(/[\\\/:*?"<>|]/g,'-');var por=P.orient=='p';
   if(!P.blocks.length)return alert('Belum ada data untuk dibuat dokumen.');
-  if(t=='print')return kopReady().then(function(){prnHTML('<div style="width:100%">'+xdDoc(P,0)+'</div>','size:A4 '+(por?'portrait':'landscape')+';margin:10mm')});
+  if(t=='print')return kopReady().then(function(){prnIso('<div style="width:100%">'+xdDoc(P,0)+'</div>','size:A4 '+(por?'portrait':'landscape')+';margin:10mm')});
   if(t=='jpg'||t=='pdf')return xdShot(xdDoc(P,0),fn,t,por?'p':'l');
   var h,mime,ext,bl;
   if(t=='doc'){h="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><style>@page Section1{size:"+(por?'595.3pt 841.9pt':'841.9pt 595.3pt')+";mso-page-orientation:"+(por?'portrait':'landscape')+";margin:36pt}div.Section1{page:Section1}body{font-family:Calibri}</style></head><body><div class=Section1>"+xdDoc(P,1)+"</div></body></html>";mime='application/msword';ext='.doc';var mh=docMht(h);bl=mh?new Blob([mh],{type:mime}):null}
@@ -4107,11 +4133,15 @@ function wImgZip(a,IMS){ // sisipkan gambar soal ke dalam paket .docx
   return a;
 }
 // cetak dokumen HTML di iframe tersendiri (tidak terpengaruh CSS aplikasi), menunggu gambar selesai dimuat
-function prnFrame(html){
-  var f=document.createElement('iframe');f.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;height:297mm;border:0';document.body.appendChild(f);
+function prnFrame(html,w){
+  var f=document.createElement('iframe');f.style.cssText='position:fixed;left:-9999px;top:0;width:'+(w||'210mm')+';height:297mm;border:0';document.body.appendChild(f);
   var d=f.contentWindow.document;d.open();d.write(html);d.close();
   var go=function(){try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('Print gagal: '+e)}setTimeout(function(){try{f.remove()}catch(e){}},120000)};
   var t0=Date.now();(function w(){var im=[].slice.call(d.images);if(im.every(function(x){return x.complete})||Date.now()-t0>10000)setTimeout(go,250);else setTimeout(w,120)})();
+}
+function prnIso(inner,pageCss){ // cetak dokumen (Jurnal Wali Kelas, Absensi, BNBA, dll.) lewat iframe terpisah: halaman aplikasi tidak ikut dicetak, sehingga pratinjau cetak tidak macet ("waiting for printer connection")
+  var land=/landscape/.test(pageCss||''),lk=[].map.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return '<link rel=stylesheet href="'+l.href+'">'}).join('');
+  prnFrame('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Cetak</title>'+lk+'<style>@page{'+(pageCss||'size:A4;margin:10mm')+'}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{margin:0;padding:0;background:#fff;color:#000;font-family:Inter,Segoe UI,Arial,sans-serif}table{border-collapse:collapse}img{max-width:100%}tr{page-break-inside:avoid}</style></head><body>'+inner+'</body></html>',land?'297mm':'210mm');
 }
 function prnSoalMedia(m){
   return String(m||'').split(/\s+/).filter(Boolean).map(function(u){
@@ -5002,25 +5032,15 @@ function stopTo(nis, nama) {
         }); });
     };
 }
+function askPermit(nama, cb) { // pilihan perlakuan jawaban saat siswa diizinkan ujian ulang
+    var o = modal('<div class="mi info">' + ic('info', 26) + '</div><p class=mt>Izinkan <b>' + esc(nama) + '</b> melanjutkan / mengulang ujian?<br>Pilih perlakuan terhadap jawaban yang sudah terisi:</p><div class=mb style="flex-direction:column;align-items:stretch;gap:8px"><button id=pm1>Lanjutkan jawaban yang sudah diisi</button><button class=d id=pm2>Hapus seluruh jawaban (mulai dari awal)</button><button class=o onclick="mclose(this)">Batal</button></div><p style="font-size:12px;color:#7b6a6d;margin:8px 0 0">Bila dilanjutkan, siswa mengerjakan dengan sisa waktu yang tersisa. Bila dihapus, siswa mendapat waktu penuh dan hasil ujiannya yang sekarang dihapus.</p>', 'dlg');
+    o.querySelector('#pm1').onclick = function () { mclose(o); cb('lanjut'); };
+    o.querySelector('#pm2').onclick = function () { mclose(o); cb('hapus'); };
+}
 function resetTo(nis, nama) {
-    var _this = this;
-    ask('Izinkan ' + nama + ' mengulang ujian? Hasil ujiannya yang sekarang akan dihapus.', 'Iya, Izinkan', function () { return __awaiter(_this, void 0, void 0, function () { var e_9; return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4, api('resetStudent', U.nik, PW, MK, nis)];
-            case 1:
-                _a.sent();
-                toast(nama + ' dapat mengulang ujian');
-                mref();
-                return [3, 3];
-            case 2:
-                e_9 = _a.sent();
-                alert(e_9);
-                return [3, 3];
-            case 3: return [2];
-        }
-    }); }); }, 1);
+    askPermit(nama, function (mode) {
+        api('resetStudent', U.nik, PW, MK, nis, mode).then(function () { toast(nama + (mode == 'lanjut' ? ' dapat melanjutkan ujian (jawaban dipertahankan)' : ' dapat mengulang ujian dari awal')); mref(); }).catch(function (e) { alert(e); });
+    });
 }
 function clearKorUI(n) {
     var x = R.rows[n];
@@ -5037,14 +5057,14 @@ function clearKorUI(n) {
 }
 function resetRpt(n) {
     var x = R.rows[n];
-    ask('Izinkan ' + x.nm + ' mengulang ujian? Hasil ujiannya yang sekarang akan dihapus.', 'Iya, Izinkan', function () {
+    askPermit(x.nm, function (mode) {
         var nis = x.nis, nm = x.nm, kode = R.a.KODE, len = R.a.soal.length;
         R.d.v = R.d.v.filter(function (r, i) { return i == 0 || !(String(r[6 + len] || '') == String(nis || '') && r[1] == nm); });
         reRows();
         cls();
-        toast(nm + ' dapat mengulang ujian');
-        api('resetStudent', U.nik, PW, kode, nis).catch(function (e) { alert('Gagal: ' + e); ld().then(function () { if (app.dataset.s == 'cls') cls(); }); });
-    }, 1);
+        toast(nm + (mode == 'lanjut' ? ' dapat melanjutkan ujian (jawaban dipertahankan)' : ' dapat mengulang ujian dari awal'));
+        api('resetStudent', U.nik, PW, kode, nis, mode).catch(function (e) { alert('Gagal: ' + e); ld().then(function () { if (app.dataset.s == 'cls') cls(); }); });
+    });
 }
 var PV = 0, ENDSHOWN = false, SELR = null;
 function ansd(q) { var v = ans[q.i]; return q.t == 'pg' ? !!v : !!(v && String(v).trim()); }
@@ -6880,14 +6900,16 @@ function lpOut(P,t,fn){
 '@media(max-width:700px){.jwr .jwb{grid-template-columns:1fr}}'].join('\n');document.head.appendChild(st)})();
 var JW={list:[],ta:'',tas:[],info:null,rb:[],D:null,mode:'list',q:'',grp:[]};
 PTT.jw='JURNAL WALI KELAS';
-function jwMon(b){var m=String(b||'').split('-');return m.length==2?BLN[+m[1]-1]+' '+m[0]:b}
+function jwBln(b){var t=String(b==null?'':b).trim(),m=t.match(/^(\d{4})-(\d{1,2})/);if(m)return m[1]+'-'+('0'+m[2]).slice(-2);var d=t?new Date(t):null;return d&&!isNaN(d.getTime())?d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2):t}
+function jwFix(l){(l||[]).forEach(function(A){A.bln=jwBln(A.bln)});return l||[]}
+function jwMon(b){var m=jwBln(b).match(/^(\d{4})-(\d{2})$/);return m?BLN[+m[2]-1]+' '+m[1]:(b?String(b):'')}
 function jwNow(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)}
 function jwFind(id){return JW.list.filter(function(x){return x.id==id})[0]}
 function jwRomb(D){return JW.rb.filter(function(r){return r.j==D.j&&r.k==D.k&&r.v==D.v})[0]}
 function jwWaliOf(D){var r=(JW.info&&JW.info.rb||[]).filter(function(x){return x.j==D.j&&x.k==D.k&&x.v==D.v})[0];return r&&r.wali||''}
 function jwCnt(A){var c={p:0,b:0,e:0,t:0};(A.rows||[]).forEach(function(r){if(r.p)c.p++;if(r.b)c.b++;if(r.e)c.e++;if(r.t)c.t++});return c}
 function jwInit(){JW.mode='list';JW.D=null;
-  Promise.all([api('jwList',U.nik,PW,JW.ta||''),api('waliInfo',U.nik,PW),api('rombelAll',U.nik,PW),ttdLoad([U.nik]).catch(function(){})]).then(function(r){var x=r[0]||{};JW.list=x.list||[];JW.ta=x.ta||sc.ta||'';JW.tas=x.tas||[];JW.info=r[1]||{};JW.rb=(r[2]||{}).list||[];jwView()})
+  Promise.all([api('jwList',U.nik,PW,JW.ta||''),api('waliInfo',U.nik,PW),api('rombelAll',U.nik,PW),ttdLoad([U.nik]).catch(function(){})]).then(function(r){var x=r[0]||{};JW.list=jwFix(x.list);JW.ta=x.ta||sc.ta||'';JW.tas=x.tas||[];JW.info=r[1]||{};JW.rb=(r[2]||{}).list||[];jwView()})
    .catch(function(e){var w=$('#jww');if(w)w.textContent='Gagal memuat: '+e})}
 function jwView(){var w=$('#jww');if(!w)return;var f=document.querySelector('.jmfab');if(f)f.remove();if(JW.mode=='form')return jwFormView(w);jwListView(w)}
 function jwBack(){JW.mode='list';JW.D=null;jwView();window.scrollTo(0,0)}
@@ -6896,7 +6918,7 @@ function jwListView(w){var tas=JW.tas.length?JW.tas:[JW.ta],can=JW.info&&JW.info
   w.innerHTML=(can?'':'<div class=jpdup style="background:var(--mt);border-color:rgba(var(--mr),.2)">'+ic('users',14)+' Jurnal wali kelas diisi oleh <b>guru yang ditetapkan sebagai wali kelas</b> (Data SDM &rsaquo; Wali Kelas), Staf Kurikulum, Kepala Sekolah, dan Super Admin. Anda belum menjadi wali kelas rombel mana pun.</div>')
    +'<div class=jmt><div class=srb style="flex:1;min-width:200px">'+ic('search',16)+'<input class=srq placeholder="Cari rombel, wali kelas, nama siswa, atau catatan..." value="'+esc(JW.q)+'" oninput="JW.q=this.value;jwDraw()"></div><select title="Tahun ajaran" onchange="jwTA(this.value)">'+tas.map(function(t){return jpOpt(t,'Tahun Ajaran '+t,JW.ta)}).join('')+'</select></div><div id=jwl></div>';
   jwDraw();if(can){var b=document.createElement('button');b.className='fab jmfab';b.innerHTML=ic('plus',20)+' Buat Jurnal Baru';b.onclick=jwNew;app.appendChild(b)}}
-function jwTA(t){JW.ta=t;var w=$('#jwl');if(w)w.innerHTML='<div class=box>Memuat...</div>';api('jwList',U.nik,PW,t).then(function(x){JW.list=x.list||[];JW.ta=x.ta||t;JW.tas=x.tas||JW.tas;jwView()}).catch(function(e){alert(e)})}
+function jwTA(t){JW.ta=t;var w=$('#jwl');if(w)w.innerHTML='<div class=box>Memuat...</div>';api('jwList',U.nik,PW,t).then(function(x){JW.list=jwFix(x.list);JW.ta=x.ta||t;JW.tas=x.tas||JW.tas;jwView()}).catch(function(e){alert(e)})}
 function jwFiltered(){var q=JW.q.toLowerCase().trim();return JW.list.filter(function(A){return !q||[A.j,A.k,A.v,A.wali,jwMon(A.bln),(A.rows||[]).map(function(r){return [r.n,r.p,r.b,r.e,r.t].join(' ')}).join(' ')].join(' ').toLowerCase().indexOf(q)>=0})}
 function jwDraw(){var L=jwFiltered(),el=$('#jwl');if(!el)return;JW.grp=[];
   if(!L.length){el.innerHTML='<div class=box style="text-align:center;color:#7b6a6d">'+(JW.q?'Tidak ada jurnal yang cocok dengan pencarian.':'Belum ada jurnal wali kelas pada tahun ajaran '+esc(JW.ta)+'.'+(JW.info&&JW.info.can?' Tekan tombol <b>Buat Jurnal Baru</b> di pojok kanan bawah.':''))+'</div>';return}
@@ -6949,7 +6971,7 @@ function jwSave(){var D=JW.D;if(!D.bln)return alert('Pilih bulan.');if(!D.j||!D.
   var rows=D.rows.filter(function(r){return r.n||r.i||r.p||r.b||r.e||r.t});if(!rows.length)return alert('Tambahkan minimal satu siswa.');
   for(var i=0;i<rows.length;i++){var r=rows[i];if(!r.n&&!r.i)return alert('Pilih nama siswa pada setiap kartu catatan, atau hapus kartu yang kosong.');if(!(r.p||r.b||r.e||r.t))return alert('Isi minimal satu catatan untuk '+(r.n||'siswa')+', atau hapus kartunya.')}
   toast('Menyimpan jurnal wali kelas...');api('jwSave',U.nik,PW,{id:D.id,ver:D.ver,bln:D.bln,j:D.j,k:D.k,v:D.v,total:D.total,rows:rows.map(function(r){return {i:r.i,n:r.n,p:r.p,b:r.b,e:r.e,t:r.t}}),ttdOn:!!D.ttdOn})
-   .then(function(r){if(r&&r.err)alert('Jurnal tersimpan, tetapi Spreadsheet sumber belum berhasil diperbarui:\n'+r.err);return api('jwList',U.nik,PW,JW.ta)}).then(function(x){JW.list=x.list||[];JW.tas=x.tas||JW.tas;JW.mode='list';JW.D=null;toast('Jurnal wali kelas tersimpan');jwView();window.scrollTo(0,0)}).catch(function(e){alert(e)})}
+   .then(function(r){if(r&&r.err)alert('Jurnal tersimpan, tetapi Spreadsheet sumber belum berhasil diperbarui:\n'+r.err);return api('jwList',U.nik,PW,JW.ta)}).then(function(x){JW.list=jwFix(x.list);JW.tas=x.tas||JW.tas;JW.mode='list';JW.D=null;toast('Jurnal wali kelas tersimpan');jwView();window.scrollTo(0,0)}).catch(function(e){alert(e)})}
 /* ---------- dokumen ---------- */
 function jwBlock(A,last){var n=(A.rows||[]).length,T1=function(x){return String(x||'').replace(/\n+/g,' / ')};
   return {banner:'Jurnal Wali Kelas \u2022 '+A.j+' '+(A.v||'Kelas '+A.k)+' \u2022 '+jwMon(A.bln),sub:'Wali Kelas: '+(A.wali||'-')+' \u2022 Tahun Ajaran '+(A.ta||'')+' \u2022 Semester '+(String(A.smt)=='2'?'2 (Genap)':'1 (Ganjil)')+' \u2022 '+n+' dari '+(A.total||n)+' siswa tercatat',
@@ -6965,5 +6987,37 @@ function jwOutM(gi,t){var G=JW.grp[gi];if(!G)return;var a=G.a,last=a[a.length-1]
   (last.ttdOn?ttdLoad([last.nik]).catch(function(){}):Promise.resolve()).then(function(){var bl=a.map(function(A,i){var b=jwBlock(A,i==a.length-1);if(b.sign)b.sign.img=A.ttdOn?(TTDC[A.nik]||''):'';return b});
     xdOut({title:'REKAP JURNAL WALI KELAS',orient:'l',cap:[6,9],blocks:bl},t,G.fn)})}
 
+</script>
+<script>
+/* ===== Ujian siswa: (1) popup pengingat fokus bila 150 detik tanpa respon, (2) Mode Pengawas (Ctrl+Alt+Delete) ===== */
+var IDL={t:0,iv:0,on:0,LIM:150000,ev:['pointerdown','pointermove','keydown','touchstart','wheel','input']};
+function idleAct(){IDL.t=Date.now()}
+function idleStart(){idleStop();IDL.t=Date.now();IDL.ev.forEach(function(n){document.addEventListener(n,idleAct,true)});IDL.iv=setInterval(idleChk,5000)}
+function idleStop(){clearInterval(IDL.iv);IDL.ev.forEach(function(n){document.removeEventListener(n,idleAct,true)});var o=document.getElementById('idlov');if(o)o.remove();IDL.on=0}
+function idleChk(){if(done||SUPO||IDL.on||PV)return;if(Date.now()-IDL.t>=IDL.LIM)idleShow()}
+function idleShow(){IDL.on=1;try{tone(660,0,.22,.1);tone(880,.28,.3,.1)}catch(x){}
+  var o=document.createElement('div');o.id='idlov';o.style.cssText='position:fixed;inset:0;z-index:99998;background:rgba(10,10,20,.72);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,Segoe UI,sans-serif';
+  o.innerHTML='<div style="max-width:440px;width:100%;background:#fff;color:#2b1a1d;border-radius:14px;padding:24px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4);border-top:6px solid #e6a100;-webkit-user-select:none;user-select:none"><div style="width:56px;height:56px;margin:0 auto 10px;border-radius:50%;background:#fff3d6;color:#b87800;display:grid;place-items:center;font-size:32px;font-weight:800">!</div><h2 style="margin:0 0 8px;font-size:20px">Tetap Fokus pada Ujian</h2><p style="margin:0 0 16px;line-height:1.55;color:#4a3a3d">Anda tidak melakukan aktivitas apa pun selama 2,5 menit. Tetaplah fokus pada ujian, lanjutkan mengerjakan soal, dan jangan sampai ujian atau koneksi Anda terputus. Jika ada kendala, angkat tangan dan hubungi pengawas.</p><button id="idlb" style="width:100%;padding:13px;border:0;border-radius:10px;background:#7a1022;color:#fff;font-size:16px;font-weight:700;cursor:pointer">Saya Lanjutkan Ujian</button></div>';
+  document.body.appendChild(o);o.querySelector('#idlb').onclick=function(){o.remove();IDL.on=0;IDL.t=Date.now()}}
+function supClose(){var o=document.getElementById('supov');if(o)o.remove();SUPO=0}
+function supErr(m,ok){var e=document.getElementById('supe');if(e){e.textContent=m||'';e.style.color=ok?'#555':'#b3261e'}}
+function supOpen(){if(done||SUPO||NOLK||typeof X=='undefined'||!X||!X.tk)return;SUPO=1;
+  var io=document.getElementById('idlov');if(io)io.remove();IDL.on=0;
+  var o=document.createElement('div');o.id='supov';o.style.cssText='position:fixed;inset:0;z-index:99999;background:#0b0f1a;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;font-family:system-ui,Segoe UI,sans-serif;-webkit-user-select:text;user-select:text';
+  var B='width:100%;padding:12px;border:0;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;',I='width:100%;padding:11px;margin:6px 0 0;border:1.5px solid #c9ced8;border-radius:8px;font-size:15px;box-sizing:border-box';
+  o.innerHTML='<div style="max-width:420px;width:100%;background:#fff;color:#1f2430;border-radius:14px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.5)"><h2 style="margin:0 0 4px;font-size:20px">Mode Pengawas</h2><p style="margin:0 0 14px;color:#555;line-height:1.5;font-size:14px">Ujian siswa dikunci sementara. Hanya pengawas / guru yang dapat melanjutkan atau membuka kunci. Masukkan NIK / NIP dan password pengawas.</p>'
+   +'<input id="supu" placeholder="NIK / NIP pengawas" autocomplete="off" style="'+I+'"><input id="supp" type="password" placeholder="Password pengawas" autocomplete="off" style="'+I+'"><div id="supe" style="min-height:20px;margin-top:8px;font-size:13px"></div>'
+   +'<button style="'+B+'background:#7a1022;color:#fff" onclick="supGo(\'lanjut\')">Lanjutkan Ujian (kunci tetap aktif)</button>'
+   +'<button style="'+B+'background:#1f6f3d;color:#fff" onclick="supGo(\'buka\')">Buka Kunci / Keluar Mode Ujian</button>'
+   +'<button style="'+B+'background:#eceff4;color:#b3261e" onclick="supGo(\'akhiri\')">Akhiri Ujian Siswa Ini</button></div>';
+  document.body.appendChild(o);try{document.getElementById('supu').focus()}catch(x){}}
+function supUnlock(){NOLK=1;try{removeEventListener('visibilitychange',vc);removeEventListener('blur',bl);removeEventListener('focus',bf);clearTimeout(BLT);removeEventListener('resize',rz);document.removeEventListener('fullscreenchange',fs);document.removeEventListener('contextmenu',nc);document.removeEventListener('copy',nc);unlockX();if(document.fullscreenElement)document.exitFullscreen()}catch(x){}toast('Mode ujian dibuka pengawas. Ujian tetap berjalan.')}
+function supGo(a){var u=(document.getElementById('supu').value||'').trim(),p=document.getElementById('supp').value||'';if(!u||!p)return supErr('Isi NIK / NIP dan password pengawas.');
+  supErr('Memeriksa...',1);
+  api('pengawasKunci',u,p,X.kode,X.nis,X.tk,a).then(function(r){if(done)return;supClose();IDL.t=Date.now();
+    if(a=='akhiri')finish('Dihentikan pengawas: '+((r&&r.nama)||'pengawas'));
+    else if(a=='buka')supUnlock();
+    else{try{var q=document.documentElement.requestFullscreen();if(q&&q.catch)q.catch(function(){})}catch(x){}toast('Ujian dilanjutkan')}
+  }).catch(function(e){supErr(String(e&&e.message||e).replace(/^Error:\s*/,''))})}
 </script>
 </body></html>
