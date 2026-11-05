@@ -1104,6 +1104,7 @@ function doLogin(m) {
                 case 2:
                     U = _a.sent();
                     PW = p;
+                    hkInit();
                     if (U.setup) { idWizard(); return [3, 5]; }
                     loadKop();
                     refL().catch(function () { });
@@ -1137,7 +1138,7 @@ function mgmt() {
             switch (_a.label) {
                 case 0:
                     stopM();
-                    if (!U.sa && !/^(as|lap|pt|ag|jm|jp|jw)$/.test(t || 'as')) t = 'as'; // jm (Jurnal Mengajar) harus bisa dibuka guru biasa
+                    t = t || 'as'; if (!can(t, 'v')) t = hkFirst() || 'none'; hkRefresh(); // tab yang boleh dibuka ditentukan matriks Hak Akses Jabatan (Tab Sekolah)
                     scr('mgmt');
                     return [4, /^(as|lap|pt)$/.test(t || 'as') ? getL() : Promise.resolve(LC.d || window.L || [])];
                 case 1:
@@ -1149,9 +1150,9 @@ function mgmt() {
                     LVL = _a.sent();
                     _a.label = 3;
                 case 3:
-                    tabs = [['jm', 'Jurnal Mengajar', 'book'], ['jp', 'Jurnal Piket', 'shield'], ['jw', 'Jurnal Wali Kelas', 'users'], ['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Jurnal Pengawas', 'clock']].concat(U.sa ? [['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'award']] : []).concat(U.sa ? [['Guru', 'Data SDM', 'teacher'], ['Siswa', 'Data Siswa', 'user']] : []).concat(U.sa ? [['kt', 'Cetak Kartu Siswa', 'idcard'], ['kp', 'Cetak Kartu Guru', 'shield']] : []);
+                    tabs = [['jm', 'Jurnal Mengajar', 'book'], ['jp', 'Jurnal Piket', 'shield'], ['jw', 'Jurnal Wali Kelas', 'users'], ['as', 'Daftar Asesmen', 'list'], ['lap', 'Laporan Hasil Asesmen', 'chart'], ['pt', 'Pantau Ujian', 'radar'], ['ag', 'Jurnal Pengawas', 'clock'], ['jd', 'Penjadwalan Asesmen', 'calendar'], ['lpp', 'Laporan Periode Asesmen', 'award'], ['Guru', 'Data SDM', 'teacher'], ['Siswa', 'Data Siswa', 'user'], ['kt', 'Cetak Kartu Siswa', 'idcard'], ['kp', 'Cetak Kartu Guru', 'shield']].filter(function (x) { return can(x[0], 'v'); });
                     tabs = tabOrd(tabs);
-                    c = '';
+                    c = t == 'none' ? '<div class=box><h3>Belum ada akses</h3><p class=em>Jabatan Anda belum diberi hak akses ke tab apa pun. Hubungi Super Admin.</p></div>' : '';
                     if (t == 'as')
                         c = L.map(function (a, i) { if (a.LOCK && !U.sa) return lkCard(a); return "<div class=\"box ac\">".concat(lkBn(a), "<div class=ach><div><h3>").concat(esc(a.NAMA), "</h3><small>").concat(a.JENJANG, " ").concat(a.TINGKAT, " \u2022 ").concat(mpb(a.MAPEL), " \u2022 ").concat(a.TAHUN, " Smt ").concat(a.SEMESTER, " \u2022 ").concat(a.DURASI, " menit \u2022 ").concat(a.soal.length, " soal").concat(U.sa ? ' • ' + esc(a['NAMA GURU']) : '', "</small></div><span class=kdk><span class=kdl>Kode soal</span><span class=kdv>").concat(ic('key', 15), " ").concat(a.KODE, "</span><button class=cpb title=\"Salin kode\" onclick=\"cpk('").concat(a.KODE, "',this)\">").concat(ic('copy', 14), " Salin</button></span></div><p class=rl>").concat(a.rooms.map(function (r) { return "<a href=\"".concat(r.url, "\" target=_blank>").concat(ic('sheet', 14), " ").concat(esc(r.n), "</a>"); }).join(''), "</p>\n <div class=acb><button onclick=\"view(").concat(i, ",1)\">").concat(ic('list', 15), " Lihat Soal</button><button class=o onclick=\"preview(").concat(i, ")\">").concat(ic('eye', 15), " Preview Soal</button><button class=o onclick=\"edit(").concat(i, ")\">").concat(ic('edit', 15), " Edit Soal</button><button class=o onclick=\"salin(").concat(i, ",this)\">").concat(ic('copy', 15), " Salin Soal</button><button onclick=\"pantau(").concat(i, ")\">").concat(ic('radar', 15), " Pantau Ujian</button><button class=o onclick=\"dlSoal(this,").concat(i, ",1)\">").concat(ic('download', 15), " Download Soal</button>", prnB('printSoal(' + i + ',1)', 'Print Soal'), "<button class=o onclick=\"dlSoal(this,").concat(i, ",0)\">").concat(ic('file', 15), " Lembar Siswa</button>", prnB('printSoal(' + i + ',0)', 'Print Lembar'), "<button class=d onclick=\"del(").concat(i, ")\">").concat(ic('trash', 15), " Hapus Soal</button></div></div>"); }).join('') || '<div class="box em">Belum ada asesmen. Klik "Buat Asesmen Baru" untuk memulai.</div>';
                     if (t == 'lap')
@@ -1198,11 +1199,11 @@ function mgmt() {
                         c = "<div id=agw class=box>Memuat...</div>";
                         setTimeout(agInit, 0);
                     }
-                    if (t == 'lpp' && U.sa) {
+                    if (t == 'lpp') {
                         c = "<div id=lpw class=box>Memuat...</div>";
                         setTimeout(lpInit, 0);
                     }
-                    if (t == 'jd' && U.sa) {
+                    if (t == 'jd') {
                         c = "<div id=jdw class=box>Memuat...</div>";
                         setTimeout(jdInit, 0);
                     }
@@ -1212,7 +1213,9 @@ function mgmt() {
                         c += taBox() + sndBox() + themeBox();
                     if (t == 'sk' && U.su)
                         c += pwBox();
-                    app.innerHTML = "<header>".concat(brand().replace('<h1>', (U.sa ? "<button class=\"o\" onclick=\"mgmt('sk')\">" + ic('school', 15) + " Sekolah</button>" : '') + (U.sa ? "<button class=\"o\" onclick=\"segarkan(this)\" title=\"Muat ulang data terbaru dari server (mis. setelah mengubah data langsung di Google Sheets)\">" + ic('sync', 15) + " Segarkan</button>" : '') + (U.su ? "<button class=\"o\" onclick=\"tabSet()\">" + ic('sliders', 15) + " Atur Tab</button>" : '') + '<h1>')).concat(av(), "<button class=o onclick=\"login()\">").concat(ic('logout', 15), " Keluar</button></header>\n <div class=wrap><div class=gnav>").concat(navHTML(tabs, t), "</div>").concat(ptitle(t), c, "</div><footer class=pf>").concat(ftx(), "</footer>").concat(t == 'as' ? "<button class=fab onclick=\"edit()\">".concat(ic('plus', 20), " Buat Asesmen Baru</button>") : '');
+                    if (t == 'sk' && (U.su || U.ua))
+                        c += hakBox();
+                    app.innerHTML = "<header>".concat(brand().replace('<h1>', (can('sk', 'v') ? "<button class=\"o\" onclick=\"mgmt('sk')\">" + ic('school', 15) + " Sekolah</button>" : '') + (can('sk', 'e') ? "<button class=\"o\" onclick=\"segarkan(this)\" title=\"Muat ulang data terbaru dari server (mis. setelah mengubah data langsung di Google Sheets)\">" + ic('sync', 15) + " Segarkan</button>" : '') + (U.su ? "<button class=\"o\" onclick=\"tabSet()\">" + ic('sliders', 15) + " Atur Tab</button>" : '') + '<h1>')).concat(av(), "<button class=o onclick=\"login()\">").concat(ic('logout', 15), " Keluar</button></header>\n <div class=wrap><div class=gnav>").concat(navHTML(tabs, t), "</div>").concat(ptitle(t), c, "</div><footer class=pf>").concat(ftx(), "</footer>").concat(t == 'as' ? "<button class=fab onclick=\"edit()\">".concat(ic('plus', 20), " Buat Asesmen Baru</button>") : '');
                     navInit(tabs, t);
                     srchInit(t);
                     setTimeout(warmUp, 1200);
@@ -1353,11 +1356,20 @@ function ver(n, k, v) { // tampilan langsung berubah; penyimpanan ke server berj
     det(n2 < 0 ? 0 : n2);
     window.scrollTo(0, y);
     VP++;
-    VQ = VQ.then(function () { return api('verifyEssay', U.nik, PW, kode, room, nm, k, v, nis); }).then(function () { VP--; if (!VP) toast('Nilai tersimpan'); }, function (e) {
+    VQ = VQ.then(function () { return apiRetry('verifyEssay', U.nik, PW, kode, room, nm, k, v, nis); }).then(function () { }, function (e) { VF.push(String(e && e.message || e)); }).then(function () {
         VP--;
-        alert('Gagal menyimpan nilai: ' + e);
+        if (VP) return; // masih ada nilai lain dalam antrean
+        if (!VF.length) { toast('Nilai tersimpan'); return; }
+        var nf = VF.length, e0 = VF[0]; VF = [];
+        alert('Gagal menyimpan ' + nf + ' nilai: ' + e0 + '\n\nData dimuat ulang dari server. Silakan periksa dan beri nilai kembali pada bagian yang belum tersimpan.');
         return ld().then(function () { var i = R.rows.findIndex(function (r) { return r.nm == nm && r.nis == nis; }); if (app.dataset.s == 'det') det(i < 0 ? 0 : i); else if (app.dataset.s == 'cls') cls(); });
     });
+}
+var VF = [];
+function apiRetry(f) { // ulangi otomatis bila server sibuk (antrean kunci penuh / waktu habis) sebelum dianggap gagal
+    var a = [].slice.call(arguments, 1), t = 0;
+    var run = function () { return api.apply(null, [f].concat(a)).catch(function (e) { if (t < 4 && /penguncian|kunci|sibuk|lock|timeout|waktu|Service/i.test(String(e && e.message || e))) { t++; return new Promise(function (r) { setTimeout(r, 1500 * t); }).then(run); } throw e; }); };
+    return run();
 }
 function CLONEFIX(d) { // salinan dokumen untuk html2canvas: matikan animasi agar warna tidak setengah transparan (pucat)
     var s = d.createElement('style');
@@ -5052,7 +5064,7 @@ function clearKorUI(n) {
         var n2 = R.rows.findIndex(function (r) { return r.nm == nm && r.nis == nis; });
         det(n2 < 0 ? 0 : n2);
         toast('Nilai koreksi dikosongkan');
-        VQ = VQ.then(function () { return api('clearKor', U.nik, PW, R.a.KODE, R.room, nm, nis); }).catch(function (e) { alert('Gagal: ' + e); return ld().then(function () { det(0); }); });
+        VQ = VQ.then(function () { return apiRetry('clearKor', U.nik, PW, R.a.KODE, R.room, nm, nis); }).catch(function (e) { alert('Gagal: ' + e); return ld().then(function () { det(0); }); });
     }, 1);
 }
 function resetRpt(n) {
@@ -5453,7 +5465,7 @@ function navInit(tabs,t){
   var d=document.createElement('div');
   d.innerHTML='<div class=sbo onclick="sbClose()"></div><aside class=sb><div class=sbh><img src="'+esc(sc.logo||LOGO)+'" alt=""><b>'+esc(sc.nama)+'<small>'+esc(U.nama)+'</small></b><button class=sbcl title="Ciutkan menu" onclick="sbClose()">'+ic('chevl',18)+'</button></div>'
    +navGroups(tabs).map(function(x){var on=x.s.some(function(y){return y[0]==t});return '<div class="sbg'+(on?' open':'')+'"><button onclick="this.parentNode.classList.toggle(\'open\')"><i class=gi data-g="'+x.k+'">'+ic(x.i,16)+'</i><span>'+esc(x.l)+'</span><i class=sbc>'+ic('chev',16)+'</i></button><div class=sbs>'+x.s.map(function(y){return '<button class="nps'+(y[0]==t?' on':'')+'" onclick="sbClose();mgmt(\''+y[0]+'\')"><i class=gi data-k="'+y[0]+'">'+ic(y[2],13)+'</i><span>'+esc(y[1])+'</span></button>'}).join('')+'</div></div>'}).join('')
-   +'<div class=sba>'+(U.sa?'<button class=o onclick="sbClose();mgmt(\'sk\')">'+ic('school',15)+' Sekolah</button><button class=o onclick="segarkan(this)">'+ic('sync',15)+' Segarkan</button>':'')+(U.su?'<button class=o onclick="sbClose();tabSet()">'+ic('sliders',15)+' Atur Tab</button>':'')+(PW!='869698'?'<button class=o onclick="sbClose();prof()">'+ic('edit',15)+' Identitas Diri</button>':'')+'<button onclick="login()">'+ic('logout',15)+' Keluar</button></div></aside>';
+   +'<div class=sba>'+(can('sk','v')?'<button class=o onclick="sbClose();mgmt(\'sk\')">'+ic('school',15)+' Sekolah</button><button class=o onclick="segarkan(this)">'+ic('sync',15)+' Segarkan</button>':'')+(U.su?'<button class=o onclick="sbClose();tabSet()">'+ic('sliders',15)+' Atur Tab</button>':'')+(PW!='869698'&&!U.ua?'<button class=o onclick="sbClose();prof()">'+ic('edit',15)+' Identitas Diri</button>':'')+'<button onclick="login()">'+ic('logout',15)+' Keluar</button></div></aside>';
   while(d.firstChild)app.appendChild(d.firstChild);
 }
 /* ===== Semester di Tab Sekolah ===== */
@@ -7019,5 +7031,48 @@ function supGo(a){var u=(document.getElementById('supu').value||'').trim(),p=doc
     else if(a=='buka')supUnlock();
     else{try{var q=document.documentElement.requestFullscreen();if(q&&q.catch)q.catch(function(){})}catch(x){}toast('Ujian dilanjutkan')}
   }).catch(function(e){supErr(String(e&&e.message||e).replace(/^Error:\s*/,''))})}
+</script>
+<style id="hkcss">
+.hkt{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}.hkt th,.hkt td{border:1px solid #e3d7d9;padding:7px 8px;text-align:center}.hkt th:first-child,.hkt td:first-child{text-align:left}
+.hkt thead th{background:#f6eef0;color:var(--m);position:sticky;top:0}.hkt tbody tr:nth-child(even){background:#fcf8f9}.hkt input[type=checkbox]{width:18px;height:18px;accent-color:var(--m);cursor:pointer;margin:0}
+.hkt .pb{display:inline-block;font-size:11px;background:#eef2ff;color:#3b4a9c;border-radius:4px;padding:1px 6px;margin-left:6px;font-weight:600}
+.hkw{overflow-x:auto}.hkbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.hkbar select{min-width:220px;margin:0}
+.hkn{font-size:12.5px;color:#7b6a6d;line-height:1.55;margin:6px 0}.hkua{background:#fff4d6;border:1px solid #e6c15c;border-radius:8px;padding:8px 10px;font-size:13px;margin:8px 0}
+</style>
+<script>
+/* ===== Hak Akses Jabatan: pemeriksa di web + editor matriks (Tab Sekolah) =====
+   v=Lihat  a=Tambah  e=Edit  d=Hapus. Server (hk_ di Code_Wizard.gs) adalah penjaga utama; di web dipakai untuk menyaring tab & tombol. */
+var HKS={data:null,cfg:{},sel:'',t0:0},HKADM=['jd','lpp','Guru','Siswa','kt','kp','sk'],HKAL=['as','jm','jp','jw','lap','pt','ag','jd','lpp','Guru','Siswa','kt','kp','sk'];
+function can(t,a){var h=(typeof U!='undefined'&&U)?U.hk:null;if(!h)return !!(typeof U!='undefined'&&U&&(U.sa||U.su));return String(h[t]||'').indexOf(a||'v')>=0}
+function hkInit(){HKS.t0=Date.now();if(U&&U.hk&&!U.su&&!U.ua&&!U.sa&&HKADM.some(function(k){return can(k,'v')}))U.sa=true} /* tab data / pengaturan terbuka -> tampilan admin ikut tampil; server tetap memeriksa tiap aksi */
+function hkFirst(){return HKAL.filter(function(k){return can(k,'v')})[0]||''}
+function hkRefresh(){if(!U||!U.nik||U.ua||Date.now()-HKS.t0<60000)return;HKS.t0=Date.now();api('hakMe',U.nik,PW).then(function(h){if(h&&JSON.stringify(h)!==JSON.stringify(U.hk)){U.hk=h;hkInit();hkDom();if(!can(CT,'v'))mgmt()}}).catch(function(){})}
+var HKP=[[/\bjmNew\(/,'jm','a'],[/\bjmEdit\(/,'jm','e'],[/\bjmDel\(/,'jm','d'],[/\bjpNew\(/,'jp','a'],[/\bjpEdit\(/,'jp','e'],[/\bjpDel\(/,'jp','d'],[/\bjwNew\(/,'jw','a'],[/\bjwEdit\(/,'jw','e'],[/\bjwDel\(/,'jw','d'],
+ [/\bagNew\(/,'ag','a'],[/\bagEdit\(/,'ag','e'],[/\bagDel\(/,'ag','d'],[/\bjdNew\(/,'jd','a'],[/\bjdEdit\(/,'jd','e'],[/\bjdDel\(/,'jd','d'],[/\bktNew\(/,'kt','a'],[/\bktEdit\(/,'kt','e'],[/\bktDel\(/,'kt','d'],
+ [/\bkpAdd\(/,'kp','a'],[/\bkpEdit\(/,'kp','e'],[/\bkpDel\(/,'kp','d'],[/\busAdd\(/,'@UT','a'],[/\busEdit\(/,'@UT','e'],[/\busDel\(/,'@UT','d'],[/\busPw\(/,'@UT','e'],
+ [/\brbCreate\(/,'Siswa','a'],[/\brbDel\(/,'Siswa','d'],[/\brbSetWali\(/,'Siswa','e'],[/\bedit\(\)/,'as','a'],[/\bedit\(\d/,'as','e'],[/\bsalin\(/,'as','a'],[/\bdel\(\d/,'as','d']];
+function hkDom(){if(typeof U=='undefined'||!U||!U.hk||U.ua)return;var ut=window.UT||'Guru';document.querySelectorAll('#app [onclick]').forEach(function(el){if(el.getAttribute('data-hk'))return;var o=el.getAttribute('onclick')||'';for(var i=0;i<HKP.length;i++){if(HKP[i][0].test(o)){var tb=HKP[i][1]=='@UT'?ut:HKP[i][1];el.setAttribute('data-hk','1');if(!can(tb,HKP[i][2]))el.style.display='none';break}}})}
+(function(){var q=0,a=document.getElementById('app');if(!a||!window.MutationObserver)return;new MutationObserver(function(){if(q)return;q=setTimeout(function(){q=0;try{hkDom()}catch(e){}},40)}).observe(a,{childList:true,subtree:true})})();
+function hakBox(){setTimeout(hakInit,0);return '<div class=box id=hakw><h3>'+ic('shield',18)+' Hak Akses Jabatan</h3><p class=em>Memuat...</p></div>'}
+function hakJabs(){var l=jabList().slice();if(U.ua)l.push('@SA');return l}
+function hakInit(){api('hakGet',U.nik,PW).then(function(d){HKS.data=d;HKS.cfg=JSON.parse(JSON.stringify(d.cfg||{}));HKS.sel=hakJabs()[0];hakRender()}).catch(function(e){var w=document.getElementById('hakw');if(w)w.innerHTML='<h3>Hak Akses Jabatan</h3><p class=em>'+esc(String(e))+'</p>'})}
+function hakRow(j){if(HKS.cfg[j])return JSON.parse(JSON.stringify(HKS.cfg[j]));var d=HKS.data.def;return JSON.parse(JSON.stringify(j=='@SA'?d.full:((HKS.data.native||[]).indexOf(j)>=0?d.sa:d.guru)))}
+function hakRender(){var w=document.getElementById('hakw');if(!w)return;
+  w.innerHTML='<h3>'+ic('shield',18)+' Hak Akses Jabatan</h3><p class=hkn>Atur apa yang boleh dilakukan setiap jabatan pada setiap tab dan isinya: <b>Lihat</b>, <b>Tambah</b>, <b>Edit</b>, <b>Hapus</b>. Super Admin selalu memiliki akses penuh sehingga tidak ditampilkan di sini. Jabatan yang belum pernah diatur memakai hak bawaan. Perubahan berlaku di server seketika; menu pengguna yang sedang masuk ikut berubah dalam sekitar 1 menit atau saat masuk ulang.</p>'
+   +(U.ua?'<div class=hkua><b>Ultra Admin</b>: Anda juga dapat mengatur hak akses <b>Super Admin</b> (pilih "Super Admin" pada daftar jabatan). Hati-hati: pembatasan pada Super Admin berlaku pada akun Super Admin.</div>':'')
+   +'<div class=hkbar><label for=hkj><b>Jabatan</b></label><select id=hkj onchange="HKS.sel=this.value;hakTbl()">'+hakJabs().map(function(j){return '<option value="'+esc(j)+'"'+(j==HKS.sel?' selected':'')+'>'+(j=='@SA'?'Super Admin (khusus Ultra Admin)':esc(j))+'</option>'}).join('')+'</select>'
+   +'<button class=o onclick="hakAll(1)">Centang semua</button><button class=o onclick="hakAll(0)">Kosongkan</button><button class=o onclick="hakDef()">Kembalikan bawaan</button><button onclick="hakSave(this)">'+ic('check',15)+' Simpan Hak Akses</button></div>'
+   +'<div class=hkw id=hkt></div><p class=hkn>Tab bertanda <span class=pb style="display:inline-block;font-size:11px;background:#eef2ff;color:#3b4a9c;border-radius:4px;padding:1px 6px;font-weight:600">data pribadi</span> hanya memperlihatkan data milik pengguna itu sendiri (guru tidak dapat melihat data guru lain) kecuali jabatannya Staf Kurikulum / Kepala Sekolah. Menceklis Tambah / Edit / Hapus otomatis mencentang Lihat.</p>';
+  hakTbl()}
+function hakTbl(){var d=HKS.data,r=hakRow(HKS.sel),el=document.getElementById('hkt');if(!el)return;var A=[['v','Lihat'],['a','Tambah'],['e','Edit'],['d','Hapus']];
+  el.innerHTML='<table class=hkt><thead><tr><th>Tab</th>'+A.map(function(x){return '<th>'+x[1]+'<br><input type=checkbox title="Semua '+x[1]+'" onchange="hakCol(\''+x[0]+'\',this.checked)"'+(d.tabs.every(function(t){return String(r[t[0]]||'').indexOf(x[0])>=0})?' checked':'')+'></th>'}).join('')+'<th>Semua</th></tr></thead><tbody>'
+   +d.tabs.map(function(t){var f=String(r[t[0]]||'');return '<tr><td>'+esc(t[1])+((d.pers||[]).indexOf(t[0])>=0?'<span class=pb>data pribadi</span>':'')+'</td>'+A.map(function(x){return '<td><input type=checkbox data-t="'+t[0]+'" data-a="'+x[0]+'" onchange="hakChk(this)"'+(f.indexOf(x[0])>=0?' checked':'')+'></td>'}).join('')+'<td><input type=checkbox onchange="hakRowAll(\''+t[0]+'\',this.checked)"'+(f.length==4?' checked':'')+'></td></tr>'}).join('')+'</tbody></table>'}
+function hakSet_(r,t,f){var o='';'vaed'.split('').forEach(function(c){if(f.indexOf(c)>=0)o+=c});if(o&&o.indexOf('v')<0)o='v'+o;if(o)r[t]=o;else delete r[t]}
+function hakChk(el){var j=HKS.sel,r=hakRow(j),t=el.getAttribute('data-t'),a=el.getAttribute('data-a'),f=String(r[t]||'');if(el.checked){if(f.indexOf(a)<0)f+=a}else{f=a=='v'?'':f.replace(a,'')}hakSet_(r,t,f);HKS.cfg[j]=r;hakTbl()}
+function hakRowAll(t,on){var j=HKS.sel,r=hakRow(j);hakSet_(r,t,on?'vaed':'');HKS.cfg[j]=r;hakTbl()}
+function hakCol(a,on){var j=HKS.sel,r=hakRow(j);HKS.data.tabs.forEach(function(t){var f=String(r[t[0]]||'');if(on){if(f.indexOf(a)<0)f+=a}else{f=a=='v'?'':f.replace(a,'')}hakSet_(r,t[0],f)});HKS.cfg[j]=r;hakTbl()}
+function hakAll(on){var j=HKS.sel,r={};if(on)HKS.data.tabs.forEach(function(t){r[t[0]]='vaed'});HKS.cfg[j]=r;hakTbl()}
+function hakDef(){delete HKS.cfg[HKS.sel];hakTbl();toast('Dikembalikan ke hak bawaan. Klik Simpan Hak Akses untuk menerapkan.')}
+function hakSave(b){if(b)b.disabled=true;api('hakSet',U.nik,PW,JSON.stringify(HKS.cfg)).then(function(r){HKS.cfg=JSON.parse(JSON.stringify(r||{}));toast('Hak akses jabatan disimpan');if(b)b.disabled=false;hakTbl()}).catch(function(e){if(b)b.disabled=false;alert(e)})}
 </script>
 </body></html>
