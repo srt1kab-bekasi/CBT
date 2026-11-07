@@ -1180,6 +1180,12 @@ function mgmt() {
                 case 5:
                     if (t == 'pt')
                         c = (U.sa ? "<div class=box><h3>Ujian Sedang Berlangsung</h3>".concat(LVL.map(function (x, k) { return "<div class=st style=\"margin:8px 0;justify-content:space-between;align-items:center\"><span><b>".concat(esc(x.nama), "</b><br><small>").concat(esc(x.tingkat), " \u2022 ").concat(esc(x.mapel), " \u2022 ").concat(esc(x.guru), " \u2022 Kode ").concat(esc(x.kode), " \u2022 ").concat(x.rooms.map(esc).join(', '), "</small></span><button onclick=\"openMon(LVL[").concat(k, "].kode,LVL[").concat(k, "].nama)\">").concat(ic('radar', 15), " Pantau</button></div>"); }).join('') || '<p class=em>Belum ada ujian yang sedang berlangsung.</p>', "<button class=o onclick=\"mgmt('pt')\">Muat ulang</button></div>") : "") + "<div class=box><h3>Pantau dengan Kode Asesmen</h3><small>Masukkan kode asesmen soal yang akan Anda awasi. Guru pengawas dapat mengawasi soal mana pun dengan memasukkan kodenya; setelah itu pemantauan, pesan, hentikan ujian, histori, dan kamera dapat dipakai untuk soal tersebut.</small><input id=pk2 placeholder=\"Kode asesmen, mis. A1B2C3\" style=\"text-transform:uppercase\"><button onclick=\"openMon($('#pk2').value.trim().toUpperCase(),'')\">".concat(ic('radar', 15), " Pantau</button></div>");
+                    if (t == 'sgd') {
+                        c = "<div id=sgw><div class=box>Memuat...</div></div>";
+                        setTimeout(sgInit, 0);
+                    }
+                    if (t == 'sbr' || t == 'sst')
+                        c = sgSoon(t);
                     if (t == 'kt') {
                         c = "<div id=ktw><div class=box>Memuat...</div></div>";
                         setTimeout(ktInit, 0);
@@ -5504,7 +5510,7 @@ srchDo=function(e){_sd1.apply(this,arguments);if(e&&e.dataset&&e.dataset.sel==='
 </script><script>
 /* ===== Navigasi grup tab + sub tab (popup hamburger / sidebar mobile) & Atur Tab ===== */
 (function(){var X={menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/>',chev:'<path d="M6 9l6 6 6-6"/>',chevl:'<path d="M15 6l-6 6 6 6"/>'};Object.keys(X).forEach(function(k){if(!IC[k])IC[k]=X[k]})})();
-var CT='as',TS=null,NGD=[{k:'adm',l:'Administrasi Guru',i:'book',s:['jm','jp','jw']},{k:'cbt',l:'Asesmen CBT',i:'list',s:['as','lap','pt','ag','jd','lpp']},{k:'dbs',l:'Database Siswa',i:'user',s:['Siswa','kt']},{k:'sdm',l:'Database SDM',i:'teacher',s:['Guru','kp']}];
+var CT='as',TS=null,NGD=[{k:'adm',l:'Administrasi Guru',i:'book',s:['jm','jp','jw']},{k:'cbt',l:'Asesmen CBT',i:'list',s:['as','lap','pt','ag','jd','lpp']},{k:'dbs',l:'Database Siswa',i:'user',s:['Siswa','kt']},{k:'sdm',l:'Database SDM',i:'teacher',s:['Guru','kp']},{k:'srp',l:'Sarpras',i:'warehouse',s:['sgd','sbr','sst']}];
 function navCfg(){var o=null;try{o=JSON.parse((sc&&sc.tab)||'null')}catch(e){}return o&&!Array.isArray(o)&&o.g&&o.o?o:{o:[],g:{}}}
 function navGroups(tabs){
   var c=navCfg(),m={},seen={},ord=c.o.filter(function(k){return NGD.some(function(d){return d.k==k})}),sub={};
@@ -5516,7 +5522,7 @@ function navGroups(tabs){
 function navHTML(tabs,t){CT=t;var G=navGroups(tabs),a=G.filter(function(x){return x.s.some(function(y){return y[0]==t})})[0]||G[0];if(!a)return '';
   return '<div class=gtabs>'+G.map(function(x){return '<button class="gtab'+(x===a?' on':'')+'"'+(x===a?'':' onclick="mgmt(\''+x.s[0][0]+'\')"')+'><i class=gi data-g="'+x.k+'">'+ic(x.i,17)+'</i><span>'+esc(x.l)+'</span></button>'}).join('')+'</div>'
    +'<div class=gsub><span class=gl>'+esc(a.l)+' \u203A</span>'+a.s.map(function(x){return '<button class="stab'+(x[0]==t?' on':'')+'" onclick="mgmt(\''+x[0]+'\')"><i class=gi data-k="'+x[0]+'">'+ic(x[2],13)+'</i><span>'+esc(x[1])+'</span></button>'}).join('')+'</div>'}
-var PTT={jm:'JURNAL MENGAJAR',as:'DAFTAR ASESMEN',lap:'LAPORAN HASIL ASESMEN',pt:'PANTAU UJIAN',ag:'JURNAL PENGAWAS',jd:'PENJADWALAN ASESMEN',lpp:'LAPORAN PERIODE ASESMEN',Guru:'DATA SDM',Siswa:'DATA SISWA',kt:'CETAK KARTU SISWA',kp:'CETAK KARTU GURU',sk:'PENGATURAN SEKOLAH'};
+var PTT={jm:'JURNAL MENGAJAR',as:'DAFTAR ASESMEN',lap:'LAPORAN HASIL ASESMEN',pt:'PANTAU UJIAN',ag:'JURNAL PENGAWAS',jd:'PENJADWALAN ASESMEN',lpp:'LAPORAN PERIODE ASESMEN',Guru:'DATA SDM',Siswa:'DATA SISWA',kt:'CETAK KARTU SISWA',kp:'CETAK KARTU GURU',sgd:'GEDUNG BANGUNAN',sbr:'BARANG, ALAT & PERLENGKAPAN',sst:'KELOLA STOK',sk:'PENGATURAN SEKOLAH'};
 function ptitle(t){return PTT[t]?'<h2 class=ptitle>'+PTT[t]+'</h2>':''}
 function gSrch(inp,root){var q=inp.value.toLowerCase().trim(),all=document.querySelectorAll(root+' .box,'+root+' .lpc,'+root+' tr');[].forEach.call(all,function(e){if(e.querySelector('input,select,textarea,canvas,.box,.lpc'))return;e.style.display=!q||e.textContent.toLowerCase().indexOf(q)>=0?'':'none'})}
 var _sI=srchInit;srchInit=function(t){_sI(t);var m={jd:'#jdw',lpp:'#lpw',kt:'#ktw',kp:'#kpw'}[t],e=m&&document.querySelector(m);if(e)e.insertAdjacentHTML('beforebegin','<div class=srb>'+ic('search',16)+'<input class=srq placeholder="Cari di halaman ini..." oninput="gSrch(this,\''+m+'\')"></div>')};
@@ -7106,7 +7112,7 @@ body .sbo{z-index:2147482000!important}body .sb{z-index:2147482001!important;poi
 /* ===== Hak Akses Jabatan: pemeriksa di web + editor matriks (Tab Sekolah) =====
    v=Lihat  a=Tambah  e=Edit  d=Hapus. Server (hk_ di Code_Wizard.gs) adalah penjaga utama; di web dipakai untuk menyaring tab & tombol. */
 /* ---- daftar tab (satu sumber), tab teratas, dan sidebar ---- */
-function hkTabs(){return [['jm','Jurnal Mengajar','book'],['jp','Jurnal Piket','shield'],['jw','Jurnal Wali Kelas','users'],['as','Daftar Asesmen','list'],['lap','Laporan Hasil Asesmen','chart'],['pt','Pantau Ujian','radar'],['ag','Jurnal Pengawas','clock'],['jd','Penjadwalan Asesmen','calendar'],['lpp','Laporan Periode Asesmen','award'],['Guru','Data SDM','teacher'],['Siswa','Data Siswa','user'],['kt','Cetak Kartu Siswa','idcard'],['kp','Cetak Kartu Guru','shield']].filter(function(x){return can(x[0],'v')})}
+function hkTabs(){return [['jm','Jurnal Mengajar','book'],['jp','Jurnal Piket','shield'],['jw','Jurnal Wali Kelas','users'],['as','Daftar Asesmen','list'],['lap','Laporan Hasil Asesmen','chart'],['pt','Pantau Ujian','radar'],['ag','Jurnal Pengawas','clock'],['jd','Penjadwalan Asesmen','calendar'],['lpp','Laporan Periode Asesmen','award'],['Guru','Data SDM','teacher'],['Siswa','Data Siswa','user'],['kt','Cetak Kartu Siswa','idcard'],['kp','Cetak Kartu Guru','shield'],['sgd','Gedung Bangunan','building'],['sbr','Barang, Alat & Perlengkapan','box'],['sst','Kelola Stok','sync']].filter(function(x){return can(x[0],'v')})}
 function topTab(){try{var G=navGroups(tabOrd(hkTabs()));if(G.length&&G[0].s.length)return G[0].s[0][0]}catch(e){}return hkFirst()||'as'} /* tab paling atas pada menu untuk jabatan ini */
 (function(){var T0=0,sbx=function(e){var b=document.body;if(!b.classList.contains('sbon'))return false;var t=e.target;if(!t||!t.closest)return false;
    if(!document.querySelector('aside.sb')){b.classList.remove('sbon');return false} /* sidebar sudah tidak ada: bersihkan status */
@@ -7117,7 +7123,7 @@ function topTab(){try{var G=navGroups(tabOrd(hkTabs()));if(G.length&&G[0].s.leng
  document.addEventListener('keydown',function(e){if(e.key=='Escape'&&document.body.classList.contains('sbon'))sbClose()},true);
  window.addEventListener('pageshow',function(){if(!document.querySelector('aside.sb'))document.body.classList.remove('sbon')})})();
 
-var HKS={data:null,cfg:{},sel:'',t0:0},HKADM=['jd','lpp','Guru','Siswa','kt','kp','sk'],HKAL=['as','jm','jp','jw','lap','pt','ag','jd','lpp','Guru','Siswa','kt','kp','sk'];
+var HKS={data:null,cfg:{},sel:'',t0:0},HKADM=['jd','lpp','Guru','Siswa','kt','kp','sgd','sbr','sst','sk'],HKAL=['as','jm','jp','jw','lap','pt','ag','jd','lpp','Guru','Siswa','kt','kp','sgd','sbr','sst','sk'];
 function can(t,a){var h=(typeof U!='undefined'&&U)?U.hk:null;if(!h)return !!(typeof U!='undefined'&&U&&(U.sa||U.su));return String(h[t]||'').indexOf(a||'v')>=0}
 function hkInit(){HKS.t0=Date.now();if(U&&U.hk&&!U.su&&!U.ua&&!U.sa&&HKADM.some(function(k){return can(k,'v')}))U.sa=true} /* tab data / pengaturan terbuka -> tampilan admin ikut tampil; server tetap memeriksa tiap aksi */
 function hkFirst(){return HKAL.filter(function(k){return can(k,'v')})[0]||''}
@@ -7349,5 +7355,153 @@ function rmBox(){return '<div class="rmw"><div class="rmt">'+ic('users',16)+' Ro
   +'<div class=rmbar><button type=button class=o onclick="rmAllSel(1)">Pilih semua rombel</button><button type=button class=o onclick="rmAllSel(0)">Kosongkan</button><button type=button class=o onclick="rmRefresh()">\u21BB Muat ulang daftar</button></div><div id="rml" class="rmcs">'+rmChips()+'</div>'
   +'<small style="display:block;color:#7b6a6d;margin-top:6px">Daftar rombel mengikuti yang dibuat di Data Siswa \u203A Rombongan Belajar. Setiap rombel mendapat spreadsheet hasil dan laporan sendiri saat soal disimpan.</small></div>'}
 var _ed1=edit;edit=function(i){var r=_ed1.apply(this,arguments);getRM().then(function(){if(E&&document.getElementById('rml'))rmDraw()}).catch(function(){});return r};
+</script>
+<style id="sgcss">
+.sgtop{padding:14px 16px}.sgst{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.sgst .s{flex:1 1 130px;display:flex;align-items:center;gap:10px;background:var(--mt);border:1px solid rgba(var(--mr),.16);border-radius:12px;padding:9px 12px}
+.sgst .s svg{width:26px;height:26px;color:var(--m);flex:none}.sgst .s b{display:block;font-size:19px;line-height:1.1;color:var(--m)}.sgst .s small{font-size:11.5px;color:#7b6a6d;font-weight:600}
+.sgtb{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.sgs{flex:1 1 300px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #dcc6c9;border-radius:10px;padding:0 10px}
+.sgs:focus-within{border-color:var(--m);box-shadow:0 0 0 3px rgba(var(--mr),.14)}.sgs svg{width:16px;height:16px;color:#9a8b8e;flex:none}.sgs input{border:0!important;box-shadow:none!important;background:transparent!important;margin:0;padding:10px 0;width:100%;outline:0}
+.sgbt{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.sgbt .btn,.sgbt button{margin:0}.sgex{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.sgex b{font-size:12px;color:#7b6a6d;margin-right:2px}.sgex button{padding:7px 11px;font-size:12.5px}
+.sgnote{margin-top:8px;font-size:12px;color:#7b6a6d}
+.sgb>.lph b{font-weight:800}.sgb>.lph small{font-weight:800;background:#fff!important;color:var(--m)!important;border-radius:6px;padding:1px 9px;margin-left:8px;letter-spacing:.4px}
+.sgx{margin-left:auto;display:inline-flex;gap:5px;margin-right:8px}.sgx button{padding:4px 10px;font-size:12px;margin:0}
+.sgmeta{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}.sgmeta span{background:var(--mt);color:var(--m);border-radius:999px;padding:2px 11px;font-size:12px;font-weight:700}
+.sgdesc{font-size:13px;color:#4a3a3d;margin:0 0 8px;white-space:pre-wrap}
+.sgfo{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.sgfo a,.sgfo .ph{position:relative;display:block;width:74px;height:74px;border-radius:9px;overflow:hidden;border:1px solid #dcc6c9;background:#f6eef0}.sgfo img{width:100%;height:100%;object-fit:cover;display:block}
+.sgfo .ph button{position:absolute;top:2px;right:2px;width:20px;height:20px;padding:0;margin:0;border-radius:50%;font-size:11px;line-height:1;background:rgba(0,0,0,.65);color:#fff;border:0}
+.sgr{display:flex;gap:10px;align-items:center;padding:9px 12px;margin:5px 0;background:#fff;border:1px solid #e6d5d8;border-left:4px solid var(--m);border-radius:10px}
+.sgr:hover{box-shadow:0 2px 10px rgba(var(--mr),.12)}.sgk{flex:none;min-width:96px;text-align:center;background:var(--mt);color:var(--m);border-radius:8px;padding:5px 8px;font-size:12px;font-weight:800;letter-spacing:.3px}
+.sgm{flex:1;min-width:0}.sgm b{display:block;font-size:14px;color:#2b1a1d}.sgm small{display:block;color:#7b6a6d;font-size:12px}.sgm p{margin:2px 0 0;font-size:12px;color:#6a5a5d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sga{flex:none;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.sga button{padding:5px 11px;font-size:12px;margin:0}
+.sgfh{display:flex;gap:6px;align-items:center;margin:6px 0 2px}.sgfh small{color:#7b6a6d}.sgfh button{margin-left:auto;padding:4px 10px;font-size:12px}
+.sge h3{display:flex;align-items:center;gap:8px;margin-top:0}.sge label,.sgfl label,.sgroom label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--m);min-width:0}
+.sge input,.sge textarea,.sgfl input,.sgroom input,.sgroom textarea{margin:0;width:100%;font-weight:400}
+.sgg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px}.sgkw{display:flex;gap:6px}.sgkw input{flex:1}.sgkw button{margin:0;padding:6px 10px;font-size:12px;white-space:nowrap}
+.sgfl{border-left:5px solid var(--m)!important;margin-top:14px;background:linear-gradient(90deg,var(--mt),#fff 38%)}
+.sgfhd{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:8px}.sgfhd>label:first-child{flex:1 1 200px}.sgfhd>label.lv{width:84px}.sgfhd button{margin:0;padding:8px 12px;font-size:12.5px}
+.sgroom{background:#fff;border:1px solid #e3d3d6;border-radius:12px;padding:10px;margin:8px 0;box-shadow:0 1px 4px rgba(var(--mr),.07)}
+.sgroom .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.sgroom .g .w{grid-column:1/-1}.sgroom .n{display:flex;gap:6px}.sgroom .n input{flex:1}.sgroom .n button{margin:0;padding:6px 9px;font-size:12px}
+.sgroom .u{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px;flex-wrap:wrap}.sgroom .u em{font-style:normal;font-size:12px;font-weight:700;color:var(--m);background:var(--mt);border-radius:999px;padding:2px 10px}
+.sgfx{animation:sgfl 1.6s ease}@keyframes sgfl{0%,60%{box-shadow:0 0 0 4px rgba(var(--mr),.35)}100%{box-shadow:none}}
+.sgsave{position:sticky;bottom:0;z-index:20;display:flex;gap:8px;justify-content:flex-end;padding:10px 12px;margin:14px -4px -4px;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-top:1px solid #e3d3d6;border-radius:0 0 12px 12px}
+.sgmd{max-width:640px!important;width:94vw;text-align:left}.sgdt{font-size:13.5px}.sgdt .bc{color:#7b6a6d;font-size:12.5px;margin-bottom:6px}.sgdt .dm{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0}
+.sgdt .dm div{background:var(--mt);border-radius:10px;padding:8px 10px;text-align:center}.sgdt .dm b{display:block;font-size:16px;color:var(--m)}.sgdt .dm small{font-size:11px;color:#7b6a6d;font-weight:700}
+.sgdt h4{margin:12px 0 4px;font-size:13px;color:var(--m)}.sgdt .em2{background:#faf5f6;border:1px dashed #dcc6c9;border-radius:10px;padding:10px;font-size:12.5px;color:#7b6a6d}
+.sgdt table{width:100%;border-collapse:collapse;font-size:12.5px}.sgdt td,.sgdt th{border:1px solid #e3d3d6;padding:4px 8px;text-align:left}
+.sgroom .u button,.sgfhd button,.sgx button{padding:5px 11px;font-size:12px;margin:0;width:auto}.sgmd .mb{margin-top:16px}.sgbt .o{display:inline-flex;align-items:center;gap:6px}
+.sgsoon{text-align:center;padding:30px 16px}.sgsoon svg{width:46px;height:46px;color:var(--m)}
+@media(max-width:640px){.sgr{flex-wrap:wrap}.sgk{min-width:0}.sga{width:100%;justify-content:flex-start}.sgx{margin-left:6px}}
+</style>
+<script>
+/* ===== SARPRAS > Gedung Bangunan ===== (sub tab 2 "Barang, Alat & Perlengkapan" dan 3 "Kelola Stok" menyusul) */
+Object.assign(IC,{building:'<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/>',box:'<path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/>',warehouse:'<path d="M3 21V9l9-5 9 5v12M7 21v-7h10v7M7 17h10"/>',door:'<path d="M5 21V4a1 1 0 011-1h12a1 1 0 011 1v17M3 21h18M15 12h.01"/>',layers:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/>',map:'<path d="M12 21s7-6.2 7-11a7 7 0 00-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>'});
+var SG={list:[],ss:'',q:'',e:null};
+function sgNid(p){return p+Math.random().toString(36).slice(2,10)}
+function sgN(x){return (Math.round((+x||0)*100)/100).toLocaleString('id-ID',{maximumFractionDigits:2})}
+function sgLuas(r){return Math.round((+r.p||0)*(+r.l||0)*100)/100}
+function sgVol(r){return Math.round((+r.p||0)*(+r.l||0)*(+r.t||0)*100)/100}
+function sgLv(lv){return lv<0?'B'+(-lv):String(lv)}
+function sgGLuas(g){var s=0;(g.lantai||[]).forEach(function(l){(l.ruang||[]).forEach(function(r){s+=sgLuas(r)})});return Math.round(s*100)/100}
+function sgGRooms(g){var n=0;(g.lantai||[]).forEach(function(l){n+=(l.ruang||[]).length});return n}
+function sgTh(u,w){return 'https://drive.google.com/thumbnail?id='+fjId(u)+'&sz=w'+(w||300)}
+function sgItems(rid){return (window.SRI&&window.SRI[rid])||[]} /* barang yang tercatat di suatu ruangan: diisi oleh sub tab Barang & Kelola Stok */
+function sgFind(id){return SG.list.filter(function(g){return g.id==id})[0]}
+function sgSoon(t){return '<div class="box sgsoon">'+ic(t=='sbr'?'box':'sync',46)+'<h3 style="margin:8px 0 4px">'+(t=='sbr'?'Barang, Alat &amp; Perlengkapan':'Kelola Stok')+'</h3><p class=em>Sub tab ini sedang disiapkan dan akan terhubung dengan data ruangan pada Gedung Bangunan.</p></div>'}
+function sgInit(){api('srGdList',U.nik,PW).then(function(r){SG.list=r.list||[];SG.ss=r.ss||'';SG.e=null;sgView()}).catch(function(e){var w=$('#sgw');if(w)w.innerHTML='<div class=box>Gagal memuat: '+esc(String(e&&e.message||e))+'</div>'})}
+function sgFiltered(){var q=SG.q.trim().toLowerCase(),out=[];SG.list.forEach(function(g){
+  if(!q){out.push(g);return}var hit=function(t){return String(t==null?'':t).toLowerCase().indexOf(q)>=0};
+  if(hit(g.nama)||hit(g.kode)||hit(g.catatan)){out.push(g);return}
+  var ls=[];(g.lantai||[]).forEach(function(l){var rs=(l.ruang||[]).filter(function(r){return hit(l.nama)||hit(r.nama)||hit(r.kode)||hit(r.cat)||sgItems(r.id).some(function(b){return hit(b.nama)||hit(b.kode)})});if(rs.length)ls.push(Object.assign({},l,{ruang:rs}))});
+  if(ls.length)out.push(Object.assign({},g,{lantai:ls}))});return out}
+function sgView(){var w=$('#sgw');if(!w)return;if(SG.e){w.innerHTML=sgEditor();return}
+  var L=SG.list,nl=0,nr=0,lu=0;L.forEach(function(g){nl+=(g.lantai||[]).length;nr+=sgGRooms(g);lu+=sgGLuas(g)});
+  var st=function(i,t,v){return '<div class=s>'+ic(i,26)+'<div><b>'+v+'</b><small>'+t+'</small></div></div>'};
+  w.innerHTML='<div class="box sgtop"><div class=sgst>'+st('building','Gedung',L.length)+st('layers','Lantai',nl)+st('door','Ruangan',nr)+st('map','Total luas',esc(sgN(lu))+' m\u00B2')+'</div>'
+   +'<div class=sgtb><div class=sgs>'+ic('search',16)+'<input id=sgq value="'+esc(SG.q)+'" placeholder="Cari nama gedung, lantai, ruangan, atau nama barang di ruangan..." oninput="sgSrch(this.value)"></div>'
+   +'<div class=sgbt>'+(can('sgd','a')?'<button onclick="sgNew()">'+ic('plus',15)+' Tambah Gedung</button>':'')+(SG.ss?'<button class=o onclick="window.open(SG.ss,\'_blank\',\'noopener\')">'+ic('sheet',15)+' Spreadsheet</button>':'')+'</div></div>'
+   +'<div class=sgex style="margin-top:10px"><b>Export:</b>'+jwBtns('sgOut(@)')+'</div><div class=sgnote>Export mengikuti hasil pencarian. Pencarian nama barang aktif setelah sub tab Barang, Alat &amp; Perlengkapan terisi.</div></div><div id=sgl>'+sgList()+'</div>'}
+function sgSrch(v){SG.q=String(v||'');var l=$('#sgl');if(l)l.innerHTML=sgList()}
+function sgList(){var gs=sgFiltered(),q=SG.q.trim();
+  if(!gs.length)return '<div class="box em">'+(SG.list.length?'Tidak ada gedung, lantai, ruangan, atau barang yang cocok dengan pencarian.':'Belum ada data gedung bangunan. Klik "Tambah Gedung" untuk memulai.')+'</div>';
+  return gs.map(function(g,i){return sgBld(g,!!q||gs.length==1)}).join('')}
+function sgBld(g,open){var n=sgGRooms(g),ed=can('sgd','e'),dl=can('sgd','d');
+  return '<div class="box lpc tr tr1 sgb'+(open?'':' cl')+'"><h3 class=lph onclick="lpT(this)">'+ic('building',20)+' <b>'+esc(g.nama)+'</b> <small>'+esc(g.kode)+'</small><span class=sgx onclick="event.stopPropagation()">'+(ed?'<button class="o" onclick="sgEdit(\''+g.id+'\')">'+ic('edit',13)+' Edit</button>':'')+(dl?'<button class="d" onclick="sgDel(\''+g.id+'\')">'+ic('trash',13)+'</button>':'')+'</span><span class=lpt>'+n+' ruangan</span></h3><div class=lpb>'
+   +'<div class=sgmeta><span>'+(g.lantai||[]).length+' lantai</span><span>'+n+' ruangan</span><span>Total luas '+esc(sgN(sgGLuas(g)))+' m\u00B2</span></div>'+(g.catatan?'<p class=sgdesc>'+esc(g.catatan)+'</p>':'')
+   +((g.foto||[]).length?'<div class=sgfo>'+g.foto.map(function(f){return '<a href="'+esc(f.u)+'" target=_blank rel=noopener><img loading=lazy alt="Foto gedung" src="'+esc(sgTh(f.u,200))+'"></a>'}).join('')+'</div>':'')
+   +(g.lantai||[]).map(function(l){return sgFl(g,l,!!SG.q.trim())}).join('')+'</div></div>'}
+function sgFl(g,l,open){var rs=l.ruang||[],lu=0;rs.forEach(function(r){lu+=sgLuas(r)});
+  return '<div class="box lpc tr tr3 sgfl2'+(open||rs.length&&rs.length<=6?'':' cl')+'"><h3 class=lph onclick="lpT(this)">'+ic('layers',16)+' '+esc(l.nama)+' <small>No. '+esc(sgLv(l.lv))+' \u2022 '+esc(sgN(Math.round(lu*100)/100))+' m\u00B2</small><span class=sgx onclick="event.stopPropagation()">'+(can('sgd','a')||can('sgd','e')?'<button class=o onclick="sgEdit(\''+g.id+'\',{add:\''+l.id+'\'})">'+ic('plus',13)+' Ruangan</button>':'')+'</span><span class=lpt>'+rs.length+' ruangan</span></h3><div class=lpb>'
+   +(rs.length?rs.map(function(r){return sgRow(g,r)}).join(''):'<div class=em2 style="font-size:12.5px;color:#7b6a6d;padding:6px 2px">Belum ada ruangan pada lantai ini.</div>')+'</div></div>'}
+function sgRow(g,r){return '<div class=sgr><div class=sgk>'+esc(r.kode)+'</div><div class=sgm><b>'+esc(r.nama)+'</b><small>'+esc(sgN(r.p))+' \u00D7 '+esc(sgN(r.l))+' \u00D7 '+esc(sgN(r.t))+' m \u2022 '+esc(sgN(sgLuas(r)))+' m\u00B2</small>'+(r.cat?'<p>'+esc(r.cat)+'</p>':'')+'</div><div class=sga><button class=o onclick="sgRoom(\''+g.id+'\',\''+r.id+'\')">'+ic('eye',13)+' Detail</button>'+(can('sgd','e')?'<button class=o onclick="sgEdit(\''+g.id+'\',\''+r.id+'\')">'+ic('edit',13)+' Edit</button>':'')+'</div></div>'}
+function sgRoom(gid,rid){var g=sgFind(gid),l=null,r=null;if(!g)return;(g.lantai||[]).forEach(function(x){(x.ruang||[]).forEach(function(y){if(y.id==rid){l=x;r=y}})});if(!r)return;var it=sgItems(rid);
+  modal('<div class="mi info">'+ic('door',26)+'</div><h3 style="margin:0 0 2px">'+esc(r.nama)+'</h3><div class=sgdt><div class=bc>'+esc(g.nama)+' ('+esc(g.kode)+') \u203A '+esc(l.nama)+' \u2022 Kode <b>'+esc(r.kode)+'</b></div>'
+   +'<div class=dm><div><b>'+esc(sgN(r.p))+' m</b><small>PANJANG</small></div><div><b>'+esc(sgN(r.l))+' m</b><small>LEBAR</small></div><div><b>'+esc(sgN(r.t))+' m</b><small>TINGGI</small></div><div><b>'+esc(sgN(sgLuas(r)))+' m\u00B2</b><small>LUAS</small></div><div><b>'+esc(sgN(sgVol(r)))+' m\u00B3</b><small>VOLUME</small></div></div>'
+   +'<h4>Catatan / Deskripsi Ruangan</h4>'+(r.cat?'<p style="white-space:pre-wrap;margin:0">'+esc(r.cat)+'</p>':'<div class=em2>Belum ada catatan.</div>')
+   +((r.foto||[]).length?'<h4>Foto Dokumentasi</h4><div class=sgfo>'+r.foto.map(function(f){return '<a href="'+esc(f.u)+'" target=_blank rel=noopener><img alt="Foto ruangan" src="'+esc(sgTh(f.u,240))+'"></a>'}).join('')+'</div>':'')
+   +'<h4>Barang, Alat &amp; Perlengkapan di Ruangan Ini</h4>'+(it.length?'<table><tr><th>Nama barang</th><th>Kode</th><th>Jumlah</th><th>Kondisi</th></tr>'+it.map(function(b){return '<tr><td>'+esc(b.nama)+'</td><td>'+esc(b.kode||'-')+'</td><td>'+esc(b.jumlah==null?'-':b.jumlah)+'</td><td>'+esc(b.kondisi||'-')+'</td></tr>'}).join('')+'</table>':'<div class=em2>Belum ada barang yang tercatat di ruangan ini. Data akan muncul di sini setelah barang ditambahkan pada sub tab <b>Barang, Alat &amp; Perlengkapan</b> atau <b>Kelola Stok</b>.</div>')
+   +'</div><div class=mb><button class=o onclick="mclose(this)">Tutup</button>'+(can('sgd','e')?'<button onclick="mclose(this);sgEdit(\''+gid+'\',\''+rid+'\')">'+ic('edit',14)+' Edit ruangan</button>':'')+'</div>','sgmd')}
+function sgDel(id){var g=sgFind(id);if(!g)return;ask('Hapus gedung "'+g.nama+'" beserta '+(g.lantai||[]).length+' lantai dan '+sgGRooms(g)+' ruangannya? Tindakan ini tidak dapat dibatalkan.','Ya, Hapus Gedung',function(){api('srGdDel',U.nik,PW,id).then(function(){SG.list=SG.list.filter(function(x){return x.id!=id});sgView();toast('Gedung dihapus')}).catch(function(e){alert(e)})},1)}
+/* ---------- editor ---------- */
+function sgUsed(skip){var u={};SG.list.forEach(function(g){if(g.id!=SG.e.id)(g.lantai||[]).forEach(function(l){(l.ruang||[]).forEach(function(r){u[r.kode]=1})})});SG.e.lantai.forEach(function(l){l.ruang.forEach(function(r){if(r.id!=skip)u[r.kode]=1})});return u}
+function sgRoomKode(g,l,skip){var u=sgUsed(skip),b=(g.kode||'GD')+'-L'+sgLv(l.lv)+'-';for(var n=1;n<1000;n++){var k=b+(n<10?'0':'')+n;if(!u[k])return k}return b+Date.now()}
+function sgAutoG(){var m=0;SG.list.forEach(function(g){var x=/^GD-(\d+)$/.exec(g.kode||'');if(x)m=Math.max(m,+x[1])});return 'GD-'+('00'+(m+1)).slice(-3)}
+function sgNewRoom(l){return {id:sgNid('r'),kode:sgRoomKode(SG.e,l),nama:'',p:'',l:'',t:'',cat:'',foto:[]}}
+function sgNew(){SG.e={id:'',kode:sgAutoG(),nama:'',catatan:'',foto:[],lantai:[{id:sgNid('l'),lv:1,nama:'Lantai 1',ruang:[]}]};sgView();scrollTo(0,0)}
+function sgEdit(id,fc){var g=sgFind(id);if(!g)return;SG.e=JSON.parse(JSON.stringify(g));var tg=null;
+  if(fc&&fc.add){var l=SG.e.lantai.filter(function(x){return x.id==fc.add})[0];if(l){var r=sgNewRoom(l);l.ruang.push(r);tg='sgr_'+r.id}}else if(typeof fc=='string')tg='sgr_'+fc;
+  sgView();setTimeout(function(){var el=tg&&document.getElementById(tg);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('sgfx');var i=el.querySelector('input');if(i&&fc&&fc.add)i.focus()}else scrollTo(0,0)},60)}
+function sgCancel(){ask('Batalkan perubahan dan kembali ke daftar gedung?','Ya, Batalkan',function(){SG.e=null;sgView();scrollTo(0,0)},0,'Lanjut mengedit')}
+function sgFotos(arr,sc){return '<div class=sgfo>'+(arr||[]).map(function(f,i){return '<div class=ph><a href="'+esc(f.u)+'" target=_blank rel=noopener style="width:100%;height:100%;border:0"><img alt="Foto" src="'+esc(sgTh(f.u,200))+'"></a><button type=button title="Hapus foto" onclick="sgFDel(\''+sc+'\','+i+')">\u2715</button></div>'}).join('')
+  +((arr||[]).length<6?'<label class="btn o" style="margin:0;align-self:center;padding:6px 10px;font-size:12px;display:inline-flex;gap:5px;flex-direction:row;font-weight:700">'+ic('image',14)+' Foto<input type=file hidden accept="image/*" onchange="sgUp(this,\''+sc+'\')"></label>':'')+'</div>'}
+function sgSc(sc){var e=SG.e;if(sc=='g')return e;var p=sc.split('_');return e.lantai[+p[0]].ruang[+p[1]]}
+function sgUp(inp,sc){var f=inp.files&&inp.files[0];inp.value='';if(!f)return;var o=sgSc(sc),lb=(SG.e.nama||'Gedung')+(sc=='g'?'':'|'+(o.nama||'Ruangan'));if((o.foto||[]).length>=6)return alert('Maksimal 6 foto.');
+  toast('Mengunggah foto dokumentasi...');resizeImg(f,1600).then(function(g){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){ok(String(r.result).split(',')[1])};r.onerror=function(){no('Foto tidak dapat dibaca')};r.readAsDataURL(g)})})
+   .then(function(b64){return api('uploadFile',U.nik,PW,'foto.jpg','image/jpeg',b64,'fotosrgd',lb)}).then(function(u){(o.foto=o.foto||[]).push({u:u,n:f.name||'foto.jpg'});var y=scrollY;sgView();scrollTo(0,y);toast('Foto terunggah')}).catch(function(e){alert(e)})}
+function sgFDel(sc,i){sgSc(sc).foto.splice(i,1);var y=scrollY;sgView();scrollTo(0,y)}
+function sgG(k,v){var e=SG.e;if(k=='kode'){var old=e.kode,nv=String(v||'').toUpperCase().replace(/\s+/g,'-');e.lantai.forEach(function(l,fi){l.ruang.forEach(function(r,ri){if(old&&r.kode.indexOf(old+'-')==0){r.kode=nv+r.kode.slice(old.length);var el=document.getElementById('sgk_'+fi+'_'+ri);if(el)el.value=r.kode}})});e.kode=nv}else e[k]=v}
+function sgF(fi,k,v){SG.e.lantai[fi][k]=k=='lv'?(parseInt(v,10)||0):v}
+function sgR(fi,ri,k,v){var r=SG.e.lantai[fi].ruang[ri];r[k]=k=='kode'?String(v||'').toUpperCase().replace(/\s+/g,'-'):v;if(k=='p'||k=='l'||k=='t'){var el=document.getElementById('sgm_'+fi+'_'+ri);if(el)el.textContent='Luas '+sgN(sgLuas(r))+' m\u00B2  \u2022  Volume '+sgN(sgVol(r))+' m\u00B3'}}
+function sgAutoR(fi,ri){var l=SG.e.lantai[fi],r=l.ruang[ri];r.kode=sgRoomKode(SG.e,l,r.id);var el=document.getElementById('sgk_'+fi+'_'+ri);if(el)el.value=r.kode}
+function sgAddR(fi){var l=SG.e.lantai[fi],r=sgNewRoom(l);l.ruang.push(r);var y=scrollY;sgView();scrollTo(0,y);setTimeout(function(){var el=document.getElementById('sgr_'+r.id);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});var i=el.querySelector('input');if(i)i.focus()}},40)}
+function sgDelR(fi,ri){var r=SG.e.lantai[fi].ruang[ri],go=function(){SG.e.lantai[fi].ruang.splice(ri,1);var y=scrollY;sgView();scrollTo(0,y)};if(r.nama||r.cat||(r.foto||[]).length)ask('Hapus ruangan "'+(r.nama||r.kode)+'" dari lantai ini?','Ya, Hapus',go,1);else go()}
+function sgDelF(fi){var e=SG.e;if(e.lantai.length<=1)return alert('Gedung harus memiliki minimal satu lantai.');var l=e.lantai[fi];ask('Hapus "'+l.nama+'" beserta '+l.ruang.length+' ruangan di dalamnya?','Ya, Hapus Lantai',function(){e.lantai.splice(fi,1);var y=scrollY;sgView();scrollTo(0,y)},1)}
+function sgAddF(dir){var e=SG.e,lvs=e.lantai.map(function(l){return l.lv}),lv=dir=='bawah'?Math.min(-1,Math.min.apply(null,lvs.concat([0]))-1):Math.max.apply(null,lvs.concat([0]))+1;
+  e.lantai.push({id:sgNid('l'),lv:lv,nama:lv<0?'Lantai B'+(-lv):'Lantai '+lv,ruang:[]});e.lantai.sort(function(a,b){return a.lv-b.lv});sgView();var id=e.lantai.filter(function(x){return x.lv==lv})[0].id;setTimeout(function(){var el=document.getElementById('sgf_'+id);if(el)el.scrollIntoView({block:'start',behavior:'smooth'})},40)}
+function sgRoomEd(r,fi,ri){var ix=fi+'_'+ri;
+  return '<div class=sgroom id="sgr_'+r.id+'"><div class=g><label class=w>Nama Ruangan<input value="'+esc(r.nama)+'" placeholder="Contoh: Ruang Kelas X-A / Laboratorium IPA" oninput="sgR('+fi+','+ri+',\'nama\',this.value)"></label>'
+   +'<label>Kode Ruangan<span class=n><input id="sgk_'+ix+'" value="'+esc(r.kode)+'" oninput="sgR('+fi+','+ri+',\'kode\',this.value)"><button type=button class=o title="Buat kode otomatis" onclick="sgAutoR('+fi+','+ri+')">Otomatis</button></span></label>'
+   +'<label>Panjang (m)<input type=number inputmode=decimal min=0 step=0.01 value="'+esc(r.p)+'" oninput="sgR('+fi+','+ri+',\'p\',this.value)"></label><label>Lebar (m)<input type=number inputmode=decimal min=0 step=0.01 value="'+esc(r.l)+'" oninput="sgR('+fi+','+ri+',\'l\',this.value)"></label><label>Tinggi (m)<input type=number inputmode=decimal min=0 step=0.01 value="'+esc(r.t)+'" oninput="sgR('+fi+','+ri+',\'t\',this.value)"></label>'
+   +'<label class=w>Catatan / Deskripsi Ruangan<textarea rows=2 placeholder="Fungsi ruangan, kondisi, fasilitas, dll." oninput="sgR('+fi+','+ri+',\'cat\',this.value)">'+esc(r.cat)+'</textarea></label></div>'
+   +'<div class=u><em id="sgm_'+ix+'">Luas '+esc(sgN(sgLuas(r)))+' m\u00B2  \u2022  Volume '+esc(sgN(sgVol(r)))+' m\u00B3</em><button type=button class=d onclick="sgDelR('+fi+','+ri+')">'+ic('trash',13)+' Hapus ruangan</button></div>'+sgFotos(r.foto,ix)+'</div>'}
+function sgEditor(){var e=SG.e;
+  return '<div class="box sge"><h3>'+ic('building',20)+' '+(e.id?'Edit Gedung Bangunan':'Tambah Gedung Bangunan')+'</h3>'
+   +'<div class=sgg><label>Nama Gedung Bangunan<input id=sgn value="'+esc(e.nama)+'" placeholder="Contoh: Gedung A / Laboratorium / Masjid" oninput="sgG(\'nama\',this.value)"></label>'
+   +'<label>Kode Gedung<span class=sgkw><input id=sgkd value="'+esc(e.kode)+'" oninput="sgG(\'kode\',this.value)"><button type=button class=o onclick="var v=sgAutoG();document.getElementById(\'sgkd\').value=v;sgG(\'kode\',v)">Otomatis</button></span></label></div>'
+   +'<label>Catatan / Deskripsi Gedung<textarea rows=2 placeholder="Fungsi gedung, tahun dibangun, kondisi umum, dll." oninput="sgG(\'catatan\',this.value)">'+esc(e.catatan)+'</textarea></label>'
+   +'<div style="margin-top:8px;font-size:12px;font-weight:700;color:var(--m)">Foto Dokumentasi Gedung</div>'+sgFotos(e.foto,'g')
+   +'<small style="color:#7b6a6d">Foto tersimpan di Google Drive: sarpras &rsaquo; Gedung Bangunan &rsaquo; Dokumentasi Gedung &amp; Bangunan.</small></div>'
+   +e.lantai.map(function(l,fi){return '<div class="box sgfl" id="sgf_'+l.id+'"><div class=sgfhd><label>Nama Lantai<input value="'+esc(l.nama)+'" placeholder="Contoh: Lantai 1 / Lantai Dasar / Basement" oninput="sgF('+fi+',\'nama\',this.value)"></label><label class=lv>No.<input type=number step=1 value="'+esc(l.lv)+'" title="Nomor urut lantai (negatif untuk lantai bawah)" oninput="sgF('+fi+',\'lv\',this.value)"></label>'
+     +'<button type=button onclick="sgAddR('+fi+')">'+ic('plus',14)+' Tambah Ruangan</button><button type=button class=d onclick="sgDelF('+fi+')">'+ic('trash',14)+' Hapus lantai</button></div>'
+     +(l.ruang.length?l.ruang.map(function(r,ri){return sgRoomEd(r,fi,ri)}).join(''):'<div class=em2 style="background:#faf5f6;border:1px dashed #dcc6c9;border-radius:10px;padding:10px;font-size:12.5px;color:#7b6a6d">Belum ada ruangan di lantai ini. Klik "Tambah Ruangan".</div>')+'</div>'}).join('')
+   +'<div class=sgbt style="margin:12px 0 0"><button class=o type=button onclick="sgAddF(\'atas\')">'+ic('plus',14)+' Tambah Lantai (ke atas)</button><button class=o type=button onclick="sgAddF(\'bawah\')">'+ic('plus',14)+' Tambah Lantai Bawah</button></div>'
+   +'<div class=sgsave><button class=o type=button onclick="sgCancel()">Batal</button><button type=button id=sgsv onclick="sgSave(this)">'+ic('save',15)+' Simpan Gedung</button></div>'}
+function sgSave(b){var e=SG.e,er=function(m){alert(m);return false};
+  if(!String(e.nama||'').trim())return er('Nama gedung bangunan wajib diisi.');if(!String(e.kode||'').trim())return er('Kode gedung wajib diisi.');
+  var dg=SG.list.filter(function(g){return g.id!=e.id&&g.kode==String(e.kode).trim().toUpperCase()})[0];if(dg)return er('Kode gedung "'+e.kode+'" sudah dipakai oleh gedung "'+dg.nama+'".');
+  var used={};SG.list.forEach(function(g){if(g.id!=e.id)(g.lantai||[]).forEach(function(l){(l.ruang||[]).forEach(function(r){used[r.kode]=g.nama})})});var lv={},mine={};
+  for(var i=0;i<e.lantai.length;i++){var l=e.lantai[i];if(!String(l.nama||'').trim())return er('Nama lantai wajib diisi (lantai urutan ke-'+(i+1)+').');if(lv[l.lv]!=null)return er('Nomor lantai '+l.lv+' dipakai dua kali. Setiap lantai harus punya nomor berbeda.');lv[l.lv]=1;
+    for(var j=0;j<l.ruang.length;j++){var r=l.ruang[j],k=String(r.kode||'').trim().toUpperCase();if(!String(r.nama||'').trim())return er('Nama ruangan wajib diisi (pada "'+l.nama+'").');if(!k)return er('Kode ruangan wajib diisi: '+r.nama);if(used[k])return er('Kode ruangan "'+k+'" sudah dipakai di gedung "'+used[k]+'".');if(mine[k])return er('Kode ruangan "'+k+'" muncul dua kali pada gedung ini.');mine[k]=1}}
+  if(b)b.disabled=true;toast('Menyimpan...');
+  api('srGdSave',U.nik,PW,e).then(function(g){var i=SG.list.findIndex(function(x){return x.id==g.id});if(i>=0)SG.list[i]=g;else SG.list.push(g);SG.list.sort(function(a,b){return knat(a.kode,b.kode)});SG.e=null;sgView();scrollTo(0,0);toast('Gedung tersimpan')}).catch(function(x){if(b)b.disabled=false;alert(String(x&&x.message||x).replace(/^Error:\s*/,''))})}
+/* ---------- export ---------- */
+function sgP(){var gs=sgFiltered(),bl=[];
+  bl.push({banner:'Ringkasan Gedung Bangunan',sub:(SG.q.trim()?'Hasil pencarian "'+SG.q.trim()+'"  \u2022  ':'')+gs.length+' gedung',cols:[{h:'No',w:5,a:'center',t:1},{h:'Kode Gedung',w:14,t:1},{h:'Nama Gedung Bangunan',w:27},{h:'Lantai',w:8,a:'center'},{h:'Ruangan',w:9,a:'center'},{h:'Total Luas (m\u00B2)',w:12,a:'center'},{h:'Catatan / Deskripsi',w:25}],
+    rows:gs.map(function(g,i){return [String(i+1),g.kode,g.nama,String((g.lantai||[]).length),String(sgGRooms(g)),sgN(sgGLuas(g)),g.catatan||'-']})});
+  gs.forEach(function(g){var rows=[],no=0;(g.lantai||[]).forEach(function(l){(l.ruang||[]).forEach(function(r){rows.push([String(++no),l.nama,r.kode,r.nama,sgN(r.p)+' \u00D7 '+sgN(r.l)+' \u00D7 '+sgN(r.t),sgN(sgLuas(r)),r.cat||'-'])})});
+    bl.push({banner:g.nama+' ('+g.kode+')',sub:(g.lantai||[]).length+' lantai  \u2022  '+sgGRooms(g)+' ruangan  \u2022  total luas '+sgN(sgGLuas(g))+' m\u00B2'+(g.catatan?'  \u2022  '+g.catatan:''),
+      cols:[{h:'No',w:5,a:'center',t:1},{h:'Lantai',w:13,t:1},{h:'Kode Ruangan',w:16,t:1},{h:'Nama Ruangan',w:22},{h:'P \u00D7 L \u00D7 T (m)',w:14,a:'center',t:1},{h:'Luas (m\u00B2)',w:9,a:'center'},{h:'Catatan / Deskripsi',w:21}],rows:rows.length?rows:[['','','','Belum ada ruangan','','','']]})});
+  return {title:'DATA GEDUNG BANGUNAN',orient:'l',blocks:bl}}
+function sgOut(t){if(!SG.list.length)return alert('Belum ada data gedung bangunan untuk diexport.');var P=sgP();if(P.blocks.length<2)return alert('Tidak ada data yang cocok dengan pencarian.');xdOut(P,t,'Gedung Bangunan')}
 </script>
 </body></html>
