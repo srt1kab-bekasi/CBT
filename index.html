@@ -8046,6 +8046,79 @@ asQ=dbn(asQ);sgSrch=dbn(sgSrch);brSrch=dbn(brSrch);stHq=dbn(stHq);
 .lmdl{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:#7a4a00;background:#fff8ea;border:1px solid #f1dcae;border-radius:10px;padding:5px 10px;margin-top:6px}
 .lmasm{display:flex;gap:10px;align-items:center;background:#f6f0fc;border:1px dashed #b79be3;border-radius:12px;padding:8px 12px;margin-top:8px;font-size:12.5px}.lmasm svg{color:#8a63d2;flex:none}
 .lmx{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.lmx button{margin:0;padding:6px 13px;font-size:12.5px;width:auto;height:auto}
+
+/* ---- LMS v2 ---- */
+.lmvk{font-size:9.5px;font-weight:800;letter-spacing:.8px;color:#fff;background:#6b7b8c;border-radius:14px;padding:3px 10px}
+.lmvk.doc{background:#2b6cd4}.lmvk.slide{background:#d9822b}.lmvk.yt,.lmvk.vid{background:#c2185b}.lmvk.aud{background:#8a63d2}.lmvk.img{background:#1f9ac0}
+.lmvf.v916{aspect-ratio:9/16;max-width:min(360px,100%)}.lmvf.vid{background:#000}.lmvf.vid video{object-fit:contain}
+.lmhint{text-align:center;font-size:11.5px;color:#7b6a6d;margin:-2px 0 10px}.lmhint a{color:var(--m);font-weight:700}
+.lmau{position:relative;display:flex;gap:18px;align-items:center;margin:12px auto;padding:18px 20px;max-width:740px;border-radius:22px;color:#fff;background:linear-gradient(120deg,#4a2487,#8a63d2 60%,#c17cf0);box-shadow:0 10px 28px rgba(90,40,150,.3);overflow:hidden}
+.lmau:before{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.12)}
+.lmaue{display:flex;gap:5px;align-items:flex-end;height:70px;flex:none;width:76px;justify-content:center;z-index:1}
+.lmaue i{width:8px;border-radius:5px;background:rgba(255,255,255,.88);height:28%;transition:height .25s}
+.lmau[data-playing="1"] .lmaue i{animation:lmeq 1s ease-in-out infinite}.lmaue i:nth-child(2){animation-delay:.12s!important}.lmaue i:nth-child(3){animation-delay:.3s!important}.lmaue i:nth-child(4){animation-delay:.18s!important}.lmaue i:nth-child(5){animation-delay:.4s!important}.lmaue i:nth-child(6){animation-delay:.08s!important}
+@keyframes lmeq{0%,100%{height:22%}50%{height:96%}}
+.lmaum{flex:1;min-width:0;display:grid;gap:9px;z-index:1}
+.lmaun b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}.lmaun small{color:rgba(255,255,255,.85);font-size:11.5px}.lmvb a.btn{color:var(--m)}
+.lmaut{display:flex;align-items:center;gap:9px;font-size:11.5px;font-variant-numeric:tabular-nums}
+.lmaur{flex:1;margin:0;accent-color:#fff;height:5px;padding:0;background:transparent;border:0;box-shadow:none}
+.lmaub{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.lmaub button{margin:0;border-radius:20px;padding:5px 12px;font-size:11.5px;width:auto;height:auto;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.38);color:#fff;box-shadow:none;text-transform:none;letter-spacing:0}
+.lmaub button.lmaup{width:50px;height:50px;border-radius:50%;background:#fff;color:#6a3aa8;display:grid;place-items:center;padding:0;border:0;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.lmaup .lmq{display:none}.lmau[data-playing="1"] .lmaup .lmp{display:none}.lmau[data-playing="1"] .lmaup .lmq{display:block}
+.lmavv{display:flex;align-items:center;gap:6px;margin:0 0 0 auto;font-size:11px;color:#fff;text-transform:none;letter-spacing:0;font-weight:600}.lmavv input{width:84px;margin:0;accent-color:#fff;padding:0;height:4px;border:0;background:transparent;box-shadow:none}
+@media(max-width:520px){.lmau{flex-direction:column;align-items:stretch}.lmaue{width:100%;height:46px}.lmavv{margin-left:0}}
+.lmim{margin:12px auto;max-width:900px;border-radius:16px;overflow:hidden;background:repeating-conic-gradient(#f3eeef 0% 25%,#fff 0% 50%) 50% / 22px 22px;border:1px solid #e3d5d7;box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.lmimc{overflow:auto;max-height:78vh;text-align:center;line-height:0}.lmimc img{max-width:100%;max-height:78vh;display:inline-block;cursor:zoom-in}
+.lmimt{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px;background:rgba(255,255,255,.94);border-top:1px solid #eadfe0}
+.lmimt button{margin:0;padding:5px 13px;font-size:12px;width:auto;height:auto;border-radius:20px;min-width:34px}.lmiz{font-size:12px;font-weight:800;color:#5d5154;min-width:50px;text-align:center}
+.lmim:fullscreen{max-width:none;border-radius:0;display:flex;flex-direction:column;background-color:#111}.lmim:fullscreen .lmimc{max-height:none;flex:1}.lmim:fullscreen img{max-height:calc(100vh - 56px)}
+.lmhero{position:relative;display:flex;gap:18px;align-items:center;padding:24px 26px;border-radius:24px;color:#fff;background:linear-gradient(120deg,var(--c2),var(--c1) 58%,var(--c3));box-shadow:0 12px 30px rgba(0,0,0,.2);overflow:hidden;margin-bottom:14px}
+.lmhero:before,.lmhero:after,.lmgc:before{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}.lmhero:before{width:240px;height:240px;right:-70px;top:-90px}.lmhero:after{width:150px;height:150px;right:130px;bottom:-80px}
+.lmhi{flex:none;width:78px;height:78px;border-radius:24px;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:30px;font-weight:800;letter-spacing:1px;border:2px solid rgba(255,255,255,.45);z-index:1}
+.lmht{position:relative;z-index:1;min-width:0}.lmht small{opacity:.92;font-size:12.5px}.lmht h2{margin:2px 0 9px;color:#fff;font-size:25px;line-height:1.15}.lmht p{margin:10px 0 0;font-size:13px;opacity:.95;line-height:1.5}
+.lmhc{display:flex;gap:6px;flex-wrap:wrap}.lmhc span{background:rgba(255,255,255,.22);border-radius:20px;padding:3px 12px;font-size:11.5px;font-weight:700}
+.lmstat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.lmst{background:#fff;border:1.5px solid rgba(var(--mr),.12);border-radius:16px;padding:12px 14px;display:flex;gap:11px;align-items:center;box-shadow:0 2px 8px rgba(var(--mr),.05)}
+.lmsi{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;color:var(--ac);background:#f4eef0;flex:none}.lmst b{display:block;font-size:21px;line-height:1.1;color:#231c1f}.lmst small{font-size:11.5px;color:#7b6a6d}
+@media(max-width:720px){.lmstat{grid-template-columns:repeat(2,minmax(0,1fr))}.lmhero{padding:18px}.lmht h2{font-size:20px}.lmhi{width:56px;height:56px;font-size:22px;border-radius:18px}}
+.lmbkl{display:flex;gap:12px;align-items:center;padding:11px 15px;border-radius:16px;background:linear-gradient(135deg,#fff8e6,#ffefc6);border:1.5px solid #f1d899;color:#7a4a00;margin-bottom:12px}.lmbkl>svg{color:#d9822b;fill:#d9822b;flex:none;width:26px;height:26px}.lmbkl small{display:block;opacity:.85;margin-top:1px}.lmbkl button{margin:0 0 0 auto;width:auto}
+.lmbkl.off{background:#f6f1f2;border-color:#e6d8da;color:#7b6a6d}.lmbkl.off>svg{fill:none;color:#9a8b8e}
+.lmtl{position:relative;padding-left:30px}.lmtl:before{content:"";position:absolute;left:13px;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(var(--m),rgba(var(--mr),.12))}
+.lmpg{position:relative;margin-bottom:20px}.lmpgh{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px;min-height:30px;padding-left:12px}
+.lmpn{position:absolute;left:-30px;top:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--m),var(--m2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;box-shadow:0 0 0 4px #fff,0 0 0 6px rgba(var(--mr),.22)}
+.lmpt2 b{font-size:15.5px;color:#2a2326}.lmpt2 small{display:block;font-size:11.5px;color:#7b6a6d}
+.lmpga{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}.lmpga button{margin:0;padding:5px 11px;font-size:11.5px;width:auto;height:auto}
+.lmc.gv{background:linear-gradient(135deg,#fff,#f3fbf5 130%);border-color:#bfe3c4}
+.lmc.last{border-color:#e0a21b;box-shadow:0 0 0 3px rgba(224,162,27,.25),0 8px 22px rgba(224,162,27,.22)}
+.lmbk{margin:0;display:inline-flex;gap:6px;align-items:center;padding:4px 12px 4px 8px;border-radius:20px;border:1.5px dashed #cdb89a;background:#fff;color:#8a7b7e;font-size:11.5px;font-weight:700;cursor:pointer;box-shadow:none;width:auto;height:auto;text-transform:none;letter-spacing:0;transition:all .15s}
+.lmbk .lmbi{fill:none;width:16px;height:16px}.lmbk:hover:not(:disabled){border-color:#e0a21b;color:#b45f06;background:#fff8ea}
+.lmbk.on{background:linear-gradient(135deg,#2e8b6f,#3aa07f);border:1.5px solid #2e8b6f;color:#fff}.lmbk.on .lmbi{fill:currentColor}.lmbk:disabled{cursor:default;opacity:.85}
+.lmlast{display:inline-flex;gap:5px;align-items:center;background:linear-gradient(135deg,#e0a21b,#d9822b);color:#fff;border-radius:20px;padding:2px 11px 2px 7px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(224,162,27,.4)}.lmlast .lmbi{fill:currentColor;width:14px;height:14px}
+.lmft{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px dashed #eadfe0}.lmft .lmx{margin:0 0 0 auto}
+.lmvs{display:inline-flex;border-radius:24px;overflow:hidden;border:1.5px solid #e0d2d4;background:#fff}
+.lmvs button{margin:0;border-radius:0;box-shadow:none;background:#fff;color:#7b6a6d;padding:6px 14px;font-size:12px;font-weight:700;display:inline-flex;gap:6px;align-items:center;width:auto;height:auto;border:0;text-transform:none;letter-spacing:0}
+.lmvs button.on{background:linear-gradient(135deg,#2e8b6f,#3aa07f);color:#fff}.lmvs button.on.lock{background:linear-gradient(135deg,#6b7b8c,#4f5d6b)}.lmvs button:disabled{cursor:default}
+.lmgl{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.lmg{background:#fff;border-radius:22px;border:1.5px solid rgba(var(--mr),.12);overflow:hidden;box-shadow:0 4px 16px rgba(var(--mr),.08);transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column}.lmg:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(var(--mr),.18)}.lmg.arsip{opacity:.75}
+.lmgc{position:relative;display:flex;gap:13px;align-items:center;padding:20px 18px 18px;color:#fff;background:linear-gradient(120deg,var(--c2),var(--c1) 58%,var(--c3));overflow:hidden}.lmgc:before{width:150px;height:150px;right:-40px;top:-60px}
+.lmgi{flex:none;width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.45);display:grid;place-items:center;font-weight:800;font-size:20px;z-index:1}
+.lmgt{z-index:1;min-width:0}.lmgt h4{margin:0;color:#fff;font-size:16.5px;line-height:1.25}.lmgt small{color:rgba(255,255,255,.92);font-size:12px}.lmht small{color:rgba(255,255,255,.92)}
+.lmarc{position:absolute;right:12px;top:10px;background:rgba(0,0,0,.38);border-radius:20px;padding:2px 11px;font-size:10.5px;font-weight:800;z-index:1}
+.lmgb{padding:14px 16px 16px;display:grid;gap:11px;flex:1;align-content:start}
+.lmgs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#5d5154}.lmgs span{display:inline-flex;gap:5px;align-items:center}.lmgs svg{color:var(--m)}.lmgs b{color:#231c1f}
+.lmprog{height:7px;border-radius:7px;background:#f0e8ea;overflow:hidden}.lmprog i{display:block;height:100%;background:linear-gradient(90deg,#e0a21b,#2e8b6f);border-radius:7px}
+.lmgbk{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#7a4a00;background:#fff8ea;border:1px solid #f1dcae;border-radius:12px;padding:7px 11px}.lmgbk .lmbi{fill:#d9822b;color:#d9822b;flex:none;width:15px;height:15px;margin-top:1px}.lmgbk.off{background:#f6f1f2;border-color:#e6d8da;color:#8a7b8e}.lmgbk.off .lmbi{fill:none;color:#9a8b8e}
+.lfvw{display:grid;gap:10px;margin-top:12px}.lfvt{font-size:12px;font-weight:800;color:#6a5a5d}
+.lfvs{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.lfvs{grid-template-columns:1fr}}
+.lfvo{margin:0;display:flex;gap:12px;align-items:center;text-align:left;padding:12px 14px;border-radius:16px;border:2px solid #e6d8da;background:#fff;color:#2a2326;box-shadow:none;width:auto;height:auto;text-transform:none;letter-spacing:0;font-weight:400;position:relative}
+.lfvo b{display:block;font-size:13.5px;color:#2a2326}.lfvo small{display:block;font-size:11.5px;color:#7b6a6d;margin-top:2px;line-height:1.35}
+.lfvi{flex:none;width:40px;height:40px;border-radius:13px;background:#f4eef0;color:#6a5a5d;display:grid;place-items:center}
+.lfvo.on{border-color:#2e8b6f;background:linear-gradient(135deg,#f3fbf5,#e6f5ea);box-shadow:0 4px 14px rgba(46,139,111,.18)}.lfvo.on .lfvi{background:#2e8b6f;color:#fff}.lfvo.lock.on{border-color:#6b7b8c;background:linear-gradient(135deg,#f4f6f8,#e9edf1);box-shadow:0 4px 14px rgba(107,123,140,.2)}.lfvo.lock.on .lfvi{background:#6b7b8c}
+.lfvo.on:after{content:"\2713";position:absolute;right:10px;top:8px;width:20px;height:20px;border-radius:50%;background:#2e8b6f;color:#fff;font-size:12px;display:grid;place-items:center;font-weight:800}.lfvo.lock.on:after{background:#6b7b8c}
+.lfgv{display:flex;gap:12px;align-items:center;cursor:pointer;margin:0;padding:11px 14px;border:2px dashed #e0b95a;border-radius:16px;background:#fffaf0;text-transform:none;letter-spacing:0;font-weight:400}
+.lfgv input{position:absolute;opacity:0;width:0;height:0;margin:0}.lfgs{flex:none;width:44px;height:25px;border-radius:25px;background:#d9cdb8;position:relative;transition:background .2s}.lfgs:after{content:"";position:absolute;left:3px;top:3px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.lfgv input:checked+.lfgs{background:linear-gradient(135deg,#e0a21b,#b45f06)}.lfgv input:checked+.lfgs:after{transform:translateX(19px)}.lfgv b{display:block;font-size:13.5px;color:#5c3a00}.lfgv small{display:block;font-size:11.5px;color:#7a6240;margin-top:2px}
 .lsg.arsip{opacity:.7}
 .lsgh{padding:12px 16px}.lsdk{font-size:13px;color:#5d5154;margin:8px 0 0;line-height:1.5}
 .lsadd{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}.lsadd b{font-size:12.5px;color:#6a5a5d}.lsadd button{margin:0;color:#fff}
@@ -8937,5 +9010,137 @@ function akProfH(){var i=AK.i,row=function(l,v){return '<div class=akpr><small>'
 PTT.lms='GRUP KELAS - LMS';
 if(!NGD.some(function(d){return d.k=='lms'}))NGD.splice(1,0,{k:'lms',l:'Grup Kelas - LMS',i:'school',s:['lms']});
 var _lmHT=hkTabs;hkTabs=function(){var a=_lmHT.apply(this,arguments);if(!can('lms','v')||a.some(function(x){return x[0]=='lms'}))return a;var i=a.map(function(x){return x[0]}).indexOf('jpl');if(i<0)i=a.map(function(x){return x[0]}).indexOf('jw');a.splice(i>=0?i+1:a.length,0,['lms','Grup Kelas - LMS','school']);return a};
+</script>
+
+<script>
+/* ===== LMS v2: viewer baru, tampilan lebih menarik, atur tampil / hanya guru, dan bookmark "sudah diberikan" ===== */
+/* YouTube butuh referrer (error 153 "Konfigurasi error" bila referrer dimatikan): kebijakan referrer halaman dipastikan aman */
+(function(){if(!document.querySelector('meta[name=referrer]')){var m=document.createElement('meta');m.name='referrer';m.content='strict-origin-when-cross-origin';document.head.appendChild(m)}})();
+var LMBK='<svg class=lmbi viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.2L5 21V4a1 1 0 0 1 1-1z"/></svg>';
+function lmShade(h,f){h=String(h||'#7a1022').replace('#','');var n=parseInt(h,16),r=(n>>16)&255,g=(n>>8)&255,b=n&255,t=f<0?0:255,p=Math.abs(f);r=Math.round((t-r)*p+r);g=Math.round((t-g)*p+g);b=Math.round((t-b)*p+b);return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)}
+function lmIni(s){var w=String(s||'?').replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/);return ((w[0]||'?')[0]+(w[1]?w[1][0]:((w[0]||'')[1]||''))).toUpperCase()}
+function lmCover(g){var b=(typeof mpc=='function'?mpc(g.mapel||g.nama||'x'):{ac:'#7a1022'}).ac;return 'style="--c1:'+b+';--c2:'+lmShade(b,-.38)+';--c3:'+lmShade(b,.32)+'"'}
+/* ---------- tipe tampilan: doc (F4) | slide | yt | vid (ukuran asli video) | aud (pemutar) | img (penampil) | ext ---------- */
+function lmOri(){try{return /^https?:$/.test(location.protocol)?'&origin='+encodeURIComponent(location.origin):''}catch(e){return ''}}
+function lmEmb(a){var DL=function(id){return 'https://drive.google.com/uc?export=download&id='+id},PV=function(id){return 'https://drive.google.com/file/d/'+id+'/preview'},DS=function(id){return 'https://drive.usercontent.google.com/download?id='+id+'&export=download&confirm=t'};
+  if(a.k=='f'){var kd=lmKind(a.n,a.m),b={name:a.n,dl:DL(a.id),kind:kd,pv:PV(a.id)};
+    if(kd=='video')return Object.assign(b,{mode:'vid',src:DS(a.id)});if(kd=='audio')return Object.assign(b,{mode:'aud',src:DS(a.id)});
+    if(kd=='image')return Object.assign(b,{mode:'img',src:'https://drive.google.com/thumbnail?id='+a.id+'&sz=w2000',src2:'https://drive.google.com/uc?export=view&id='+a.id});
+    return Object.assign(b,{mode:'doc',src:PV(a.id)})}
+  var u=String(a.u||''),nm=a.n||u,y=lmYt(u);
+  if(y)return {mode:'yt',src:'https://www.youtube.com/embed/'+y+'?rel=0&modestbranding=1&playsinline=1'+lmOri(),port:/youtube\.com\/shorts\//.test(u),name:nm,dl:'https://www.youtube.com/watch?v='+y,kind:'yt'};
+  var vm=/vimeo\.com\/(?:video\/)?(\d+)/.exec(u);if(vm)return {mode:'yt',src:'https://player.vimeo.com/video/'+vm[1],name:nm,dl:u,kind:'yt'};
+  var d=lmDrvId(u);if(d)return {mode:'doc',src:PV(d),pv:PV(d),name:nm,dl:DL(d),kind:'drive'};
+  var g=/docs\.google\.com\/(document|spreadsheets|presentation|forms)\/d\/(?:e\/)?([\w-]+)/.exec(u);
+  if(g){var t=g[1],id=g[2];if(t=='presentation')return {mode:'slide',src:'https://docs.google.com/presentation/d/'+id+'/embed?start=false&loop=false',name:nm,dl:u,kind:'drive'};
+    if(t=='forms')return {mode:'doc',src:'https://docs.google.com/forms/d/e/'+id+'/viewform?embedded=true',name:nm,dl:u,kind:'drive'};return {mode:'doc',src:'https://docs.google.com/'+t+'/d/'+id+'/preview',name:nm,dl:u,kind:'drive'}}
+  var e=lmExt(u);
+  if(/^(mp4|webm|ogv)$/.test(e))return {mode:'vid',src:u,name:nm,dl:u,kind:'video'};if(/^(mp3|wav|ogg|m4a|aac)$/.test(e))return {mode:'aud',src:u,name:nm,dl:u,kind:'audio'};if(/^(png|jpe?g|gif|webp)$/.test(e))return {mode:'img',src:u,name:nm,dl:u,kind:'image'};
+  if(e=='pdf')return {mode:'doc',src:u,name:nm,dl:u,kind:'pdf'};if(/^(docx?|xlsx?|pptx?)$/.test(e))return {mode:'doc',src:'https://view.officeapps.live.com/op/embed.aspx?src='+encodeURIComponent(u),name:nm,dl:u,kind:'word'};
+  return {mode:'ext',src:u,name:nm,dl:u,kind:'link'}}
+function lmChips(key,it){return lmAtts(it).map(function(x,i){var em=lmEmb(x),kd=x.k=='f'?lmKind(x.n,x.m):(lmYt(x.u)?'yt':((lmDrvId(x.u)||/docs\.google\.com/.test(x.u))?'drive':(em.mode=='ext'?'link':lmKind(x.u)))),tg={pdf:'PDF',word:'DOC',excel:'XLS',ppt:'PPT',audio:'AUDIO',video:'VIDEO',image:'IMG',yt:'VIDEO',drive:'DRIVE',link:'LINK',file:'FILE'}[kd]||'FILE';
+  return '<button type=button class="lmch '+kd+'" data-lm="'+esc(key)+'" data-i='+i+' onclick="lmOpen(\''+esc(key)+'\','+i+')" title="'+esc(x.n||x.u)+'"><i>'+tg+'</i><span>'+esc(x.n||x.u)+'</span></button>'}).join('')}
+function lmFmtT(s){if(!isFinite(s))return '0:00';s=Math.floor(s);var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x}
+function lmAuH(e){var P='<svg class=lmp viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',Q='<svg class=lmq viewBox="0 0 24 24" width="24" height="24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
+  return '<div class=lmau data-playing=0><div class=lmaue><i></i><i></i><i></i><i></i><i></i><i></i></div><div class=lmaum><div class=lmaun><b title="'+esc(e.name)+'">'+esc(e.name)+'</b><small>Pemutar suara</small></div>'
+   +'<div class=lmaut><span class=lmac>0:00</span><input type=range class=lmaur min=0 max=1000 value=0 oninput="lmAu(this,\'s\')" aria-label="Posisi"><span class=lmad>0:00</span></div>'
+   +'<div class=lmaub><button type=button class=lmaup onclick="lmAu(this,\'t\')" aria-label="Putar / jeda">'+P+Q+'</button><button type=button onclick="lmAu(this,\'b\')">\u221210 dtk</button><button type=button onclick="lmAu(this,\'f\')">+10 dtk</button><button type=button class=lmasp onclick="lmAu(this,\'r\')">1\u00D7</button>'
+   +'<label class=lmavv>Volume <input type=range min=0 max=100 value=100 oninput="lmAu(this,\'v\')"></label></div></div>'
+   +'<audio src="'+esc(e.src)+'" preload=metadata onloadedmetadata="lmAuM(this)" ontimeupdate="lmAuT(this)" onplay="lmAuP(this,1)" onpause="lmAuP(this,0)" onended="lmAuP(this,0)" onerror="lmFb(this)"></audio></div>'}
+function lmAu(el,a){var box=el.closest('.lmau'),au=box.querySelector('audio');
+  if(a=='t'){if(au.paused){var p=au.play();if(p&&p.catch)p.catch(function(){lmFb(au)})}else au.pause()}else if(a=='s'){if(au.duration)au.currentTime=au.duration*el.value/1000}
+  else if(a=='b')au.currentTime=Math.max(0,au.currentTime-10);else if(a=='f')au.currentTime=Math.min(au.duration||1e9,au.currentTime+10);
+  else if(a=='r'){var sp=[1,1.25,1.5,2,0.75],i=(sp.indexOf(au.playbackRate)+1)%sp.length;au.playbackRate=sp[i];el.textContent=sp[i]+'\u00D7'}else if(a=='v')au.volume=el.value/100}
+function lmAuM(au){var b=au.closest('.lmau');if(b)b.querySelector('.lmad').textContent=lmFmtT(au.duration)}
+function lmAuT(au){var b=au.closest('.lmau');if(!b)return;b.querySelector('.lmac').textContent=lmFmtT(au.currentTime);if(au.duration)b.querySelector('.lmaur').value=Math.round(au.currentTime*1000/au.duration)}
+function lmAuP(au,on){var b=au.closest('.lmau');if(b)b.dataset.playing=on?1:0}
+function lmImH(e){return '<div class=lmim data-z=0><div class=lmimc><img src="'+esc(e.src)+'" data-s2="'+esc(e.src2||'')+'" alt="'+esc(e.name)+'" onerror="lmImE(this)" ondblclick="lmIm(this,\'t\')"></div><div class=lmimt><button type=button class=o onclick="lmIm(this,\'-\')" title="Perkecil">\u2212</button><span class=lmiz>Pas</span><button type=button class=o onclick="lmIm(this,\'+\')" title="Perbesar">+</button><button type=button class=o onclick="lmIm(this,\'f\')">Pas layar</button><button type=button class=o onclick="lmIm(this,\'o\')">Ukuran asli</button></div></div>'}
+function lmIm(b,a){var box=b.closest('.lmim'),im=box.querySelector('img'),z=+box.dataset.z||0;if(a=='t')a=z==0?'o':'f';if(a=='f')z=0;else if(a=='o')z=-1;else if(a=='+')z=z<=0?1.25:Math.min(4,z*1.25);else z=z<=0?0:Math.max(0.25,z/1.25);
+  box.dataset.z=z;if(z==0){im.style.width='';im.style.maxWidth='100%';im.style.maxHeight='78vh';im.style.cursor='zoom-in'}else if(z==-1){im.style.width='auto';im.style.maxWidth='none';im.style.maxHeight='none';im.style.cursor='zoom-out'}else{im.style.width=(z*100)+'%';im.style.maxWidth='none';im.style.maxHeight='none';im.style.cursor='zoom-out'}
+  box.querySelector('.lmiz').textContent=z==0?'Pas':z==-1?'100%':Math.round(z*100)+'%'}
+function lmImE(im){var s2=im.getAttribute('data-s2');if(s2){im.setAttribute('data-s2','');im.src=s2;return}lmFb(im)}
+/* pemutar bawaan gagal -> pratinjau Google Drive (bila ada) */
+function lmFb(el){var root=el.closest('.lmv');if(!root||root.dataset.fb)return;root.dataset.fb=1;var pv=root.dataset.pv,body=root.querySelector('.lmvf,.lmau,.lmim');if(!body)return;
+  body.outerHTML=pv?'<div class="lmvf v16"><iframe src="'+esc(pv)+'" allow="autoplay; fullscreen" allowfullscreen loading=lazy></iframe></div><div class=lmhint>Pemutar langsung tidak tersedia, ditampilkan lewat pratinjau Google Drive.</div>':'<div class=lmext>'+ic('alert',26)+'<p>File tidak dapat ditampilkan. Gunakan tombol Unduh / Buka sumber.</p></div>'}
+/* video: bingkai mengikuti ukuran asli video (lebar x tinggi) */
+function lmVm(v){var f=v.closest('.lmvf');if(!f||!v.videoWidth||!v.videoHeight)return;var r=v.videoWidth/v.videoHeight,mw=Math.max(240,(f.parentNode.clientWidth||820)),mh=window.innerHeight*0.82,w=Math.min(mw,mh*r,Math.max(v.videoWidth,320));f.style.aspectRatio=v.videoWidth+' / '+v.videoHeight;f.style.width=Math.round(w)+'px';f.style.maxWidth='100%'}
+function lmVH(e){var bt=function(i,t,js){return '<button type=button class=o onclick="'+js+'">'+ic(i,14)+' '+t+'</button>'},tg={doc:'DOKUMEN',slide:'SLIDE',yt:'VIDEO',vid:'VIDEO',aud:'AUDIO',img:'GAMBAR',ext:'TAUTAN'}[e.mode]||'FILE',ytl=e.kind=='yt'||e.kind=='link';
+  var h='<div class=lmv data-pv="'+esc(e.pv||'')+'"><div class=lmvb><span class="lmvk '+e.mode+'">'+tg+'</span><b title="'+esc(e.name)+'">'+esc(e.name)+'</b><span class=lmsp></span>'+((e.mode=='doc'||e.mode=='slide')?bt('layers','Bingkai','lmRatio(this)'):'')+((e.mode!='ext'&&e.mode!='aud')?bt('eye','Layar penuh','lmFs(this)'):'')
+   +(e.dl?'<a class="btn o" href="'+esc(e.dl)+'" target=_blank rel=noopener>'+ic(ytl?'link':'download',14)+' '+(e.kind=='yt'?'Buka di YouTube':e.kind=='link'?'Buka sumber':'Unduh')+'</a>':'')+'<button type=button class=o onclick="lmClose(this)" title="Tutup">&times;</button></div>';
+  var rp='strict-origin-when-cross-origin';
+  if(e.mode=='ext')return h+'<div class=lmext>'+ic('link',26)+'<p>Tautan ini tidak dapat ditampilkan di dalam halaman.</p><a class=btn href="'+esc(e.src)+'" target=_blank rel=noopener>Buka tautan</a></div></div>';
+  if(e.mode=='doc')return h+'<div class="lmvf f4"><iframe src="'+esc(e.src)+'" allow="fullscreen" allowfullscreen loading=lazy referrerpolicy="'+rp+'"></iframe></div></div>';
+  if(e.mode=='slide')return h+'<div class="lmvf v16"><iframe src="'+esc(e.src)+'" allow="fullscreen" allowfullscreen loading=lazy referrerpolicy="'+rp+'"></iframe></div></div>';
+  if(e.mode=='yt')return h+'<div class="lmvf '+(e.port?'v916':'v16')+'"><iframe src="'+esc(e.src)+'" title="'+esc(e.name)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen loading=lazy referrerpolicy="'+rp+'"></iframe></div><div class=lmhint>Video tidak tampil? <a href="'+esc(e.dl)+'" target=_blank rel=noopener>Buka di YouTube</a></div></div>';
+  if(e.mode=='vid')return h+'<div class="lmvf vid" style="aspect-ratio:16 / 9"><video src="'+esc(e.src)+'" controls playsinline preload=metadata onloadedmetadata="lmVm(this)" onerror="lmFb(this)"></video></div></div>';
+  if(e.mode=='aud')return h+lmAuH(e)+'</div>';
+  return h+lmImH(e)+'</div>'}
+function lmRatio(btn){var f=btn.closest('.lmv').querySelector('.lmvf');if(!f)return;var v=f.classList.contains('v16');f.classList.toggle('v16',!v);f.classList.toggle('f4',v)}
+function lmFs(btn){var f=btn.closest('.lmv').querySelector('.lmvf,.lmim');if(!f)return;var fn=f.requestFullscreen||f.webkitRequestFullscreen;if(fn)fn.call(f)}
+/* ---------- linimasa pertemuan ---------- */
+function lmGroups(items,asc){var m={},ks=[];items.forEach(function(i){var k=i.pert||0;if(!m[k]){m[k]=[];ks.push(k)}m[k].push(i)});ks.sort(function(a,b){if(a==0)return 1;if(b==0)return -1;return asc?a-b:b-a});return ks.map(function(k){return {pert:k,items:m[k].sort(function(a,b){return (a.urut||0)-(b.urut||0)})}})}
+function lmTL(items,ctx,teacher){var gs=lmGroups(items,ctx.asc);return '<div class=lmtl>'+gs.map(function(g){var tg=g.items.filter(function(i){return i.tgl})[0],hid=g.items.filter(function(i){return i.tampil===false}).length,vis=g.items.length-hid;
+  return '<section class=lmpg><div class=lmpgh><span class=lmpn>'+(g.pert?g.pert:'\u2022')+'</span><div class=lmpt2><b>'+(g.pert?'Pertemuan '+g.pert:'Informasi Umum')+'</b><small>'+(tg?lmD(tg.tgl)+' \u2022 ':'')+g.items.length+' konten'+(teacher?' \u2022 '+vis+' tampil ke siswa'+(hid?' \u2022 '+hid+' hanya guru':''):'')+'</small></div>'
+   +(teacher&&can('lms','e')?'<div class=lmpga><button class=o type=button onclick="lsBulk('+g.pert+',1)">'+ic('eye',13)+' Tampilkan semua</button><button class=o type=button onclick="lsBulk('+g.pert+',0)">'+ic('lock',13)+' Hanya guru</button></div>':'')+'</div><div class=lmpgi>'+g.items.map(function(i){return lmCard(i,ctx)}).join('')+'</div></section>'}).join('')+'</div>'}
+/* ---------- kartu konten ---------- */
+function lmCard(it,ctx){var t=LMT[it.t],att=lmAtts(it);LM.items[it.id]=it;ctx=ctx||{};var T=ctx.r=='t',over=it.dl&&ctx.now&&String(ctx.now).replace(' ','T')>it.dl,vis=it.tampil!==false,given=T&&it.given,last=T&&ctx.last==it.id,ce=T&&can('lms','e');
+  var h='<div class="lmc'+(vis?'':' hid')+(given?' gv':'')+(last?' last':'')+'" style="--ac:'+t.c+'" id="lmi-'+it.id+'"><div class=lmh><span class=lmb>'+ic(t.i,12)+' '+t.l+'</span>'+(it.tgl?'<span class=lmdt>'+ic('calendar',12)+' '+lmD(it.tgl)+'</span>':'')+(last?'<span class=lmlast>'+LMBK+' Terakhir diberikan</span>':'')+'<span class=lmsp></span>'
+   +(T?'<button type=button class="lmbk'+(given?' on':'')+'"'+(ce?' onclick="lsMark(\''+it.id+'\')"':' disabled')+' title="'+(given?'Klik untuk membatalkan tanda':'Tandai bahwa konten ini sudah diberikan ke siswa')+'">'+LMBK+'<span>'+(given?'Sudah diberikan'+(it.gat?' \u2022 '+lmD(it.gat):''):'Tandai diberikan')+'</span></button>':'')+'</div><h4>'+esc(it.judul)+'</h4>'+(it.desc?'<div class=lmd>'+lmNl(it.desc)+'</div>':'');
+  if(it.t=='tugas')h+='<div class=lmdl'+(over&&ctx.r=='s'&&!ctx.sub?' style="color:#b3261e"':'')+'>'+ic('clock',14)+' '+(it.dl?'Batas pengumpulan: <b>'+lmDT(it.dl)+'</b>':'Tanpa batas waktu')+' \u2022 Nilai maks. '+it.max+(it.kumpul?'':' \u2022 dikumpulkan di luar web')+'</div>';
+  if(it.t=='asesmen'&&it.asm)h+='<div class=lmasm>'+ic('list',22)+'<div><b>'+esc(it.asm.nama)+'</b><div style="font-size:11.5px;color:#6a5a5d">'+esc(it.asm.mapel||'')+(it.asm.dur?' \u2022 '+it.asm.dur+' menit':'')+(T?' \u2022 Kode: <b>'+esc(it.asm.kode)+'</b>':'')+'</div></div></div>';
+  if(att.length)h+='<div class=lma>'+lmChips(it.id,it)+'</div><div id="lmv-'+it.id+'"></div>';
+  if(T){h+='<div class=lmft><div class=lmvs role=group aria-label="Tampilan untuk siswa"><button type=button class="'+(vis?'on':'')+'"'+(ce?' onclick="lsVis(\''+it.id+'\',1)"':' disabled')+'>'+ic('eye',14)+' Tampil ke siswa</button><button type=button class="'+(vis?'':'on lock')+'"'+(ce?' onclick="lsVis(\''+it.id+'\',0)"':' disabled')+'>'+ic('lock',14)+' Hanya guru</button></div><div class=lmx>'
+    +(it.t=='tugas'&&it.kumpul?'<button type=button onclick="lsKum(\''+it.id+'\')">'+ic('users',14)+' Pengumpulan ('+(ctx.kc!=null?ctx.kc:(it.kc||0))+'/'+(ctx.siswa||0)+')</button>':'')+(ce?'<button type=button class=o onclick="lsMarkTo(\''+it.id+'\')" title="Tandai semua konten dari awal sampai konten ini">'+LMBK+' Tandai sampai sini</button><button type=button class=o onclick="lsEditI(\''+it.id+'\')">'+ic('edit',14)+' Edit</button>':'')+(can('lms','d')?'<button type=button class=o onclick="lsDelI(\''+it.id+'\')">'+ic('trash',14)+' Hapus</button>':'')+'</div></div>'}
+  else h+=akAct(it,ctx,over);return h+'</div>'}
+/* ---------- guru: daftar grup ---------- */
+function lsListH(){var ca=can('lms','a'),h='<div class=jqbar><h3>'+ic('school',20)+' Grup Kelas - LMS</h3>'+(ca?'<button onclick="lsNewG()">'+ic('plus',15)+' Buat Grup Kelas</button>':'')+'</div>';
+  if(!LS.list.length)return h+'<div class=jqem>'+ic('school',44)+'<b>Belum ada grup kelas</b><p>'+(ca?'Buat ruang kelas untuk rombel tertentu, lalu tambahkan materi, tugas, dan asesmen lengkap dengan file, video, atau tautan. Siswa melihatnya lewat <b>Akun Siswa</b>.':'Grup kelas akan tampil di sini setelah dibuat.')+'</p></div>';
+  return h+'<div class=lmgl>'+LS.list.map(function(g,i){var arsip=g.status=='Arsip',pc=g.n?Math.round(g.gv*100/g.n):0;
+    return '<div class="lmg'+(arsip?' arsip':'')+'"><div class=lmgc '+lmCover(g)+'><span class=lmgi>'+esc(lmIni(g.mapel||g.nama))+'</span><div class=lmgt><h4>'+esc(g.nama)+'</h4><small>'+esc(g.mapel||'Grup Kelas')+(U.sa&&g.guru?' \u2022 '+esc(g.guru):'')+'</small></div>'+(arsip?'<span class=lmarc>Arsip</span>':'')+'</div>'
+     +'<div class=lmgb><div class=jqmt><span>'+esc(g.j)+' \u2022 Kelas '+esc(g.k)+'</span><span>'+(g.v?'Rombel '+esc(g.v):'Semua rombel')+'</span><span>TA '+esc(g.ta||'-')+'</span></div>'
+     +'<div class=lmgs><span>'+ic('book',14)+'<b>'+g.n+'</b> konten</span><span>'+ic('users',14)+'<b>'+g.siswa+'</b> siswa</span><span>'+ic('eye',14)+'<b>'+g.tp+'</b> tampil</span></div>'
+     +'<div class=lmprog title="Konten yang sudah ditandai diberikan"><i style="width:'+pc+'%"></i></div>'
+     +'<div class="lmgbk'+(g.gv?'':' off')+'">'+LMBK+'<span>'+(g.gv?'Sudah diberikan sampai <b>'+(g.lp>0?'Pertemuan '+g.lp:'konten umum')+'</b>'+(g.lt?' \u2014 '+esc(g.lt):'')+' ('+g.gv+' dari '+g.n+')':'Belum ada konten yang ditandai sudah diberikan')+'</span></div>'
+     +'<div class=jqac><button onclick="lsOpenG('+i+')">'+ic('book',14)+' Buka Kelas</button>'+(can('lms','e')?'<button class=o onclick="lsEditG('+i+')">'+ic('edit',14)+' Edit</button>':'')+(can('lms','d')?'<button class=o onclick="lsDelG('+i+')">'+ic('trash',14)+' Hapus</button>':'')+'</div></div></div>'}).join('')+'</div>'}
+/* ---------- guru: halaman grup ---------- */
+function lsLast(){var l=null;LS.items.forEach(function(i){if(i.given&&(!l||(i.pert||0)>(l.pert||0)||((i.pert||0)==(l.pert||0)&&(i.urut||0)>(l.urut||0))))l=i});return l}
+function lmJump(id){var e=document.getElementById('lmi-'+id);if(e){e.scrollIntoView({block:'center',behavior:'smooth'});e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')}}
+function lsGrupH(){var g=LS.cur,ca=can('lms','a'),fl=['all','materi','tugas','asesmen'],cnt=function(t){return LS.items.filter(function(i){return t=='all'||i.t==t}).length},list=LS.items.filter(function(i){return LS.flt=='all'||i.t==LS.flt}),
+  n=LS.items.length,tp=LS.items.filter(function(i){return i.tampil!==false}).length,gv=LS.items.filter(function(i){return i.given}).length,last=lsLast(),pc=n?Math.round(gv*100/n):0;
+  var tile=function(c,i,v,l){return '<div class=lmst style="--ac:'+c+'"><span class=lmsi>'+ic(i,20)+'</span><div><b>'+v+'</b><small>'+l+'</small></div></div>'};
+  var top='<div class=jqbar><button class=o onclick="lsInit()">'+ic('chevl',14)+' Semua Grup</button></div>'
+   +'<div class=lmhero '+lmCover(g)+'><div class=lmhi>'+esc(lmIni(g.mapel||g.nama))+'</div><div class=lmht><small>'+esc(g.j)+' \u2022 Kelas '+esc(g.k)+'</small><h2>'+esc(g.nama)+'</h2><div class=lmhc><span>'+(g.v?'Rombel '+esc(g.v):'Semua rombel')+'</span>'+(g.mapel?'<span>'+esc(g.mapel)+'</span>':'')+'<span>TA '+esc(g.ta||'-')+'</span></div>'+(g.desk?'<p>'+lmNl(g.desk)+'</p>':'')+'</div></div>'
+   +'<div class=lmstat>'+tile('#3b6fd4','book',n,'Total konten')+tile('#2e8b6f','eye',tp,'Tampil ke siswa')+tile('#e0a21b','lock',n-tp,'Hanya guru')+tile('#8a63d2','users',LS.siswa,'Siswa')+'</div>'
+   +(last?'<div class=lmbkl>'+LMBK+'<div><b>Terakhir diberikan: '+(last.pert?'Pertemuan '+last.pert:'konten umum')+'</b><small>'+esc(last.judul)+(last.gat?' \u2022 '+lmD(last.gat):'')+' \u2022 '+gv+' dari '+n+' konten sudah ditandai ('+pc+'%)</small></div><button type=button class=o onclick="lmJump(\''+last.id+'\')">Lihat</button></div>':'<div class="lmbkl off">'+LMBK+'<div><b>Belum ada penanda</b><small>Klik tombol <b>Tandai diberikan</b> pada konten yang sudah Anda sampaikan ke siswa sebagai pengingat.</small></div></div>')
+   +(ca?'<div class=lsadd><b>Tambah konten:</b>'+['materi','tugas','asesmen'].map(function(t){return '<button style="background:'+LMT[t].c+';border-color:'+LMT[t].c+'" onclick="lsNewI(\''+t+'\')">'+ic('plus',14)+' '+LMT[t].l+'</button>'}).join('')+'</div>':'')
+   +'<div class=jqrt style="align-items:center">'+fl.map(function(t){return '<button type=button class="jqch'+(LS.flt==t?' on':'')+'" onclick="LS.flt=\''+t+'\';lsView()">'+(t=='all'?'Semua':LMT[t].l)+' ('+cnt(t)+')</button>'}).join('')+'<span class=lmsp></span><button type=button class="jqch" onclick="LS.asc=!LS.asc;lsView()">'+(LS.asc?'Pertemuan terlama dulu':'Pertemuan terbaru dulu')+'</button></div>';
+  return top+(list.length?lmTL(list,{r:'t',siswa:LS.siswa,last:last&&last.id,asc:LS.asc},true):'<div class=jqem><b>'+(LS.items.length?'Tidak ada konten pada filter ini':'Belum ada konten')+'</b><p>Gunakan tombol di atas untuk menambahkan materi, tugas, atau asesmen.</p></div>')}
+function lsMark(id){var it=LS.items.filter(function(i){return i.id==id})[0];if(!it)return;var v=it.given?0:1;api('lmsMark',U.nik,PW,LS.cur.id,id,v,0).then(function(r){it.given=v;it.gat=(r&&r.gat)||'';toast(v?'Ditandai: sudah diberikan ke siswa':'Tanda dibatalkan');lsView()}).catch(function(e){alert((e&&e.message)||e)})}
+function lsMarkTo(id){ask('Tandai semua konten dari awal sampai konten ini sebagai SUDAH DIBERIKAN ke siswa?','Ya, Tandai',function(){api('lmsMark',U.nik,PW,LS.cur.id,id,1,1).then(function(r){toast(((r&&r.n)||0)+' konten ditandai sudah diberikan');lsLoad()}).catch(function(e){alert((e&&e.message)||e)})},0,'Batal')}
+function lsVis(id,v){var it=LS.items.filter(function(i){return i.id==id})[0];if(!it||(it.tampil!==false?1:0)==v)return;lsTgl(id)}
+function lsBulk(pert,v){var arr=LS.items.filter(function(i){return (i.pert||0)==pert&&((i.tampil!==false?1:0)!=v)});if(!arr.length)return toast('Tidak ada perubahan');
+  Promise.all(arr.map(function(it){var f=JSON.parse(JSON.stringify(it));f.tampil=v;f.kumpul=it.kumpul?1:0;return api('lmsItemSave',U.nik,PW,lsPayload(f))})).then(function(){toast(arr.length+' konten '+(v?'ditampilkan ke siswa':'diubah menjadi hanya guru'));lsLoad()}).catch(function(e){alert((e&&e.message)||e)})}
+function lsPayload(f){return {id:f.id,gid:LS.cur.id,t:f.t,judul:f.judul,pert:f.pert,tgl:f.tgl,dl:f.dl,desc:f.desc,files:f.files,links:f.links,max:f.max,kumpul:f.kumpul?1:0,tampil:f.tampil?1:0,asm:f.asm,given:f.given?1:0,gat:f.gat||''}}
+function lsNewI(t){var mx=LS.items.reduce(function(m,i){return Math.max(m,i.pert||0)},0);LS.form={id:'',t:t,judul:'',pert:mx+1,tgl:lsToday(),desc:'',files:[],links:[],dl:'',max:100,kumpul:1,tampil:1,given:0,gat:'',asm:null};LS.mode='form';lsAsmLoad().then(lsView)}
+function lsEditI(id){var it=LS.items.filter(function(i){return i.id==id})[0];if(!it)return;LS.form={id:it.id,t:it.t,judul:it.judul,pert:it.pert,tgl:it.tgl,desc:it.desc,files:JSON.parse(JSON.stringify(it.files||[])),links:JSON.parse(JSON.stringify(it.links||[])),dl:it.dl,max:it.max,kumpul:it.kumpul?1:0,tampil:it.tampil===false?0:1,given:it.given?1:0,gat:it.gat||'',asm:it.asm};LS.mode='form';lsAsmLoad().then(lsView)}
+function lsSyncF(){var f=LS.form,v=function(i){var e=$('#'+i);return e?e.value:null};if(!f||!$('#lfj'))return;f.judul=v('lfj');f.pert=parseInt(v('lfp'),10)||0;f.tgl=v('lft')||'';f.desc=v('lfd')||'';
+  if(f.t=='tugas'){f.dl=v('lfdl')||'';f.max=parseInt(v('lfmx'),10)||100;f.kumpul=$('#lfk')&&$('#lfk').checked?1:0}
+  if($('#lfg')){var gv=$('#lfg').checked?1:0;if(gv!=f.given){f.given=gv;f.gat=gv?lsToday():''}}
+  if(f.t=='asesmen'){var k=v('lfa');f.asm=(LS.opts||[]).filter(function(a){return a.kode==k})[0]||f.asm;if(f.asm&&!f.judul)f.judul=f.asm.nama}}
+function lsFV(v){LS.form.tampil=v;[].forEach.call(document.querySelectorAll('#lfvs .lfvo'),function(b){b.classList.toggle('on',+b.dataset.v==v)})}
+var _lsFormH0=lsFormH;
+lsFormH=function(){var h=_lsFormH0.apply(this,arguments),f=LS.form,t=LMT[f.t];
+  /* ganti kotak centang "Tampilkan kepada siswa" dengan tombol pilihan yang lebih jelas + penanda diberikan */
+  var old='<label class=jqck><input type=checkbox id=lfv'+(f.tampil?' checked':'')+'> Tampilkan kepada siswa</label>';
+  var neu='<div class=lfvw><div class=lfvt>Siapa yang dapat melihat konten ini?</div><div class=lfvs id=lfvs><button type=button class="lfvo'+(f.tampil?' on':'')+'" data-v=1 onclick="lsFV(1)"><span class=lfvi>'+ic('eye',20)+'</span><span><b>Tampil ke siswa</b><small>Siswa melihat konten ini di Akun Siswa</small></span></button><button type=button class="lfvo lock'+(f.tampil?'':' on')+'" data-v=0 onclick="lsFV(0)"><span class=lfvi>'+ic('lock',20)+'</span><span><b>Hanya guru</b><small>Disimpan sebagai draf, belum terlihat siswa</small></span></button></div>'
+    +'<label class=lfgv><input type=checkbox id=lfg'+(f.given?' checked':'')+'><span class=lfgs></span><span><b>Tandai sudah diberikan ke siswa</b><small>Pengingat (bookmark) untuk Anda'+(f.given&&f.gat?' \u2022 ditandai '+lmD(f.gat):'')+'</small></span></label></div>';
+  return h.indexOf(old)>=0?h.replace(old,neu):h};
+/* ---------- siswa ---------- */
+function akKelasH(){var d=AK.d;return '<div class=jqbar><h3>'+ic('book',20)+' Kelas Saya</h3></div>'+(d.grup.length?'<div class=lmgl>'+d.grup.map(function(g){var its=d.items.filter(function(i){return i.g==g.id}),tg=its.filter(function(i){return i.t=='tugas'&&akSt(i).k=='belum'}).length;
+    return '<div class=lmg><div class=lmgc '+lmCover(g)+'><span class=lmgi>'+esc(lmIni(g.mapel||g.nama))+'</span><div class=lmgt><h4>'+esc(g.nama)+'</h4><small>'+esc(g.mapel||'Kelas')+' \u2022 '+esc(g.guru||'Guru')+'</small></div></div><div class=lmgb>'+(g.desk?'<div style="font-size:12.5px;color:#5d5154">'+esc(g.desk.slice(0,130))+'</div>':'')
+     +'<div class=lmgs><span>'+ic('book',14)+'<b>'+its.length+'</b> konten</span>'+(tg?'<span style="color:#e0703a">'+ic('clock',14)+'<b>'+tg+'</b> tugas belum dikumpulkan</span>':'')+'</div><div class=jqac><button onclick="akGo(\'kelas\',\''+g.id+'\')">'+ic('book',14)+' Masuk Kelas</button></div></div></div>'}).join('')+'</div>':'<div class=jqem>'+ic('school',44)+'<b>Belum ada kelas</b><p>Guru belum membuat grup kelas untuk rombel Anda.</p></div>')}
+function akGrupH(){var d=AK.d,g=d.grup.filter(function(x){return x.id==AK.gid})[0];if(!g)return akKelasH();var its=d.items.filter(function(i){return i.g==g.id}),tg=its.filter(function(i){return i.t=='tugas'}),bel=tg.filter(function(i){return akSt(i).k=='belum'}).length;
+  return '<div class=jqbar><button class=o onclick="akGo(\'kelas\')">'+ic('chevl',14)+' Kelas Saya</button></div><div class=lmhero '+lmCover(g)+'><div class=lmhi>'+esc(lmIni(g.mapel||g.nama))+'</div><div class=lmht><small>'+esc(g.mapel||'Kelas')+'</small><h2>'+esc(g.nama)+'</h2><div class=lmhc><span>Guru: '+esc(g.guru||'-')+'</span><span>TA '+esc(g.ta||'-')+'</span><span>'+its.length+' konten</span>'+(bel?'<span style="background:rgba(255,255,255,.9);color:#b45f06">'+bel+' tugas belum dikumpulkan</span>':'')+'</div>'+(g.desk?'<p>'+lmNl(g.desk)+'</p>':'')+'</div></div>'
+   +(its.length?'<div class=jqrt><button type=button class=jqch onclick="AK.asc=!AK.asc;akRender()">'+(AK.asc?'Pertemuan terlama dulu':'Pertemuan terbaru dulu')+'</button></div>'+lmTL(its,{r:'s',now:d.now,asc:AK.asc},false):'<div class=jqem><b>Belum ada konten</b><p>Materi dan tugas dari guru akan muncul di sini.</p></div>')}
 </script>
 </body></html>
